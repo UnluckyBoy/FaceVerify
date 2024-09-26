@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="matrix.cloudestudio.faceverify.model.mapper.AuthorityMapper">
+    <select id="queryAuthority" parameterType="String" resultType="AuthorityInfo">
+        SELECT
+            *
+        FROM
+            authority_table
+        WHERE
+            authority_code IN ( SELECT authority_code FROM user_authority_table WHERE account = #{account});
+    </select>
+</mapper>

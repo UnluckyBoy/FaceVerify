@@ -1,6 +1,7 @@
 package matrix.cloudestudio.faceverify.util;
 
 import lombok.Data;
+import org.springframework.security.core.AuthenticationException;
 
 /**
  * @ClassName WebServerResponse
@@ -57,14 +58,14 @@ public class WebServerResponse {
         resultResponse.setHandleData(null);
         return resultResponse;
     }
-//    public static WebServerResponse failure(AuthenticationException exception){
-//        WebServerResponse resultResponse=new WebServerResponse();
-//        resultResponse.setHandleType(false);
-//        resultResponse.setHandleCode(404);
-//        resultResponse.setHandleMessage(MessageUtil.Message(exception));
-//        resultResponse.setHandleData(null);
-//        return resultResponse;
-//    }
+    public static WebServerResponse failure(AuthenticationException exception){
+        WebServerResponse resultResponse=new WebServerResponse();
+        resultResponse.setHandleType(false);
+        resultResponse.setHandleCode(404);
+        resultResponse.setHandleMessage(MessageUtil.Message(exception));
+        resultResponse.setHandleData(null);
+        return resultResponse;
+    }
     public static WebServerResponse failure(String message){
         WebServerResponse resultResponse=new WebServerResponse();
         resultResponse.setHandleType(false);

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录</title>
+    <!-- 引入Bootstrap CSS -->
+    <link href="css/bootstrap_5.2.3.min.css" rel="stylesheet">
+    <link href="css/matrix_style.css" rel="stylesheet">
+    <!--CDN图标库-->
+    <link type="text/css" href="css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="text-center">登录</h3>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="account" class="form-label">账号</label>
+                        <input type="text" class="form-control" id="account" name="account" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">密码</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                    <div class="align-items-center">
+                        <button type="submit" class="btn btn-primary btn-block" id="login_btn">登录</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/common/jquery.min.js"></script>
+<script src="js/common/bootstrap_5.2.3.min.js"></script>
+<script src="js/common/matrix_modal_tool.js"></script>
+<script src="js/login/login_handle.js"></script>
+</body>
+</html>

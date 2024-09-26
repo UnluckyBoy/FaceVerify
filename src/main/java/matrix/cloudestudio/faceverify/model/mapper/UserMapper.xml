@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="matrix.cloudestudio.faceverify.model.mapper.UserMapper">
+    <!--查询逻辑-->
+    <select id="accountQuery" resultType="UserInfo" parameterType="String">
+        SELECT
+            login_info_table.uId,
+            login_info_table.account,
+            login_info_table.uPassword,
+            login_info_table.organization_code,
+            login_info_table.organization,
+            login_info_table.uStatus
+        FROM
+            login_info_table
+        WHERE
+            login_info_table.account = #{account};
+    </select>
+</mapper>

@@ -8,9 +8,9 @@ function simple_modal(title,content){
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="simpleModalLabel">${title}</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+                        <span class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-close" aria-hidden="true"></i>
+                        </span>
                     </div>
                     <div class="modal-body">
                         ${content}
@@ -25,4 +25,23 @@ function simple_modal(title,content){
     $('body').append(modalHTML);
     // 显示Modal
     $('#simpleModal').modal('show');
+}
+
+function simPleToast(title,content){
+    let toastHTML = `
+        <div class="toast matrix-toast show" id="simpleToast">
+            <div class="toast-header">
+                <strong class="me-auto">
+                    <span class="text-danger fa fa-warning"><!--<i class="fa fa-warning" aria-hidden="true" /></i>-->
+                    </span>${title}
+                </strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+            </div>
+            <div class="toast-body matrix-toast-body text-center">
+                <p>${content}</p>
+            </div>
+        </div>
+    `;
+    $('body').append(toastHTML);
+    //new bootstrap.Toast($('#toast')).show();
 }
