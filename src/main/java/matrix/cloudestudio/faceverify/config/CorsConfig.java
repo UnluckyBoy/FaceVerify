@@ -24,10 +24,12 @@ public class CorsConfig extends WebMvcConfigurationSupport {
      */
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedMethods("*")
+        registry.addMapping("/**") // 允许所有路径的跨域请求
                 .allowedOrigins("*")
+                .allowedMethods("*")
                 .allowedHeaders("*");
+                //.allowCredentials(true) // 是否允许发送Cookie信息
+                //.maxAge(3600); // 预检请求的缓存时间(秒)
         super.addCorsMappings(registry);
     }
 

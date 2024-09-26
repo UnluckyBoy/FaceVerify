@@ -11,7 +11,7 @@
 
 <div class="container mt-5">
     <div class="row justify-content-center">
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="mb-3">
                 <label for="real_name" class="form-label">姓名</label>
                 <input type="text" class="form-control" id="real_name" placeholder="请输入姓名">
@@ -20,14 +20,15 @@
                 <label for="idCard" class="form-label">身份证号</label>
                 <input type="text" class="form-control" id="idCard" placeholder="请输入身份证号">
             </div>
+<!--            <div class="mb-3">-->
+<!--                <label for="imageInput" class="form-label">本地图片</label>-->
+<!--                <input type="file" class="form-control-file bg-warning" id="imageInput">-->
+<!--            </div>-->
             <div class="mb-3">
-                <label for="imageInput" class="form-label">本地图片</label>
-                <input type="file" class="form-control-file bg-warning" id="imageInput">
-            </div>
-            <div class="mb-3">
-                <label for="imageInput" class="form-label">实时采集</label>
+                <label class="form-label">实时采集</label>
                 <div class="d-flex justify-content-center">
                     <button type="submit" class="btn btn-success" id="capture_start">启动摄像头</button>
+                    <button type="submit" class="mx-2 btn btn-warning" id="capture_idCard">身份证识别</button>
                     <button type="submit" class="mx-2 btn btn-success" id="capture">拍照</button>
                     <button type="submit" class="mx-2 btn btn-primary" id="verify">认证</button>
                 </div>
@@ -35,6 +36,7 @@
                 <div class="d-flex justify-content-center">
                     <video id="video" width="256" height="192" autoplay></video>
                     <canvas id="canvas" width="256" height="192" style="display:none;"></canvas>
+                    <img class="mx-2" id="photo_idCard" alt="" style="display:none;"/>
                     <img class="mx-2" id="photo" alt="" style="display:none;"/>
                 </div>
             </div>
@@ -44,6 +46,7 @@
 
 <script src="js/common/jquery.min.js"></script>
 <script src="js/common/bootstrap_5.2.3.min.js"></script>
+<script src="js/common/axios.min.js"></script>
 <script src="js/common/matrix_modal_tool.js"></script>
 <script src="js/common/matrix_tool.js"></script>
 <script src="js/index/index_handle.js"></script>

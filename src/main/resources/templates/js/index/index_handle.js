@@ -1,21 +1,24 @@
 // import isEmptyString from '../common/matrix_tool';
+//var real_name;
+//var idCard;
+var idCardImage;
 var image;
 $(document).ready(function() {
-    $('#imageInput').on('change', function(e) {
-        const file = e.target.files[0]; // 或者使用 $(this)[0].files[0]
-        if (!file.type.startsWith('image/')) {
-            console.log('Please select an image file.');
-            return;
-        }
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const base64String = e.target.result;
-            image = base64String.replace(/^data:image\/\w+;base64,/, '');//去掉前缀
-            console.log(image);
-            // 你可以在这里使用这个Base64字符串
-        };
-        reader.readAsDataURL(file);
-    });
+    // $('#imageInput').on('change', function(e) {
+    //     const file = e.target.files[0]; // 或者使用 $(this)[0].files[0]
+    //     if (!file.type.startsWith('image/')) {
+    //         console.log('Please select an image file.');
+    //         return;
+    //     }
+    //     const reader = new FileReader();
+    //     reader.onload = function(e) {
+    //         const base64String = e.target.result;
+    //         image = base64String.replace(/^data:image\/\w+;base64,/, '');//去掉前缀
+    //         console.log(image);
+    //         // 你可以在这里使用这个Base64字符串
+    //     };
+    //     reader.readAsDataURL(file);
+    // });
 
     // 浏览器兼容性检查
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -30,7 +33,43 @@ $(document).ready(function() {
                     console.error("无法启动摄像头：", error);
                 });
         });
-        // 拍照
+        /**
+         * 拍身份证
+         * */
+        $('#capture_idCard').click(function () {
+            const icCard_canvas = $('#canvas')[0];
+            const icCard_context = icCard_canvas.getContext('2d');
+            icCard_context.drawImage($('#video')[0], 0, 0, 256, 192);
+            // 将canvas转换为图片并显示
+            const idCard_dataURL = icCard_canvas.toDataURL('image/png');
+            $('#photo_idCard').prop('src', idCard_dataURL).show();
+            idCardImage = idCard_dataURL.split(',')[1];
+            console.log('身份证图片已显示,Base64 编码:' + idCardImage);
+            $.ajax({
+                url: '/BaiduApi/verify_idcard',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    image: idCardImage
+                }, // 发送到服务器的数据
+                success: function(data) {
+                    //console.log('请求成功:'+data.handleType); // 打印返回的数据
+                    if(data.handleType){
+                        console.log('请求成功:'+data.handleData);
+                        const result=JSON.parse(data.handleData);
+                        $('#real_name').val(result.words_result.姓名.words);
+                        $('#idCard').val(result.words_result.公民身份号码.words);
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('请求失败: ' + textStatus, errorThrown);
+                }
+            });
+        });
+
+        /**
+         * 拍人脸
+         */
         $('#capture').click(function (){
             const canvas = $('#canvas')[0];
             const context = canvas.getContext('2d');
@@ -38,10 +77,8 @@ $(document).ready(function() {
             // 将canvas转换为图片并显示
             const dataURL = canvas.toDataURL('image/png');
             $('#photo').prop('src', dataURL).show();
-            console.log('图片已显示');
             image=dataURL.split(',')[1];
-            //const base64Data = dataURL.split(',')[1]; // 分割字符串，并取第二个元素（即Base64编码的数据）
-            console.log('Base64 编码的图片数据:', image);
+            console.log('图片已显示,Base64 编码的图片数据:', image);
         });
     } else {
         //console.error('您的浏览器不支持 getUserMedia API');
@@ -49,11 +86,14 @@ $(document).ready(function() {
         //simple_modal('平台提示','您的浏览器不支持 getUserMedia API!');
     }
 
+    /**
+     * 验证逻辑
+     */
     $('#verify').click(function(){
-        var real_name=$('#real_name').val().trim();
-        var idCard=$('#idCard').val().trim();
+        const real_name=$('#real_name').val().trim();
+        const idCard=$('#idCard').val().trim();
         if (!real_name || !idCard || !image) {
-            alert('信息不能为空!');
+            simple_modal('平台提示','信息不能为空!');
             return;
         }
         else{
