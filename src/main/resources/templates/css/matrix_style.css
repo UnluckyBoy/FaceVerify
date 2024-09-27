@@ -1,3 +1,16 @@
+/*定义颜色动画*/
+@keyframes bgAnimation {
+    0%{
+        background-position: 0% 50%;
+    }
+    50%{
+        background-position: 100% 50%;
+    }
+    100%{
+        background-position: 0% 50%;
+    }
+}
+
 /* 自定义toast样式，使其居中显示 */
 .matrix-toast {
     position: fixed; /* 或者使用 absolute，取决于你的页面布局 */
@@ -15,5 +28,17 @@
 
 /* 如果需要，可以添加一些额外的样式来美化toast */
 .matrix-toast-body {
-    padding: 20px; /* 增加一些内边距 */
+    padding: 6px; /* 增加一些内边距 */
+}
+.btn-circle {
+    width: 20px; /* 圆形按钮的直径 */
+    height: 20px; /* 与宽度相同，以保持圆形 */
+    border-radius: 50%; /* 设置为圆形 */
+    text-align: center; /* 确保图标居中 */
+    line-height: 26px; /* 调整line-height以确保图标垂直居中（这里可能需要根据你的图标大小进行调整） */
+    /* 注意：由于我们设置了padding为2px，所以line-height需要相应调整以确保图标居中 */
+    overflow: hidden; /* 防止图标超出按钮边界 */
+}
+.matrix-offcanvas-width {
+    width: 280px !important; /* 或者其他你想要的宽度 */
 }
