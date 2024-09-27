@@ -1,135 +1,84 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>实名认证</title>
+    <title>首页</title>
+    <link href="css/matrix_style.css" rel="stylesheet">
     <!-- 引入Bootstrap CSS -->
     <link href="css/bootstrap_5.2.3.min.css" rel="stylesheet">
     <!--CDN图标库-->
     <link type="text/css" href="css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
-<!--导航栏-->
-<a class="btn btn-light btn-circle" data-bs-toggle="offcanvas" href="#matrix-navbar" role="button" aria-controls="matrix-navbar">
-    <span><i class="fa fa-align-justify" aria-hidden="true"></i></span>
-</a>
-<div class="offcanvas offcanvas-start matrix-offcanvas-width" tabindex="-1" id="matrix-navbar" aria-labelledby="matrix-navbarLabel">
-    <div class="offcanvas-header matrix-offcanvas-width">
-        <h5 class="offcanvas-title" id="matrix-navbarLabel">侧边栏</h5>
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body matrix-offcanvas-width">
-        <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
-            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-                <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
-                <span class="fs-4">Sidebar</span>
-            </a>
-            <hr>
-            <ul class="nav nav-pills flex-column mb-auto">
-                <li class="mb-1">
-                    <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" aria-expanded="true">
-                        <i class="fa fa-home" aria-hidden="true"></i>
-                        Home
-                    </button>
-                </li>
-                <li class="mb-1">
-                    <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" aria-expanded="true">
-                        <i class="fa fa-book" aria-hidden="true"></i>
-                        Dashboard
-                    </button>
-                </li>
-            </ul>
-            <hr>
-            <div class="dropdown">
-                <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUserInfo" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="./img/matrix.png" alt="" width="32" height="32" class="rounded-circle me-2">
-                    <strong>mdo</strong>
-                </a>
-                <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUserInfo">
-                    <li><a class="dropdown-item" href="#">设置</a></li>
-                    <li><a class="dropdown-item" href="#">信息</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">登出</a></li>
-                </ul>
+<div class="matrix-flex-display flex-column">
+    <!--导航栏-->
+    <div th:fragment="web-navber">
+        <a class="btn btn-light" data-bs-toggle="offcanvas" href="#matrix-navbar" role="button" aria-controls="matrix-navbar">
+            <span><i class="fa fa-bars" aria-hidden="true"></i></span>
+        </a>
+        <div class="matrix-border-radius offcanvas offcanvas-start matrix-offcanvas-width" tabindex="-1" id="matrix-navbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">侧边导航栏</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
-        </div>
-    </div>
-</div>
-<!--页面主体-->
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-4">
-            <div class="mb-3">
-                <label for="real_name" class="form-label">姓名</label>
-                <input type="text" class="form-control" id="real_name" placeholder="请输入姓名">
-            </div>
-            <div class="mb-3">
-                <label for="idCard" class="form-label">身份证号</label>
-                <input type="text" class="form-control" id="idCard" placeholder="请输入身份证号">
-            </div>
-            <!--            <div class="mb-3">-->
-            <!--                <label for="imageInput" class="form-label">本地图片</label>-->
-            <!--                <input type="file" class="form-control-file bg-warning" id="imageInput">-->
-            <!--            </div>-->
-            <div class="mb-3">
-                <label class="form-label">实时采集</label>
-                <div class="d-flex justify-content-center">
-                    <button type="submit" class="btn btn-success" id="capture_start">启动摄像头</button>
-                    <button type="submit" class="mx-2 btn btn-warning" id="capture_idCard">身份证识别</button>
-                    <button type="submit" class="mx-2 btn btn-success" id="capture">拍照</button>
-                    <button type="submit" class="mx-2 btn btn-primary" id="verify">认证</button>
-                </div>
-                <br/>
-                <div class="d-flex justify-content-center">
-                    <video id="video" width="256" height="192" autoplay></video>
-                    <canvas id="canvas" width="256" height="192" style="display:none;"></canvas>
-                    <img class="mx-2" id="photo_idCard" alt="" style="display:none;"/>
-                    <img class="mx-2" id="photo" alt="" style="display:none;"/>
+            <div class="matrix-flex-display flex-column offcanvas-body">
+                <div class="matrix-padding matrix-content d-flex flex-column flex-shrink-0 p-3 bg-dark matrix-border-radius">
+                    <ul class="matrix-border-radius list-group list-group-flush">
+                        <li class="matrix-list-item matrix-border-radius my-2 list-group-item">
+                            <a href="/index" class="matrix-text-decoration link-dark">首页</a>
+                        </li>
+                        <li class="matrix-list-item matrix-border-radius my-2 list-group-item ">
+                            <a href="/about" class="matrix-text-decoration link-dark">关于我们</a>
+                        </li>
+                        <li class="matrix-list-item matrix-border-radius my-2 list-group-item">
+                            <a href="#" class="matrix-text-decoration link-dark">服务</a>
+                        </li>
+                        <li class="matrix-list-item matrix-border-radius my-2 list-group-item">
+                            <a href="#" class="matrix-text-decoration link-dark">联系方式</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
+    <!--页面主体-->
+    <div class="matrix-content container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label for="real_name" class="form-label">姓名</label>
+                    <input type="text" class="form-control" id="real_name" placeholder="请输入姓名">
+                </div>
+                <div class="mb-3">
+                    <label for="idCard" class="form-label">身份证号</label>
+                    <input type="text" class="form-control" id="idCard" placeholder="请输入身份证号">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">实时采集</label>
+                    <div class="d-flex justify-content-center">
+                        <button type="submit" class="btn btn-success" id="capture_start">启动摄像头</button>
+                        <button type="submit" class="mx-2 btn btn-warning" id="capture_idCard">身份证识别</button>
+                        <button type="submit" class="mx-2 btn btn-success" id="capture">拍照</button>
+                        <button type="submit" class="mx-2 btn btn-primary" id="verify">认证</button>
+                    </div>
+                    <br/>
+                    <div class="d-flex justify-content-center">
+                        <video id="video" width="256" height="192" autoplay></video>
+                        <canvas id="canvas" width="256" height="192" style="display:none;"></canvas>
+                        <img class="mx-2" id="photo_idCard" alt="" style="display:none;"/>
+                        <img class="mx-2" id="photo" alt="" style="display:none;"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="bg-light text-center text-black p-0" th:fragment="web-foot">
+        <p class="matrix-line-height">© 张有坤. 版权所有.</p>
+    </footer>
 </div>
-
-<!--<div class="container mt-5">-->
-<!--    <div class="row justify-content-center">-->
-<!--        <div class="col-md-4">-->
-<!--            <div class="mb-3">-->
-<!--                <label for="real_name" class="form-label">姓名</label>-->
-<!--                <input type="text" class="form-control" id="real_name" placeholder="请输入姓名">-->
-<!--            </div>-->
-<!--            <div class="mb-3">-->
-<!--                <label for="idCard" class="form-label">身份证号</label>-->
-<!--                <input type="text" class="form-control" id="idCard" placeholder="请输入身份证号">-->
-<!--            </div>-->
-<!--            &lt;!&ndash;            <div class="mb-3">&ndash;&gt;-->
-<!--            &lt;!&ndash;                <label for="imageInput" class="form-label">本地图片</label>&ndash;&gt;-->
-<!--            &lt;!&ndash;                <input type="file" class="form-control-file bg-warning" id="imageInput">&ndash;&gt;-->
-<!--            &lt;!&ndash;            </div>&ndash;&gt;-->
-<!--            <div class="mb-3">-->
-<!--                <label class="form-label">实时采集</label>-->
-<!--                <div class="d-flex justify-content-center">-->
-<!--                    <button type="submit" class="btn btn-success" id="capture_start">启动摄像头</button>-->
-<!--                    <button type="submit" class="mx-2 btn btn-warning" id="capture_idCard">身份证识别</button>-->
-<!--                    <button type="submit" class="mx-2 btn btn-success" id="capture">拍照</button>-->
-<!--                    <button type="submit" class="mx-2 btn btn-primary" id="verify">认证</button>-->
-<!--                </div>-->
-<!--                <br/>-->
-<!--                <div class="d-flex justify-content-center">-->
-<!--                    <video id="video" width="256" height="192" autoplay></video>-->
-<!--                    <canvas id="canvas" width="256" height="192" style="display:none;"></canvas>-->
-<!--                    <img class="mx-2" id="photo_idCard" alt="" style="display:none;"/>-->
-<!--                    <img class="mx-2" id="photo" alt="" style="display:none;"/>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-
 <script src="js/common/jquery.min.js"></script>
 <script src="js/common/bootstrap_5.2.3.bundle.js"></script>
-<script src="js/common/axios.min.js"></script>
 <script src="js/common/matrix_modal_tool.js"></script>
 <script src="js/common/matrix_tool.js"></script>
 <script src="js/index/index_handle.js"></script>

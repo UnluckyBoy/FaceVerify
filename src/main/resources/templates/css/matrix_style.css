@@ -11,6 +11,18 @@
     }
 }
 
+/*html, body {*/
+/*    height: 100%;*/
+/*    margin: 0;*/
+/*}*/
+.matrix-flex-display{
+    display: flex;
+    height: 100vh;
+}
+.matrix-content {
+    /* 为页面内容设置Flex属性，使其可以增长并填满剩余空间 */
+    flex: 1 0 auto;
+}
 /* 自定义toast样式，使其居中显示 */
 .matrix-toast {
     position: fixed; /* 或者使用 absolute，取决于你的页面布局 */
@@ -30,15 +42,33 @@
 .matrix-toast-body {
     padding: 6px; /* 增加一些内边距 */
 }
-.btn-circle {
-    width: 20px; /* 圆形按钮的直径 */
-    height: 20px; /* 与宽度相同，以保持圆形 */
-    border-radius: 50%; /* 设置为圆形 */
-    text-align: center; /* 确保图标居中 */
-    line-height: 26px; /* 调整line-height以确保图标垂直居中（这里可能需要根据你的图标大小进行调整） */
-    /* 注意：由于我们设置了padding为2px，所以line-height需要相应调整以确保图标居中 */
-    overflow: hidden; /* 防止图标超出按钮边界 */
+.matrix-padding {
+    padding: 2px;
 }
-.matrix-offcanvas-width {
-    width: 280px !important; /* 或者其他你想要的宽度 */
+.matrix-line-height{
+    line-height:1.5;
+}
+.matrix-offcanvas-width{
+    width: 180px !important;
+}
+
+/*圆角*/
+.matrix-border-radius{
+    border-radius: 6px;
+}
+.matrix-text-decoration{
+    text-decoration: none;
+}
+
+/*自定义li标签样式*/
+.matrix-list-item{
+    text-decoration: none;
+}
+.matrix-list-item:hover {
+    background: rgb(17, 143, 238);
+}
+
+/* 如果你还想改变链接的文本颜色，可以这样做： */
+.matrix-list-item:hover .link-dark {
+    color: #007bff; /* 蓝色，或者任何你希望的颜色 */
 }

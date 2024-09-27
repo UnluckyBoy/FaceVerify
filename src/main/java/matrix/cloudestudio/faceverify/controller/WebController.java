@@ -11,11 +11,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class WebController {
     @RequestMapping("/index")
-    public String IndexWebView(){
+    public String indexWebView(){
         return "index";
     }
     @RequestMapping("/login")
-    public String LoginWebView(){
+    public String loginWebView(){
         return "login";
+    }
+
+    @RequestMapping("/about")
+    public String aboutWebView(){
+        return "about";
     }
 }
