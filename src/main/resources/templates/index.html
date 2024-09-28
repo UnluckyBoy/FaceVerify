@@ -34,29 +34,29 @@
             <div class="matrix-flex-display flex-column offcanvas-body"><!--matrix-flex-display flex-column -->
                 <div class="matrix-content-top-view">
                     <div class="matrix-padding matrix-content d-flex flex-column flex-shrink-0 p-3 bg-light matrix-border-radius">
-                        <ul class="matrix-ul-list matrix-border-radius list-group list-group-flush">
-                            <li class="matrix-list-item matrix-border-radius my-2 py-3"><!--list-group-item-->
-                                <a href="/index" class="matrix-text-decoration link-dark">首页</a>
-                            </li>
-                            <li class="matrix-list-item matrix-border-radius my-2 py-3">
-                                <a href="#" class="matrix-text-decoration link-dark">系统维护</a>
-                            </li>
-                            <li class="matrix-list-item matrix-border-radius my-2 py-3">
-                                <a href="/verify" class="matrix-text-decoration link-dark">实名认证</a>
-                            </li>
-                            <li class="matrix-list-item matrix-border-radius my-2 py-3">
-                                <a href="#" class="matrix-text-decoration link-dark">其他</a>
-                            </li>
-                            <li class="matrix-list-item matrix-border-radius my-2 py-3">
-                                <a href="about" class="matrix-text-decoration link-dark">商务合作</a>
-                            </li>
+                        <ul class="matrix-ul-list matrix-border-radius list-group list-group-flush" id="permission-function-list">
+<!--                            <li class="matrix-list-item matrix-border-radius my-2 py-3">&lt;!&ndash;list-group-item&ndash;&gt;-->
+<!--                                <a href="/index" class="matrix-text-decoration link-dark">首页</a>-->
+<!--                            </li>-->
+<!--                            <li class="matrix-list-item matrix-border-radius my-2 py-3">-->
+<!--                                <a href="#" class="matrix-text-decoration link-dark">系统维护</a>-->
+<!--                            </li>-->
+<!--                            <li class="matrix-list-item matrix-border-radius my-2 py-3">-->
+<!--                                <a href="/verify" class="matrix-text-decoration link-dark">实名认证</a>-->
+<!--                            </li>-->
+<!--                            <li class="matrix-list-item matrix-border-radius my-2 py-3">-->
+<!--                                <a href="#" class="matrix-text-decoration link-dark">其他</a>-->
+<!--                            </li>-->
+<!--                            <li class="matrix-list-item matrix-border-radius my-2 py-3">-->
+<!--                                <a href="about" class="matrix-text-decoration link-dark">商务合作</a>-->
+<!--                            </li>-->
                         </ul>
                     </div>
                 </div>
                 <hr>
                 <div class="matrix-content-bottom-view">
                     <div class="dropdown">
-                        <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownInfoView" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a href="javascript:void(0);" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownInfoView" data-bs-toggle="dropdown" aria-expanded="false">
                             <img id="headerView" th:src="${null?:'./img/default.png'}" alt="" width="32" height="32" class="rounded-circle me-2">
                             <strong id="nameView"></strong>
                         </a>
@@ -64,7 +64,7 @@
                             <li><a class="dropdown-item" href="#">设置</a></li>
                             <li><a class="dropdown-item" href="#">个人信息</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">安全退出</a></li>
+                            <li><a class="dropdown-item fa fa-sign-out" href="#">安全退出</a></li>
                         </ul>
                     </div>
                 </div>

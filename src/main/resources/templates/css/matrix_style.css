@@ -95,7 +95,7 @@
     text-decoration: none;
     display: flex; /* 使用Flexbox来轻松实现居中 */
     align-items: center; /* 垂直居中 */
-    justify-content: center; /* 水平居中 */
+    justify-content: flex-start; /* 水平居中 */
     border: 1px solid #000; /* 添加边框，颜色为黑色，宽度为1px */
     /* 可选：添加一些内边距来避免文字紧贴边框 */
     padding: 2px 2px;

@@ -3,6 +3,7 @@ package matrix.cloudestudio.faceverify.controller;
 import com.google.gson.Gson;
 import jakarta.servlet.http.HttpServletResponse;
 import matrix.cloudestudio.faceverify.model.UserInfo;
+import matrix.cloudestudio.faceverify.model.UserInfoSimple;
 import matrix.cloudestudio.faceverify.service.AuthorityService;
 import matrix.cloudestudio.faceverify.util.WebServerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class HandleController {
     @RequestMapping("/userInfo")
     public void checkAuthentication(Authentication authentication, HttpServletResponse response) throws IOException{
         // 如果authentication为null，则认证流程没有触发或成功
-        UserInfo userInfo=getUserInfo(authentication);
+        UserInfoSimple userInfo=getUserInfo(authentication);
         if (userInfo==null) {
             response.setContentType("application/json;charset=UTF-8");
             response.getWriter().write(gson.toJson(WebServerResponse.failure("请求失败")));
@@ -50,7 +51,7 @@ public class HandleController {
      * @param authentication
      * @return
      */
-    private UserInfo getUserInfo(Authentication authentication){
+    private UserInfoSimple getUserInfo(Authentication authentication){
         // 如果authentication为null，则认证流程没有触发或成功
         if (authentication == null || !authentication.isAuthenticated()) {
             System.out.println("用户未认证");
@@ -60,9 +61,10 @@ public class HandleController {
         assert authentication != null;
         Object principal = authentication.getPrincipal();
         if (principal instanceof UserInfo) {
-            UserInfo userInfoDetails = (UserInfo) principal;
+            //UserInfo userInfoDetails = (UserInfoSimple) principal;
+            UserInfoSimple userInfoDetails = ((UserInfo) principal).toUserInfoSimple();
             // 获取用户详情
-            System.out.println("认证用户: " + userInfoDetails.getUsername());
+            System.out.println("认证用户信息:" + userInfoDetails.toString());
             return userInfoDetails;
         } else {
             // 如果不是UserDetails类型，可能是其他类型的Principal，比如String用户名等

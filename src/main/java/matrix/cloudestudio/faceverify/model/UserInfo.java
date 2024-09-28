@@ -92,4 +92,14 @@ public class UserInfo implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    /**
+     * 将 UserInfo转为UserInfoSimple
+     * 防止密码外泄
+     * @return
+     */
+    public UserInfoSimple toUserInfoSimple() {
+        // 直接使用当前对象的 authorities 列表
+        return new UserInfoSimple(uId, uAccount, organization_code, organization_name, uStatus, headerImageUrl, authorities);
+    }
 }
