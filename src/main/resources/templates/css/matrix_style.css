@@ -19,9 +19,19 @@
     display: flex;
     height: 100vh;
 }
+.matrix-only-flex-display{
+    display: flex;
+}
 .matrix-content {
     /* 为页面内容设置Flex属性，使其可以增长并填满剩余空间 */
     flex: 1 0 auto;
+}
+.matrix-content-top-view{
+    flex-grow: 1;
+}
+.matrix-content-bottom-view{
+    /*width: 100px;*/
+    margin-top: auto;
 }
 /* 自定义toast样式，使其居中显示 */
 .matrix-toast {
@@ -43,15 +53,34 @@
     padding: 6px; /* 增加一些内边距 */
 }
 .matrix-padding {
-    padding: 2px;
+    padding:2px 2px;
 }
+.matrix-margin {
+    margin:2px 2px;
+}
+
+/*行高*/
 .matrix-line-height{
-    line-height:1.5;
+    line-height:1;
 }
 .matrix-offcanvas-width{
     width: 180px !important;
 }
 
+.matrix-ul-list{
+    list-style-type: none;/* 移除圆点 */
+    margin-bottom: 5px; /* 为除最后一个li之外的所有li设置下边距 */
+}
+.matrix-ul-list li:first-child {
+    /* 只对第一个li元素应用样式 */
+    margin-top: 6px; /* 设置上边距 */
+}
+.matrix-ul-list li:last-child {
+    /* 只对最后一个li元素应用样式 */
+    margin-bottom: 0; /* 移除或设置特定的下边距 */
+    /* 或者，如果你想要给最后一个元素添加一些额外的下边距，你可以设置一个不同于其他元素的值 */
+    /* margin-bottom: 30px; */
+}
 /*圆角*/
 .matrix-border-radius{
     border-radius: 6px;
@@ -62,7 +91,14 @@
 
 /*自定义li标签样式*/
 .matrix-list-item{
+    max-height: 36px;
     text-decoration: none;
+    display: flex; /* 使用Flexbox来轻松实现居中 */
+    align-items: center; /* 垂直居中 */
+    justify-content: center; /* 水平居中 */
+    border: 1px solid #000; /* 添加边框，颜色为黑色，宽度为1px */
+    /* 可选：添加一些内边距来避免文字紧贴边框 */
+    padding: 2px 2px;
 }
 .matrix-list-item:hover {
     background: rgb(17, 143, 238);
@@ -71,4 +107,22 @@
 /* 如果你还想改变链接的文本颜色，可以这样做： */
 .matrix-list-item:hover .link-dark {
     color: #007bff; /* 蓝色，或者任何你希望的颜色 */
+}
+.offcanvas-header-custom {
+    display: flex; /* 启用Flexbox */
+    /*width: 100vw; /* 根据需要设置宽度 */
+    max-height: 68px;
+    padding: 1px; /* 根据需要添加内边距 */
+}
+
+.offcanvas-header-button-container {
+    flex-shrink: 0; /* 防止按钮容器被压缩 */
+    margin-right: 2px; /* 根据需要添加右边距 */
+    margin-top: 2px;
+}
+
+.offcanvas-header-content {
+    flex-grow: 1; /* 使内容容器填充剩余空间 */
+    display: flex; /* 如果需要，可以在这里启用另一个Flexbox来进一步控制标题和段落的布局 */
+    flex-direction: column; /* 使标题和段落垂直排列 */
 }

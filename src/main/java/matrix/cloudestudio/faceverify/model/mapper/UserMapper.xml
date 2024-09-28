@@ -7,14 +7,15 @@
     <select id="accountQuery" resultType="UserInfo" parameterType="String">
         SELECT
             login_info_table.uId,
-            login_info_table.account,
+            login_info_table.uAccount,
             login_info_table.uPassword,
             login_info_table.organization_code,
-            login_info_table.organization,
-            login_info_table.uStatus
+            login_info_table.organization_name,
+            login_info_table.uStatus,
+            login_info_table.headerImageUrl
         FROM
             login_info_table
         WHERE
-            login_info_table.account = #{account};
+            login_info_table.uAccount = #{account};
     </select>
 </mapper>

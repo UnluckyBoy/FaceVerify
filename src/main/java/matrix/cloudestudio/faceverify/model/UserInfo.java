@@ -18,11 +18,12 @@ import java.util.stream.Collectors;
 @Data
 public class UserInfo implements UserDetails {
     private int uId;
-    private String account;
+    private String uAccount;
     private String uPassword;
     private String organization_code;
-    private String organization;
+    private String organization_name;
     private int uStatus;
+    private String headerImageUrl;
     private List<String> authorities;
 
     /**
@@ -42,7 +43,7 @@ public class UserInfo implements UserDetails {
     /*账号*/
     @Override
     public String getUsername() {
-        return account;
+        return uAccount;
     }
     /**
      * 是否过期

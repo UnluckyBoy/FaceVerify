@@ -18,7 +18,10 @@ public class WebController {
     public String loginWebView(){
         return "login";
     }
-
+    @RequestMapping("/verify")
+    public String verifyWebView(){
+        return "verify";
+    }
     @RequestMapping("/about")
     public String aboutWebView(){
         return "about";

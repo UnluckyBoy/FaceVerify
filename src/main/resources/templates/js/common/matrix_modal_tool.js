@@ -27,7 +27,7 @@ function simple_modal(title,content){
     $('#simpleModal').modal('show');
 }
 
-function simPleToast(title,content){
+function simpleToast(title,content){
     let toastHTML = `
         <div class="toast matrix-toast show" id="simpleToast">
             <div class="toast-header">

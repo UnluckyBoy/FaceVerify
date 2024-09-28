@@ -1,25 +1,6 @@
-// import isEmptyString from '../common/matrix_tool';
-//var real_name;
-//var idCard;
 var idCardImage;
 var image;
 $(document).ready(function() {
-    // $('#imageInput').on('change', function(e) {
-    //     const file = e.target.files[0]; // 或者使用 $(this)[0].files[0]
-    //     if (!file.type.startsWith('image/')) {
-    //         console.log('Please select an image file.');
-    //         return;
-    //     }
-    //     const reader = new FileReader();
-    //     reader.onload = function(e) {
-    //         const base64String = e.target.result;
-    //         image = base64String.replace(/^data:image\/\w+;base64,/, '');//去掉前缀
-    //         console.log(image);
-    //         // 你可以在这里使用这个Base64字符串
-    //     };
-    //     reader.readAsDataURL(file);
-    // });
-
     // 浏览器兼容性检查
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         // 启动摄像头
@@ -82,7 +63,7 @@ $(document).ready(function() {
         });
     } else {
         //console.error('您的浏览器不支持 getUserMedia API');
-        alert('您的浏览器不支持 getUserMedia API');
+        simpleToast('温馨提示','您的浏览器不支持获取摄像设备API');
         //simple_modal('平台提示','您的浏览器不支持 getUserMedia API!');
     }
 
@@ -93,7 +74,7 @@ $(document).ready(function() {
         const real_name=$('#real_name').val().trim();
         const idCard=$('#idCard').val().trim();
         if (!real_name || !idCard || !image) {
-            simple_modal('平台提示','信息不能为空!');
+            simpleToast('平台提示','信息不能为空!');
             return;
         }
         else{

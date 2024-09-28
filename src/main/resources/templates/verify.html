@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实名认证</title>
+    <link href="css/matrix_style.css" rel="stylesheet">
+    <!-- 引入Bootstrap CSS -->
+    <link href="css/bootstrap_5.2.3.min.css" rel="stylesheet">
+    <!--CDN图标库-->
+    <link type="text/css" href="css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="matrix-flex-display flex-column">
+    <div th:replace="index::web-navber"></div>
+    <!--页面主体-->
+    <div class="matrix-content container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <h4 class="text-center">实名认证</h4>
+                <div class="mb-3">
+                    <label for="real_name" class="form-label">姓名</label>
+                    <input type="text" class="form-control" id="real_name" placeholder="请输入姓名">
+                </div>
+                <div class="mb-3">
+                    <label for="idCard" class="form-label">身份证号</label>
+                    <input type="text" class="form-control" id="idCard" placeholder="请输入身份证号">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">实时采集</label>
+                    <div class="d-flex justify-content-center">
+                        <button type="submit" class="btn btn-success" id="capture_start">启动摄像头</button>
+                        <button type="submit" class="mx-2 btn btn-warning" id="capture_idCard">身份证识别</button>
+                        <button type="submit" class="mx-2 btn btn-success" id="capture">拍照</button>
+                        <button type="submit" class="mx-2 btn btn-primary" id="verify">认证</button>
+                    </div>
+                    <br/>
+                    <div class="d-flex justify-content-center">
+                        <video id="video" width="256" height="192" autoplay></video>
+                        <canvas id="canvas" width="256" height="192" style="display:none;"></canvas>
+                        <img class="mx-2" id="photo_idCard" alt="" style="display:none;"/>
+                        <img class="mx-2" id="photo" alt="" style="display:none;"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="bg-light text-center text-black p-0" th:replace="index::web-foot">
+    </footer>
+</div>
+<script src="js/common/jquery.min.js"></script>
+<script src="js/common/bootstrap_5.2.3.bundle.js"></script>
+<script src="js/common/matrix_modal_tool.js"></script>
+<script src="js/common/datahandle/commondatahandle.js"></script>
+<script src="js/verify/verify_handle.js"></script>
+</body>
+</html>
