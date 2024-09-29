@@ -19,10 +19,8 @@ function getUserInfoData() {
                 console.log(data);
                 console.log('权限:'+data.handleData.authorities[0]);
                 $('#headerView').attr('src', '/image'+data.handleData.headerImageUrl);
-                //$("#nameLabel").text(data.handleData.uAccount);
-                $('#nameLabel').html('您好!<strong>' + data.handleData.uAccount + '</strong>');
-                //$('#organizationLabel').html('所属机构:<br><strong>' + data.handleData.organization_name + '</strong>');
-                $('#organizationLabel').text(data.handleData.organization_name);
+                //$('#nameLabel').html('您好!<strong>' + data.handleData.uAccount + '</strong>');
+                //$('#organizationLabel').text(data.handleData.organization_name);
                 $('#nameView').text(data.handleData.uAccount);
                 createHtmlView(data.handleData.authorities);
             }
@@ -40,12 +38,11 @@ function getUserInfoData() {
 function createHtmlView(authorities){
     var htmlView=
         '<li class="matrix-list-item matrix-border-radius my-2 py-3">' +
-            '<a href="/index" class="matrix-text-decoration link-dark"><span class="fa fa-home"></span>首页</a>' +
+            '<a href="/index" class="matrix-text-decoration link-dark"><span class="fa fa-home"></span>&nbsp;首页</a>' +
         '</li>';
-
     function createMenuItem(iconClass, title, href) {
         return '<li class="matrix-list-item matrix-border-radius my-2 py-3">' +
-                '<a href="'+href+'" class="matrix-text-decoration link-dark"><span class="'+iconClass+'"></span>'+title+'</a>' +
+                '<a href="'+href+'" class="matrix-text-decoration link-dark"><span class="'+iconClass+'"></span>&nbsp;'+title+'</a>' +
             '</li>';
     }
 
@@ -53,44 +50,23 @@ function createHtmlView(authorities){
     for (let item of authorities){
         switch (item){
             case '00001':
-                htmlView += createMenuItem('fa fa-cog', '系统维护', '#');
+                htmlView += createMenuItem('fa fa-cog', '系统维护', '/manager');
                 htmlView += createMenuItem('fas fa-id-card', '实名认证', '/verify');
                 break;
             case '00002':
-                htmlView =
-                    '<li class="matrix-list-item matrix-border-radius my-2 py-3">' +
-                    '<a href="/index" class="matrix-text-decoration link-dark fa fa-home">首页</a>' +
-                    '</li>' +
-                    '<li class="matrix-list-item matrix-border-radius my-2 py-3">' +
-                    '<a href="#" class="matrix-text-decoration link-dark fa fa-coffee">其他</a>' +
-                    '</li>' +
-                    '<li class="matrix-list-item matrix-border-radius my-2 py-3">' +
-                    '<a href="about" class="matrix-text-decoration link-dark fa fa-send">商务合作</a>' +
-                    '</li>';
+                htmlView += '';
                 break;
             case '00003':
-                htmlView =
-                    '<li class="matrix-list-item matrix-border-radius my-2 py-3">' +
-                    '<a href="/index" class="matrix-text-decoration link-dark fa fa-home">首页</a>' +
-                    '</li>' +
-                    '<li class="matrix-list-item matrix-border-radius my-2 py-3">' +
-                    '<a href="/verify" class="matrix-text-decoration link-dark fas fa-id-card">实名认证</a>' +
-                    '</li>' +
-                    '<li class="matrix-list-item matrix-border-radius my-2 py-3">' +
-                    '<a href="#" class="matrix-text-decoration link-dark fa fa-coffee">其他</a>' +
-                    '</li>' +
-                    '<li class="matrix-list-item matrix-border-radius my-2 py-3">' +
-                    '<a href="about" class="matrix-text-decoration link-dark fa fa-send">商务合作</a>' +
-                    '</li>';
+                htmlView += createMenuItem('fas fa-id-card', '实名认证', '/verify');
                 break;
         }
     }
     htmlView+=
         '<li class="matrix-list-item matrix-border-radius my-2 py-3">' +
-            '<a href="#" class="matrix-text-decoration link-dark"><span class="fa fa-coffee"></span>其他</a>' +
+            '<a href="#" class="matrix-text-decoration link-dark"><span class="fa fa-coffee"></span>&nbsp;其他</a>' +
         '</li>' +
         '<li class="matrix-list-item matrix-border-radius my-2 py-3">' +
-            '<a href="about" class="matrix-text-decoration link-dark"><span class="fas fa-paper-plane"></span>商务合作</a>' +
+            '<a href="about" class="matrix-text-decoration link-dark"><span class="fas fa-paper-plane"></span>&nbsp;商务合作</a>' +
         '</li>';
     $('#permission-function-list').html(htmlView);
 }

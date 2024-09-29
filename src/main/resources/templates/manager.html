@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>运维&管理</title>
+    <!-- 引入Bootstrap CSS -->
+    <link href="css/matrix_style.css" rel="stylesheet">
+    <link href="css/bootstrap_5.2.3.min.css" rel="stylesheet">
+    <!--CDN图标库-->
+    <link type="text/css" href="fontawesome-free-6.6.0-web/css/all.css" rel="stylesheet">
+</head>
+<body>
+<div class="matrix-flex-display flex-column">
+<!--    <div th:replace="index::web-navber"></div>-->
+    <div class="matrix-content container">
+        <nav class="matrix-border-radius navbar bg-dark navbar-dark"><!--navbar-expand-md-->
+            <span class="text-light fa fa-cog"></span>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="container">
+            <h3>折叠导航栏</h3>
+            <p>通常，小屏幕上我们都会折叠导航栏，通过点击来显示导航选项。</p>
+            <p>提示: 如果你删除 .navbar-expand-md 类，导航链接会一直隐藏，且切换按钮会一直显示。</p>
+        </div>
+    </div>
+    <footer class="bg-light text-center text-black p-0" th:replace="index::web-foot">
+    </footer>
+</div>
+<script src="js/common/jquery.min.js"></script>
+<script src="js/common/bootstrap_5.2.3.bundle.js"></script>
+<script src="js/common/matrix_modal_tool.js"></script>
+<script src="js/common/datahandle/commondatahandle.js"></script>
+<script src="js/common/matrix_modal_tool.js"></script>
+</body>
+</html>

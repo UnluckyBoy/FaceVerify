@@ -47,16 +47,50 @@
     max-height: 40%;
     background-color: rgba(255, 255, 255, 1);
 }
-
+.matrix-btn-transparent{
+    background-color: transparent;
+    color: black; /* 可选，设置文字颜色 */
+}
+.matrix-border{
+    color: #000;
+    border: 1px solid #000;
+}
 /* 如果需要，可以添加一些额外的样式来美化toast */
 .matrix-toast-body {
     padding: 6px; /* 增加一些内边距 */
 }
 .matrix-padding {
-    padding:2px 2px;
+    padding:0.5rem 0.5rem !important;
+}
+.matrix-padding-2{
+    padding:0.25rem 0.25rem !important;
+}
+.matrix-padding-3{
+    padding:0.1rem 0.1rem !important;
+}
+.matrix-padding-horizontal{
+    padding:0px 1rem !important;
 }
 .matrix-margin {
     margin:2px 2px;
+}
+.matrix-margin-horizontal {
+    margin:0px 1rem;
+}
+.matrix-margin-horizontal-1{
+    margin:0px 0.5rem;
+}
+.matrix-margin-horizontal-2{
+    margin:0px 0.25rem;
+}
+.matrix-margin-horizontal-3{
+    margin:0px 0.1rem;
+}
+.matrix-margin-end{
+    margin-right:1rem;
+}
+.matrix-margin-end-1{
+    margin-right:0.5rem;
 }
 
 /*行高*/
@@ -102,11 +136,6 @@
 }
 .matrix-list-item:hover {
     background: rgb(17, 143, 238);
-}
-
-/* 如果你还想改变链接的文本颜色，可以这样做： */
-.matrix-list-item:hover .link-dark {
-    color: #007bff; /* 蓝色，或者任何你希望的颜色 */
 }
 .offcanvas-header-custom {
     display: flex; /* 启用Flexbox */

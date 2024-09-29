@@ -14,9 +14,9 @@ public class WebController {
     public String indexWebView(){
         return "index";
     }
-    @RequestMapping("/login")
-    public String loginWebView(){
-        return "login";
+    @RequestMapping("/manager")
+    public String managerWebView(){
+        return "manager";
     }
     @RequestMapping("/verify")
     public String verifyWebView(){
@@ -25,5 +25,9 @@ public class WebController {
     @RequestMapping("/about")
     public String aboutWebView(){
         return "about";
+    }
+    @RequestMapping("/login")
+    public String loginWebView(){
+        return "login";
     }
 }

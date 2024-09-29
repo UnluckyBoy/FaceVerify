@@ -13,66 +13,68 @@
 <body>
 <div class="matrix-flex-display flex-column">
     <!--导航栏-->
-    <div th:fragment="web-navber">
-        <a class="btn btn-light" data-bs-toggle="offcanvas" href="#matrix-navbar" role="button" aria-controls="matrix-navbar">
-            <span><i class="fa fa-bars" aria-hidden="true"></i></span>
-        </a>
-        <div class="matrix-border-radius offcanvas offcanvas-start matrix-offcanvas-width" tabindex="-1" id="matrix-navbar" aria-labelledby="nameLabel">
-            <div class="offcanvas-header">
-                <div class="dropdown">
-                    <a href="javascript:void(0);" class="d-flex align-items-center link-dark text-decoration-none" id="topDropdownView" data-bs-toggle="dropdown" aria-expanded="false">
-                        <h5 id="nameLabel" th:text="${null?:'游客'}"></h5>
-                    </a>
-                    <div class="matrix-only-flex-display dropdown-menu small shadow" aria-labelledby="topDropdownView">
-                        <p>所属机构:</p>
-                        <p><strong id="organizationLabel"></strong></p>
-                    </div>
-                </div>
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <hr>
-            <div class="matrix-flex-display flex-column offcanvas-body"><!--matrix-flex-display flex-column -->
-                <div class="matrix-content-top-view">
-                    <div class="matrix-padding matrix-content d-flex flex-column flex-shrink-0 p-3 bg-light matrix-border-radius">
-                        <ul class="matrix-ul-list matrix-border-radius list-group list-group-flush" id="permission-function-list">
-<!--                            <li class="matrix-list-item matrix-border-radius my-2 py-3">&lt;!&ndash;list-group-item&ndash;&gt;-->
-<!--                                <a href="/index" class="matrix-text-decoration link-dark">首页</a>-->
-<!--                            </li>-->
-<!--                            <li class="matrix-list-item matrix-border-radius my-2 py-3">-->
-<!--                                <a href="#" class="matrix-text-decoration link-dark">系统维护</a>-->
-<!--                            </li>-->
-<!--                            <li class="matrix-list-item matrix-border-radius my-2 py-3">-->
-<!--                                <a href="/verify" class="matrix-text-decoration link-dark">实名认证</a>-->
-<!--                            </li>-->
-<!--                            <li class="matrix-list-item matrix-border-radius my-2 py-3">-->
-<!--                                <a href="#" class="matrix-text-decoration link-dark">其他</a>-->
-<!--                            </li>-->
-<!--                            <li class="matrix-list-item matrix-border-radius my-2 py-3">-->
-<!--                                <a href="about" class="matrix-text-decoration link-dark">商务合作</a>-->
-<!--                            </li>-->
-                        </ul>
-                    </div>
-                </div>
-                <hr>
-                <div class="matrix-content-bottom-view">
-                    <div class="dropdown">
-                        <a href="javascript:void(0);" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownInfoView" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img id="headerView" th:src="${null?:'./img/default.png'}" alt="" width="32" height="32" class="rounded-circle me-2">
-                            <strong id="nameView"></strong>
-                        </a>
-                        <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownInfoView">
-                            <li><a class="dropdown-item" href="#">设置</a></li>
-                            <li><a class="dropdown-item" href="#">个人信息</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item fa fa-sign-out" href="#">安全退出</a></li>
-                        </ul>
-                    </div>
-                </div>
+    <nav class="matrix-border-radius matrix-padding-2 matrix-border text-black navbar navbar-dark">
+        <div class="dropdown">
+            <button class="matrix-padding-3 matrix-btn-transparent btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                <img class="rounded-circle matrix-border me-2 dropdown-toggle-img" id="headerView" th:src="${null?:'./img/default.png'}" alt="" width="32" height="32">
+                <strong id="nameView" th:text="${null?:'游客'}"></strong>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li><a class="dropdown-item" href="#">个人信息</a></li>
+                <li><a class="dropdown-item" href="#">安全退出&nbsp;<span class="fa fa-sign-out"></span></a></li>
+            </ul>
+        </div>
+        <button class="matrix-padding-2 matrix-btn-transparent matrix-margin-end-1 btn text-black" type="button" data-bs-toggle="collapse" data-bs-target="#webNavbar"><!--navbar-toggler-->
+            <span class="fas fa-ellipsis-v"></span>
+        </button>
+        <div class="collapse navbar-collapse my-2" id="webNavbar">
+            <div class="btn-group" id="btn-group-view">
+                <button type="button" class="btn btn-primary" id="home"><span class="fa fa-home"></span>&nbsp;首页</button>
+                <button type="button" class="btn btn-primary" id="manager"><span class="fa fa fa-cog"></span>&nbsp;信息维护</button>
+                <button type="button" class="btn btn-primary" id="verify"><span class="fas fa-id-card"></span>&nbsp;实名认证</button>
+                <button type="button" class="btn btn-primary" id="about"><span class="fas fa-paper-plane"></span>&nbsp;商务合作</button>
             </div>
         </div>
-    </div>
+    </nav>
+<!--    <div th:fragment="web-navber">-->
+<!--        <a class="btn btn-light" data-bs-toggle="offcanvas" href="#matrix-navbar" role="button" aria-controls="matrix-navbar">-->
+<!--            <span><i class="fa fa-bars" aria-hidden="true"></i></span>-->
+<!--        </a>-->
+<!--        <div class="matrix-border-radius offcanvas offcanvas-start matrix-offcanvas-width" tabindex="-1" id="matrix-navbar" aria-labelledby="nameLabel">-->
+<!--            <div class="offcanvas-header">-->
+<!--                <h5 id="nameLabel" th:text="${null?:'游客'}"></h5>-->
+<!--                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>-->
+<!--            </div>-->
+<!--            <hr>-->
+<!--            <div class="matrix-flex-display flex-column offcanvas-body">&lt;!&ndash;matrix-flex-display flex-column &ndash;&gt;-->
+<!--                <div class="matrix-content-top-view">-->
+<!--                    <div class="matrix-padding matrix-content d-flex flex-column flex-shrink-0 p-3 bg-light matrix-border-radius">-->
+<!--                        <ul class="matrix-ul-list matrix-border-radius list-group list-group-flush" id="permission-function-list">-->
+<!--                            &lt;!&ndash;在commondatahandle.js中动态加载&ndash;&gt;-->
+<!--                        </ul>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <hr>-->
+<!--                <div class="matrix-content-bottom-view">-->
+<!--                    <div class="dropdown">-->
+<!--                        <a href="javascript:void(0);" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownInfoView" data-bs-toggle="dropdown" aria-expanded="false">-->
+<!--                            <img id="headerView" th:src="${null?:'./img/default.png'}" alt="" width="32" height="32" class="rounded-circle me-2">-->
+<!--                            <strong id="nameView"></strong>-->
+<!--                        </a>-->
+<!--                        <p class="small">机构:<strong id="organizationLabel" class="matrix-border-radius"></strong></p>-->
+<!--                        <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownInfoView">-->
+<!--                            <li><a class="dropdown-item" href="#">设置</a></li>-->
+<!--                            <li><a class="dropdown-item" href="#">个人信息</a></li>-->
+<!--                            <li><hr class="dropdown-divider"></li>-->
+<!--                            <li><a class="dropdown-item" href="#">安全退出&nbsp;<span class="fa fa-sign-out"></span></a></li>-->
+<!--                        </ul>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
     <!--页面主体-->
-    <div class="matrix-content container mt-5">
+    <div class="matrix-content container">
         <p>主页</p>
     </div>
     <footer class="text-center text-black small" th:fragment="web-foot">
