@@ -38,27 +38,23 @@ function getUserInfoData() {
  * 创建HTML
  */
 function createHtmlView(authorities){
-    var htmlView;
+    var htmlView=
+        '<li class="matrix-list-item matrix-border-radius my-2 py-3">' +
+            '<a href="/index" class="matrix-text-decoration link-dark"><span class="fa fa-home"></span>首页</a>' +
+        '</li>';
+
+    function createMenuItem(iconClass, title, href) {
+        return '<li class="matrix-list-item matrix-border-radius my-2 py-3">' +
+                '<a href="'+href+'" class="matrix-text-decoration link-dark"><span class="'+iconClass+'"></span>'+title+'</a>' +
+            '</li>';
+    }
+
     // 动态创建导航菜单
     for (let item of authorities){
         switch (item){
             case '00001':
-                htmlView =
-                    '<li class="matrix-list-item matrix-border-radius my-2 py-3">' +
-                    '<a href="/index" class="matrix-text-decoration link-dark fa fa-home">首页</a>' +
-                    '</li>' +
-                    '<li class="matrix-list-item matrix-border-radius my-2 py-3">' +
-                    '<a href="#" class="matrix-text-decoration link-dark fa fa-cog">系统维护</a>' +
-                    '</li>' +
-                    '<li class="matrix-list-item matrix-border-radius my-2 py-3">' +
-                    '<a href="/verify" class="matrix-text-decoration link-dark fa fa-wpforms">实名认证</a>' +
-                    '</li>' +
-                    '<li class="matrix-list-item matrix-border-radius my-2 py-3">' +
-                    '<a href="#" class="matrix-text-decoration link-dark fa fa-coffee">其他</a>' +
-                    '</li>' +
-                    '<li class="matrix-list-item matrix-border-radius my-2 py-3">' +
-                    '<a href="about" class="matrix-text-decoration link-dark fa fa-send">商务合作</a>' +
-                    '</li>';
+                htmlView += createMenuItem('fa fa-cog', '系统维护', '#');
+                htmlView += createMenuItem('fas fa-id-card', '实名认证', '/verify');
                 break;
             case '00002':
                 htmlView =
@@ -78,7 +74,7 @@ function createHtmlView(authorities){
                     '<a href="/index" class="matrix-text-decoration link-dark fa fa-home">首页</a>' +
                     '</li>' +
                     '<li class="matrix-list-item matrix-border-radius my-2 py-3">' +
-                    '<a href="/verify" class="matrix-text-decoration link-dark fa fa-wpforms">实名认证</a>' +
+                    '<a href="/verify" class="matrix-text-decoration link-dark fas fa-id-card">实名认证</a>' +
                     '</li>' +
                     '<li class="matrix-list-item matrix-border-radius my-2 py-3">' +
                     '<a href="#" class="matrix-text-decoration link-dark fa fa-coffee">其他</a>' +
@@ -89,5 +85,12 @@ function createHtmlView(authorities){
                 break;
         }
     }
+    htmlView+=
+        '<li class="matrix-list-item matrix-border-radius my-2 py-3">' +
+            '<a href="#" class="matrix-text-decoration link-dark"><span class="fa fa-coffee"></span>其他</a>' +
+        '</li>' +
+        '<li class="matrix-list-item matrix-border-radius my-2 py-3">' +
+            '<a href="about" class="matrix-text-decoration link-dark"><span class="fas fa-paper-plane"></span>商务合作</a>' +
+        '</li>';
     $('#permission-function-list').html(htmlView);
 }
