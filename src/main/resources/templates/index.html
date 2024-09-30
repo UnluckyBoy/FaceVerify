@@ -13,7 +13,7 @@
 <body>
 <div class="matrix-flex-display flex-column">
     <!--导航栏-->
-    <nav class="matrix-border-radius-1 matrix-bg-1 matrix-padding-2 matrix-border text-black navbar navbar-dark" th:fragment="web-navber">
+    <nav class="matrix-border-radius-1 matrix-bg-1 matrix-padding-2 matrix-border matrix-margin-top text-black navbar navbar-dark" th:fragment="web-navber">
         <div class="dropdown">
             <button class="matrix-padding-3 matrix-btn-transparent btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                 <img class="rounded-circle matrix-border me-2 dropdown-toggle-img" id="headerView" th:src="${null?:'./img/default.png'}" alt="" width="32" height="32">
@@ -34,11 +34,56 @@
         </div>
     </nav>
     <!--页面主体-->
-    <div class="matrix-content container">
-        <p>主页</p>
+    <div class="matrix-only-flex-display matrix-only-flex-content flex-column">
+        <!--轮播-->
+        <div class="matrix-banner-container matrix-border-transparent matrix-border-radius-1 matrix-margin-horizontal-3">
+            <div id="webBanner" class="carousel slide" data-bs-ride="carousel">
+                <!-- 指示符 -->
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#webBanner" data-bs-slide-to="0" class="active"></button>
+                    <button type="button" data-bs-target="#webBanner" data-bs-slide-to="1"></button>
+                    <button type="button" data-bs-target="#webBanner" data-bs-slide-to="2"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img class="d-block matrix-banner-img" src="https://img0.baidu.com/it/u=1711875334,20344900&fm=253&fmt=auto&app=120&f=JPEG?w=889&h=500" alt="First slide">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>First Slide</h5>
+                            <p>This is the first slide's caption.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block matrix-banner-img" src="https://img0.baidu.com/it/u=1494117873,4195903805&fm=253&fmt=auto&app=120&f=JPEG?w=888&h=500" alt="Second slide">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Second Slide</h5>
+                            <p>This is the second slide's caption.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block matrix-banner-img" src="https://img2.baidu.com/it/u=2851757110,4099045183&fm=253&fmt=auto&app=120&f=JPEG?w=889&h=500" alt="Third slide">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>third Slide</h5>
+                            <p>This is the third slide's caption.</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev text-black" type="button" data-bs-target="#webBanner" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">上一页</span>
+                </button>
+                <button class="carousel-control-next text-black" type="button" data-bs-target="#webBanner" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">下一页</span>
+                </button>
+            </div>
+        </div>
+        <!--其他内容-->
+        <div class="matrix-flex-display matrix-only-flex-content">
+            <p>其他内容</p>
+        </div>
     </div>
     <footer class="text-center text-black small" th:fragment="web-foot">
-        <strong>© CloudStudio. 版权所有. 技术支持·张有坤</strong>
+        <strong>© CloudStudio·版权所有. 技术支持·张有坤</strong>
     </footer>
 </div>
 <script src="js/common/jquery.min.js"></script>

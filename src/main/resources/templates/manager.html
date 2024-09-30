@@ -13,30 +13,13 @@
 <body>
 <div class="matrix-flex-display flex-column">
     <div th:replace="index::web-navber"></div>
-    <div class="matrix-content container">
-        <nav class="matrix-border-radius navbar bg-dark navbar-dark"><!--navbar-expand-md-->
-            <span class="text-light fa fa-cog"></span>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="collapsibleNavbar">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                </ul>
+    <div class="matrix-only-flex-display matrix-only-flex-content flex-column">
+        <div class="matrix-fixed-content">
+            <div class="btn-group" id="btn-group-view" role="group" aria-label="">
+                <button type="button" class="btn btn-primary" id="edit-user-info"><span><i class="fa-solid fa-users-gear"></i></span>&nbsp;人员管理</button>
+                <button type="button" class="btn btn-primary" id="edit-authority"><span><i class="fa-solid fa-user-lock"></i></span>&nbsp;权限管理</button>
+                <button type="button" class="btn btn-primary" id="edit-other"><span><i class="fa-solid fa-globe"></i></span>&nbsp;其他管理</button>
             </div>
-        </nav>
-        <div class="container">
-            <h3>折叠导航栏</h3>
-            <p>通常，小屏幕上我们都会折叠导航栏，通过点击来显示导航选项。</p>
-            <p>提示: 如果你删除 .navbar-expand-md 类，导航链接会一直隐藏，且切换按钮会一直显示。</p>
         </div>
     </div>
     <footer class="bg-light text-center text-black p-0" th:replace="index::web-foot">

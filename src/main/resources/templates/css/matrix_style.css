@@ -1,4 +1,5 @@
 /*定义颜色动画*/
+/*定义颜色动画*/
 @keyframes bgAnimation {
     0%{
         background-position: 0% 50%;
@@ -10,11 +11,35 @@
         background-position: 0% 50%;
     }
 }
+/*定义关闭,开启动画*/
+@keyframes open {
+    0% {
+        /*top: -100vh;*/
+        left: -100%;
+    }
+    100% {
+        /*top: 0;*/
+        left: 0;
+    }
+}
+@keyframes close {
+    0% {
+        /*top: 0;*/
+        left: 0;
+        visibility: visible;
+    }
+    100% {
+        /*top: 100vh;*/
+        left: 100%;
+        visibility: visible;
+    }
+}
 
-/*html, body {*/
-/*    height: 100%;*/
-/*    margin: 0;*/
-/*}*/
+.matrix-bg-animation{
+    background:linear-gradient(125deg,#7377e7,#455de7,#4499fa,#f373f3,#b224ef);
+    background-size: 500%;
+    animation: bgAnimation 15s linear infinite;
+}
 .matrix-flex-display{
     display: flex;
     height: 100vh;
@@ -22,16 +47,29 @@
 .matrix-only-flex-display{
     display: flex;
 }
-.matrix-content {
+.matrix-only-flex-content {
     /* 为页面内容设置Flex属性，使其可以增长并填满剩余空间 */
     flex: 1 0 auto;
+}
+.matrix-item-center{
+    display: flex;
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
 }
 .matrix-content-top-view{
     flex-grow: 1;
 }
 .matrix-content-bottom-view{
-    /*width: 100px;*/
     margin-top: auto;
+}
+.matrix-fixed-content{
+    height: auto;
+    width: auto;
+    display: flex;
+    margin: 0.2rem 0.2rem;
+    background-color: #25cff2;
+    border: 1px solid #5460ee;
+    border-radius: 2px;
 }
 /* 自定义toast样式，使其居中显示 */
 .matrix-toast {
@@ -45,7 +83,7 @@
     max-width: 30%; /* 限制最大宽度，避免过宽 */
     height: auto;
     max-height: 40%;
-    background-color: rgba(255, 255, 255, 1);
+    background-color: rgb(215, 209, 209);
 }
 .matrix-btn-transparent{
     background-color: transparent;
@@ -56,6 +94,10 @@
 }
 .matrix-border{
     color: #000;
+    border: 1px solid #000;
+}
+.matrix-border-transparent{
+    color: transparent;
     border: 1px solid #000;
 }
 /*圆角*/
@@ -105,7 +147,12 @@
 .matrix-margin-end-1{
     margin-right:0.5rem;
 }
-
+.matrix-margin-top{
+    margin-right:0.1rem;
+}
+.matrix-margin-top-1{
+    margin-right:0.25rem;
+}
 /*行高*/
 .matrix-line-height{
     line-height:1;
@@ -113,7 +160,17 @@
 .matrix-offcanvas-width{
     width: 180px !important;
 }
-
+.matrix-banner-container{
+    width: auto;
+    height: 8rem;
+    margin-top: 0.1rem;
+}
+/*轮播图片模板*/
+.matrix-banner-img {
+    height: 8rem;
+    width: 100%;
+    object-fit: cover;
+}
 .matrix-ul-list{
     list-style-type: none;/* 移除圆点 */
     margin-bottom: 5px; /* 为除最后一个li之外的所有li设置下边距 */
@@ -128,7 +185,6 @@
     /* 或者，如果你想要给最后一个元素添加一些额外的下边距，你可以设置一个不同于其他元素的值 */
     /* margin-bottom: 30px; */
 }
-
 /*自定义li标签样式*/
 .matrix-list-item{
     max-height: 36px;
@@ -149,13 +205,11 @@
     max-height: 68px;
     padding: 1px; /* 根据需要添加内边距 */
 }
-
 .offcanvas-header-button-container {
     flex-shrink: 0; /* 防止按钮容器被压缩 */
     margin-right: 2px; /* 根据需要添加右边距 */
     margin-top: 2px;
 }
-
 .offcanvas-header-content {
     flex-grow: 1; /* 使内容容器填充剩余空间 */
     display: flex; /* 如果需要，可以在这里启用另一个Flexbox来进一步控制标题和段落的布局 */
