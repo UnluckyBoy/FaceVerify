@@ -37,13 +37,9 @@ function getUserInfoData() {
  */
 function createHtmlView(authorities){
     var htmlView=
-        '<li class="matrix-list-item matrix-border-radius my-2 py-3">' +
-            '<a href="/index" class="matrix-text-decoration link-dark"><span class="fa fa-home"></span>&nbsp;首页</a>' +
-        '</li>';
+        '<a href="/index" class="btn btn-primary" id="home" role="button"><span class="fa fa-home"></span>&nbsp;首页</a>';
     function createMenuItem(iconClass, title, href) {
-        return '<li class="matrix-list-item matrix-border-radius my-2 py-3">' +
-                '<a href="'+href+'" class="matrix-text-decoration link-dark"><span class="'+iconClass+'"></span>&nbsp;'+title+'</a>' +
-            '</li>';
+        return '<a href="'+href+'" class="btn btn-primary" id="home" role="button"><span class="'+iconClass+'"></span>&nbsp;'+title+'</a>';
     }
 
     // 动态创建导航菜单
@@ -61,12 +57,6 @@ function createHtmlView(authorities){
                 break;
         }
     }
-    htmlView+=
-        '<li class="matrix-list-item matrix-border-radius my-2 py-3">' +
-            '<a href="#" class="matrix-text-decoration link-dark"><span class="fa fa-coffee"></span>&nbsp;其他</a>' +
-        '</li>' +
-        '<li class="matrix-list-item matrix-border-radius my-2 py-3">' +
-            '<a href="about" class="matrix-text-decoration link-dark"><span class="fas fa-paper-plane"></span>&nbsp;商务合作</a>' +
-        '</li>';
-    $('#permission-function-list').html(htmlView);
+    htmlView+='<a href="/about" class="btn btn-primary" id="about" role="button"><span class="fas fa-paper-plane"></span>&nbsp;商务合作</a>';
+    $('#btn-group-view').html(htmlView);
 }

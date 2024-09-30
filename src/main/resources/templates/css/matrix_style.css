@@ -51,9 +51,22 @@
     background-color: transparent;
     color: black; /* 可选，设置文字颜色 */
 }
+.matrix-bg-1{
+    background-color: rgba(167, 224, 255,48);
+}
 .matrix-border{
     color: #000;
     border: 1px solid #000;
+}
+/*圆角*/
+.matrix-border-radius{
+    border-radius: 6px;
+}
+.matrix-border-radius-1{
+    border-radius: 2px;
+}
+.matrix-text-decoration{
+    text-decoration: none;
 }
 /* 如果需要，可以添加一些额外的样式来美化toast */
 .matrix-toast-body {
@@ -114,13 +127,6 @@
     margin-bottom: 0; /* 移除或设置特定的下边距 */
     /* 或者，如果你想要给最后一个元素添加一些额外的下边距，你可以设置一个不同于其他元素的值 */
     /* margin-bottom: 30px; */
-}
-/*圆角*/
-.matrix-border-radius{
-    border-radius: 6px;
-}
-.matrix-text-decoration{
-    text-decoration: none;
 }
 
 /*自定义li标签样式*/
