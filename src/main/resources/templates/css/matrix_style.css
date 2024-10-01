@@ -43,6 +43,7 @@
 .matrix-flex-display{
     display: flex;
     height: 100vh;
+    background: rgba(32,159,236,0.4);
 }
 .matrix-only-flex-display{
     display: flex;
@@ -67,9 +68,11 @@
     width: auto;
     display: flex;
     margin: 0.2rem 0.2rem;
-    background-color: #25cff2;
-    border: 1px solid #5460ee;
+    /*border: 1px solid #5460ee;*/
     border-radius: 2px;
+}
+.matrix-hide-view{
+    display:none;
 }
 /* 自定义toast样式，使其居中显示 */
 .matrix-toast {

@@ -21,6 +21,53 @@
                 <button type="button" class="btn btn-primary" id="edit-other"><span><i class="fa-solid fa-globe"></i></span>&nbsp;其他管理</button>
             </div>
         </div>
+        <!-- 切换视图的容器 -->
+        <div class="flex-column" id="view-container">
+            <!-- 初始内容可以是空的，或者显示一个默认视图 -->
+        </div>
+        <!-- 隐藏的不同视图内容 -->
+        <div id="view-user-info" class="matrix-hide-view">
+            <h2 class="text-center">人员管理</h2>
+            <div class="container mt-5">
+                <div class="input-group mb-3">
+                    <div class="w-25">
+                        <input type="text" class="form-control" id="searchInput" placeholder="搜索...">
+                    </div>
+                </div>
+                <table class="table table-hover text-center">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">姓名</th>
+                        <th scope="col">年龄</th>
+                        <th scope="col">城市</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                    <!-- 表格数据将在这里动态填充 -->
+                    <!-- 初始数据将被隐藏，直到分页逻辑运行 -->
+                    <tr class="matrix-hide-view"><th scope="row">1</th><td>张三</td><td>28</td><td>北京</td></tr>
+                    <tr class="matrix-hide-view"><th scope="row">2</th><td>李四</td><td>34</td><td>上海</td></tr>
+                    <!-- 添加更多数据行，都加上hidden类 -->
+                    </tbody>
+                </table>
+                <div class="text-center ms-3">
+                    <button class="btn btn-secondary" id="prevPage">上一页</button>
+                    <span id="pageInfo"></span>
+                    <button class="btn btn-secondary" id="nextPage">下一页</button>
+                </div>
+            </div>
+        </div>
+        <div id="view-authority" class="matrix-hide-view">
+            <!-- 权限管理视图内容 -->
+            <h2 class="text-center">权限管理</h2>
+            <p>这里是权限管理的内容。</p>
+        </div>
+        <div id="view-other" class="matrix-hide-view">
+            <!-- 其他管理视图内容 -->
+            <h2 class="text-center">其他管理</h2>
+            <p>这里是其他管理的内容。</p>
+        </div>
     </div>
     <footer class="bg-light text-center text-black p-0" th:replace="index::web-foot">
     </footer>
@@ -30,5 +77,6 @@
 <script src="js/common/matrix_modal_tool.js"></script>
 <script src="js/common/datahandle/commondatahandle.js"></script>
 <script src="js/common/matrix_modal_tool.js"></script>
+<script src="js/manager/manager_handle.js"></script>
 </body>
 </html>
