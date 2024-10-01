@@ -8,7 +8,9 @@
     <link href="css/matrix_style.css" rel="stylesheet">
     <link href="css/bootstrap_5.2.3.min.css" rel="stylesheet">
     <!--CDN图标库-->
-    <link type="text/css" href="fontawesome-free-6.6.0-web/css/all.css" rel="stylesheet">
+    <link type="text/css" href="fontawesome-free-6.6.0-web/css/all.min.css" rel="stylesheet">
+    <!--表格CSS库-->
+    <link type="text/css" href="datatables/css/datatables.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="matrix-flex-display flex-column">
@@ -28,34 +30,29 @@
         <!-- 隐藏的不同视图内容 -->
         <div id="view-user-info" class="matrix-hide-view">
             <h2 class="text-center">人员管理</h2>
-            <div class="container mt-5">
-                <div class="input-group mb-3">
-                    <div class="w-25">
-                        <input type="text" class="form-control" id="searchInput" placeholder="搜索...">
-                    </div>
-                </div>
-                <table class="table table-hover text-center">
+            <div class="text-center container mt-5">
+                <table id="user-info-table" class="display">
                     <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">姓名</th>
-                        <th scope="col">年龄</th>
-                        <th scope="col">城市</th>
-                    </tr>
+                        <tr>
+                            <th>#</th>
+                            <th class="text-center">账户</th>
+                            <th class="text-center">机构</th>
+                            <th class="text-center">权限</th>
+                        </tr>
                     </thead>
-                    <tbody id="tableBody">
-                    <!-- 表格数据将在这里动态填充 -->
-                    <!-- 初始数据将被隐藏，直到分页逻辑运行 -->
-                    <tr class="matrix-hide-view"><th scope="row">1</th><td>张三</td><td>28</td><td>北京</td></tr>
-                    <tr class="matrix-hide-view"><th scope="row">2</th><td>李四</td><td>34</td><td>上海</td></tr>
-                    <!-- 添加更多数据行，都加上hidden类 -->
+                    <tbody>
+                        <tr>
+                            <td>admin</td>
+                            <td>CloudStudio</td>
+                            <td>管理员</td>
+                        </tr>
+                        <tr>
+                            <td>008233</td>
+                            <td>RJXZYY</td>
+                            <td>普通用户</td>
+                        </tr>
                     </tbody>
                 </table>
-                <div class="text-center ms-3">
-                    <button class="btn btn-secondary" id="prevPage">上一页</button>
-                    <span id="pageInfo"></span>
-                    <button class="btn btn-secondary" id="nextPage">下一页</button>
-                </div>
             </div>
         </div>
         <div id="view-authority" class="matrix-hide-view">
@@ -74,7 +71,7 @@
 </div>
 <script src="js/common/jquery.min.js"></script>
 <script src="js/common/bootstrap_5.2.3.bundle.js"></script>
-<script src="js/common/matrix_modal_tool.js"></script>
+<script src="datatables/js/datatables.min.js"></script>
 <script src="js/common/datahandle/commondatahandle.js"></script>
 <script src="js/common/matrix_modal_tool.js"></script>
 <script src="js/manager/manager_handle.js"></script>

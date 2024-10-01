@@ -1,6 +1,12 @@
 $(document).ready(function() {
     btnViewHandle();
-    userInfoTableHandle();
+    //userInfoTableHandle();
+    $('#user-info-table').DataTable({
+        language:{
+            //url: '//cdn.datatables.net/plug-ins/2.1.7/i18n/zh.json'
+            url: '../datatables/location/Chinese.json'
+        }
+    });
 });
 
 /**
@@ -39,47 +45,46 @@ function btnViewHandle() {
 /***
  * 表格检索逻辑
  */
-function userInfoTableHandle(){
-    const $rows = $('#tableBody tr');
-    const perPage = 1; // 每页显示的行数
-    let currentPage = 1; // 当前页码
-    const totalPages = Math.ceil($rows.length / perPage); // 总页数
-
-    function showPage(page) {
-        // 隐藏所有行
-        $rows.addClass('matrix-hide-view');
-        // 计算当前页应该显示的行的索引范围
-        const startIndex = (page - 1) * perPage;
-        const endIndex = startIndex + perPage;
-        // 显示当前页的行
-        $rows.slice(startIndex, endIndex).removeClass('matrix-hide-view');
-        // 更新页面信息
-        $('#pageInfo').text(`第 ${page} 页 / 共 ${totalPages} 页`);
-    }
-    // 初始化时显示第一页
-    showPage(currentPage);
-    // 绑定上一页和下一页的点击事件
-    $('#prevPage').click(function() {
-        if (currentPage > 1) {
-            currentPage--;
-            showPage(currentPage);
-        }
-    });
-    $('#nextPage').click(function() {
-        if (currentPage < totalPages) {
-            currentPage++;
-            showPage(currentPage);
-        }
-    });
-    // 搜索功能（保留原样，但需要在搜索后重置分页）
-    $('#searchInput').keyup(function() {
-        const searchValue = $(this).val().toLowerCase();
-        $rows.each(function() {
-            const text = $(this).text().toLowerCase();
-            $(this).toggleClass('matrix-hide-view', !text.includes(searchValue));
-        });
-        // 重置分页到第一页（可选，取决于你的需求）
-        currentPage = 1;
-        showPage(currentPage);
-    });
-}
+// function userInfoTableHandle(){
+//     const $rows = $('#tableBody tr');
+//     const perPage = 9; // 每页显示的行数
+//     let currentPage = 1; // 当前页码
+//     const totalPages = Math.ceil($rows.length / perPage); // 总页数
+//
+//     function showPage(page) {
+//         // 隐藏所有行
+//         $rows.addClass('matrix-hide-view');
+//         // 计算当前页应该显示的行的索引范围
+//         const startIndex = (page - 1) * perPage;
+//         const endIndex = startIndex + perPage;
+//         // 显示当前页的行
+//         $rows.slice(startIndex, endIndex).removeClass('matrix-hide-view');
+//         // 更新页面信息
+//         $('#pageInfo').text(`第 ${page} 页 / 共 ${totalPages} 页`);
+//     }
+//     // 初始化时显示第一页
+//     showPage(currentPage);
+//     // 绑定上一页和下一页的点击事件
+//     $('#prevPage').click(function() {
+//         if (currentPage > 1) {
+//             currentPage--;
+//             showPage(currentPage);
+//         }
+//     });
+//     $('#nextPage').click(function() {
+//         if (currentPage < totalPages) {
+//             currentPage++;
+//             showPage(currentPage);
+//         }
+//     });
+//     // 搜索功能,需要在搜索后重置分页
+//     $('#searchInput').on('keyup', function() {
+//         const val = $.trim($(this).val()).toLowerCase();
+//         $rows.filter(function() {
+//             const text = $(this).text().toLowerCase();
+//             $(this).toggle(text.indexOf(val) > -1);
+//         });
+//         currentPage = 1;
+//         showPage(currentPage);
+//     });
+// }
