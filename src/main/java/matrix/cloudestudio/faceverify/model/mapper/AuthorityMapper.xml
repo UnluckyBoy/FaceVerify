@@ -9,6 +9,6 @@
         FROM
             authority_table
         WHERE
-            authority_code IN ( SELECT authority_code FROM user_authority_table WHERE account = #{account});
+            authority_code IN ( SELECT authority_code FROM user_authority_table WHERE uAccount = #{account});
     </select>
 </mapper>

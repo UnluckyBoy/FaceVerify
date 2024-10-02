@@ -45,14 +45,14 @@ function createHtmlView(authorities){
     // 动态创建导航菜单
     for (let item of authorities){
         switch (item){
-            case '00001':
+            case '10001':
                 htmlView += createMenuItem('fa fa-cog', '系统维护', '/manager');
                 htmlView += createMenuItem('fas fa-id-card', '实名认证', '/verify');
                 break;
-            case '00002':
+            case '10002':
                 htmlView += '';
                 break;
-            case '00003':
+            case '10003':
                 htmlView += createMenuItem('fas fa-id-card', '实名认证', '/verify');
                 break;
         }

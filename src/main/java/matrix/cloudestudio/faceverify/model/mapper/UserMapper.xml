@@ -18,4 +18,15 @@
         WHERE
             login_info_table.uAccount = #{account};
     </select>
+
+    <select id="queryUserAuthorityInfo" resultType="UserAuthorityInfoBean">
+        SELECT DISTINCT
+            login_info_table.uAccount,
+            login_info_table.organization_name,
+            authority_table.authority_type
+        FROM
+            login_info_table
+                INNER JOIN user_authority_table ON user_authority_table.uAccount = login_info_table.uAccount
+                INNER JOIN authority_table ON authority_table.authority_code = user_authority_table.authority_code;
+    </select>
 </mapper>

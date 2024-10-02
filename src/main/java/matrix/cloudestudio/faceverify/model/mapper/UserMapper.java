@@ -1,9 +1,12 @@
 package matrix.cloudestudio.faceverify.model.mapper;
 
+import matrix.cloudestudio.faceverify.model.UserAuthorityInfoBean;
 import matrix.cloudestudio.faceverify.model.UserInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @ClassName UserMapper
@@ -15,4 +18,5 @@ import org.springframework.stereotype.Service;
 @Repository //将mapper交由spring容器管理
 public interface UserMapper {
     UserInfo accountQuery(String account);
+    List<UserAuthorityInfoBean> queryUserAuthorityInfo();
 }

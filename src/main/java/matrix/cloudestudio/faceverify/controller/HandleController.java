@@ -2,9 +2,11 @@ package matrix.cloudestudio.faceverify.controller;
 
 import com.google.gson.Gson;
 import jakarta.servlet.http.HttpServletResponse;
+import matrix.cloudestudio.faceverify.model.UserAuthorityInfoBean;
 import matrix.cloudestudio.faceverify.model.UserInfo;
 import matrix.cloudestudio.faceverify.model.UserInfoSimple;
 import matrix.cloudestudio.faceverify.service.AuthorityService;
+import matrix.cloudestudio.faceverify.service.BaseInfoService;
 import matrix.cloudestudio.faceverify.util.WebServerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @ClassName HandleController
@@ -23,6 +26,9 @@ import java.io.IOException;
 public class HandleController {
     @Autowired
     private AuthorityService authorityService;
+
+    @Autowired
+    private BaseInfoService baseInfoService;
 
     private static Gson gson=new Gson();//Json数据对象
 
@@ -42,6 +48,18 @@ public class HandleController {
         }else{
             response.setContentType("application/json;charset=UTF-8");
             response.getWriter().write(gson.toJson(WebServerResponse.success("请求成功",userInfo)));
+        }
+    }
+
+    @RequestMapping("/query_userInfo_authority")
+    public void queryUserAuthorityInfo(HttpServletResponse response) throws IOException{
+        List<UserAuthorityInfoBean> userAuthorityInfoBeanList=baseInfoService.queryUserAuthorityInfo();
+        if (userAuthorityInfoBeanList.size()>0) {
+            response.setContentType("application/json;charset=UTF-8");
+            response.getWriter().write(gson.toJson(WebServerResponse.success("请求成功",userAuthorityInfoBeanList)));
+        }else{
+            response.setContentType("application/json;charset=UTF-8");
+            response.getWriter().write(gson.toJson(WebServerResponse.failure("请求失败")));
         }
     }
 
