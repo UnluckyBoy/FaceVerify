@@ -30,7 +30,7 @@
         <!-- 隐藏的不同视图内容 -->
         <div id="view-user-info" class="matrix-hide-view">
             <h2 class="text-center">人员管理</h2>
-            <div class="text-center container mt-5">
+            <div class="container mt-3"><!--container-->
                 <table id="user-info-table" class="display">
                     <thead>
                         <tr>
@@ -40,25 +40,16 @@
                             <th class="text-center">操作</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>admin</td>
-                            <td>CloudStudio</td>
-                            <td>管理员</td>
-                            <td>
-                                <a title='编辑'  class='btn btn-xs btn-info' href='#' >编辑</a>
-                                <a title='删除' class='btn btn-xs btn-danger' href='#'>删除</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>008233</td>
-                            <td>RJXZYY</td>
-                            <td>普通用户</td>
-                            <td>
-                                <a title='编辑'  class='btn btn-xs btn-info' href='#' >编辑</a>
-                                <a title='删除' class='btn btn-xs btn-danger' href='#'>删除</a>
-                            </td>
-                        </tr>
+                    <tbody id="user-info-table-body">
+<!--                        <tr>-->
+<!--                            <td>admin</td>-->
+<!--                            <td>CloudStudio</td>-->
+<!--                            <td>管理员</td>-->
+<!--                            <td>-->
+<!--                                <button class='btn btn-xs btn-info'>编辑</button>-->
+<!--                                <button class='btn btn-xs btn-danger'>删除</button>-->
+<!--                            </td>-->
+<!--                        </tr>-->
                     </tbody>
                 </table>
             </div>

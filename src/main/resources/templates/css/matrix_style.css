@@ -144,6 +144,10 @@
 .matrix-margin-horizontal-3{
     margin:0px 0.1rem;
 }
+.matrix-margin-horizontal-auto{
+    margin-right: auto;
+    margin-left: auto;
+}
 .matrix-margin-end{
     margin-right:1rem;
 }
@@ -155,6 +159,9 @@
 }
 .matrix-margin-top-1{
     margin-right:0.25rem;
+}
+.matrix-width-fill{
+    width: 100%;
 }
 /*行高*/
 .matrix-line-height{

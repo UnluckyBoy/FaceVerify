@@ -9,9 +9,8 @@ $(document).ready(function() {
  * 获取用户信息
  */
 function getUserInfoData() {
-    // 假设这里是一个AJAX请求
     $.ajax({
-        url:'/api/userInfo',/* /check */
+        url:'/api/userInfo',
         type: 'POST',
         dataType: 'json',
         success: function(data) {
