@@ -3,6 +3,7 @@ package matrix.cloudestudio.faceverify.service;
 import matrix.cloudestudio.faceverify.model.UserAuthorityInfoBean;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName BaseInfoService
@@ -11,4 +12,6 @@ import java.util.List;
  */
 public interface BaseInfoService {
     List<UserAuthorityInfoBean> queryUserAuthorityInfo();
+    boolean fresh_user_organization(Map<String,Object> map);
+    boolean delete_user(String uAccount);
 }

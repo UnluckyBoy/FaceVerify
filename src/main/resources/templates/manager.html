@@ -26,43 +26,36 @@
         <!-- 切换视图的容器 -->
         <div class="flex-column" id="view-container">
             <!-- 初始内容可以是空的，或者显示一个默认视图 -->
-        </div>
-        <!-- 隐藏的不同视图内容 -->
-        <div id="view-user-info" class="matrix-hide-view">
-            <h2 class="text-center">人员管理</h2>
-            <div class="container mt-3"><!--container-->
-                <table id="user-info-table" class="display">
-                    <thead>
-                        <tr>
-                            <th class="text-center">账户</th>
-                            <th class="text-center">机构</th>
-                            <th class="text-center">角色</th>
-                            <th class="text-center">操作</th>
-                        </tr>
-                    </thead>
-                    <tbody id="user-info-table-body">
-<!--                        <tr>-->
-<!--                            <td>admin</td>-->
-<!--                            <td>CloudStudio</td>-->
-<!--                            <td>管理员</td>-->
-<!--                            <td>-->
-<!--                                <button class='btn btn-xs btn-info'>编辑</button>-->
-<!--                                <button class='btn btn-xs btn-danger'>删除</button>-->
-<!--                            </td>-->
-<!--                        </tr>-->
-                    </tbody>
-                </table>
+            <!-- 隐藏的不同视图内容 -->
+            <div id="view-user-info" class="matrix-hide-view">
+                <h2 class="text-center">人员管理</h2>
+                <div class="container mt-3"><!--container-->
+                    <table id="user-info-table" class="display matrix-common-table">
+                        <thead>
+                            <tr>
+                                <th class="text-center">用户账户</th>
+                                <th class="text-center">机构代码</th>
+                                <th class="text-center">机构名称</th>
+                                <th class="text-center">角色类型</th>
+                                <th class="text-center">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="user-info-table-body" class="text-center">
+                        <!--在manager_handle.js中动态加载-->
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-        <div id="view-authority" class="matrix-hide-view">
-            <!-- 权限管理视图内容 -->
-            <h2 class="text-center">权限管理</h2>
-            <p>这里是权限管理的内容。</p>
-        </div>
-        <div id="view-other" class="matrix-hide-view">
-            <!-- 其他管理视图内容 -->
-            <h2 class="text-center">其他管理</h2>
-            <p>这里是其他管理的内容。</p>
+            <div id="view-authority" class="matrix-hide-view">
+                <!-- 权限管理视图内容 -->
+                <h2 class="text-center">权限管理</h2>
+                <p>这里是权限管理的内容。</p>
+            </div>
+            <div id="view-other" class="matrix-hide-view">
+                <!-- 其他管理视图内容 -->
+                <h2 class="text-center">其他管理</h2>
+                <p>这里是其他管理的内容。</p>
+            </div>
         </div>
     </div>
     <footer class="bg-light text-center text-black p-0" th:replace="index::web-foot">

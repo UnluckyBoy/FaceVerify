@@ -40,6 +40,13 @@
     background-size: 500%;
     animation: bgAnimation 15s linear infinite;
 }
+.matrix-common-table tbody tr:hover {
+    background-color: #e8dfdf; /* 或者你选择的任何其他颜色 */
+    cursor: pointer; /* 可选：改变鼠标指针样式以表明可交互性 */
+}
+.matrix-main-bg{
+    background: rgba(32,159,236,0.4);
+}
 .matrix-flex-display{
     display: flex;
     height: 100vh;

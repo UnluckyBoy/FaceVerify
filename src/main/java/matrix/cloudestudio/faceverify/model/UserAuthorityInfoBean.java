@@ -10,6 +10,7 @@ import lombok.Data;
 @Data
 public class UserAuthorityInfoBean {
     private String uAccount;
+    private String organization_code;
     private String organization_name;
     private String authority_type;
 }

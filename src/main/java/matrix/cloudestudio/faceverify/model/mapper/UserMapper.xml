@@ -18,10 +18,10 @@
         WHERE
             login_info_table.uAccount = #{account};
     </select>
-
     <select id="queryUserAuthorityInfo" resultType="UserAuthorityInfoBean">
         SELECT DISTINCT
             login_info_table.uAccount,
+            login_info_table.organization_code,
             login_info_table.organization_name,
             authority_table.authority_type
         FROM
@@ -29,4 +29,34 @@
                 INNER JOIN user_authority_table ON user_authority_table.uAccount = login_info_table.uAccount
                 INNER JOIN authority_table ON authority_table.authority_code = user_authority_table.authority_code;
     </select>
+
+    <!--UpDate逻辑-->
+    <!--更新机构信息-->
+    <update id="fresh_user_organization" parameterType="java.util.HashMap">
+        UPDATE login_info_table
+        <set >
+            <if test="organization_code!=null">
+                login_info_table.organization_code=#{organization_code},
+            </if>
+            <if test="organization_name!=null">
+                login_info_table.organization_name=#{organization_name}
+            </if>
+        </set>
+        <where>
+            <if test="uAccount!=null">
+                login_info_table.uAccount=#{uAccount}
+            </if>
+        </where>
+    </update>
+
+    <!--Delete逻辑-->
+    <!--删除用户-->
+    <delete id="delete_user" parameterType="String">
+        delete from login_info_table
+        <where>
+            <if test="uAccount!=null">
+                login_info_table.uAccount=#{uAccount}
+            </if>
+        </where>
+    </delete>
 </mapper>

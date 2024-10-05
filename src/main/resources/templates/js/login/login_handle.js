@@ -4,8 +4,9 @@ $(document).ready(function() {
         var account=$("#account").val();
         var password=$("#password").val();
         if(account.trim()===''|password.trim()===''){
-            simpleToast('平台提示','请检查输入情况!');
-            return;
+            simple_modal('平台提示','请检查输入情况!',function (){
+                return;
+            });
         }
         $.ajax({
             url:'login',
@@ -20,14 +21,15 @@ $(document).ready(function() {
                     console.log(data)
                     location.href='/index';
                 }else{
-                    alert("登录状态码:"+data.handleCode+"---"+data.handleMessage);
-                    // location.href='/login';
-                    location.reload(true);
+                    //waringToast('平台提示',"登录状态码:"+data.handleCode+"---"+data.handleMessage);
+                    simple_modal('平台提示',"登录状态码:"+data.handleCode+"---"+data.handleMessage,function (){
+                        location.reload(true);
+                    });
                 }
             },
             error: function(xhr, status, error) {
                 //console.error("AJAX请求失败: " +xhr.responseText);
-                simple_modal('平台提示','请求失败:'+xhr.responseText);
+                waringToast('平台提示','请求失败:'+xhr.responseText);
             }
         });
     });

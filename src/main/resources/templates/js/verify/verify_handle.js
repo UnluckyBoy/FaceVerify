@@ -44,6 +44,7 @@ $(document).ready(function() {
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     console.error('请求失败: ' + textStatus, errorThrown);
+                    waringToast('温馨提示','请求失败: ' + textStatus, errorThrown);
                 }
             });
         });
@@ -63,7 +64,7 @@ $(document).ready(function() {
         });
     } else {
         //console.error('您的浏览器不支持 getUserMedia API');
-        simpleToast('温馨提示','您的浏览器不支持获取摄像设备API');
+        waringToast('温馨提示','您的浏览器不支持获取摄像设备API');
         //simple_modal('平台提示','您的浏览器不支持 getUserMedia API!');
     }
 
@@ -74,7 +75,7 @@ $(document).ready(function() {
         const real_name=$('#real_name').val().trim();
         const idCard=$('#idCard').val().trim();
         if (!real_name || !idCard || !image) {
-            simpleToast('平台提示','信息不能为空!');
+            waringToast('平台提示','信息不能为空!');
             return;
         }
         else{
