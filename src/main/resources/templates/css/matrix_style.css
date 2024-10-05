@@ -100,7 +100,7 @@
     color: black; /* 可选，设置文字颜色 */
 }
 .matrix-bg-1{
-    background-color: rgba(167, 224, 255,48);
+    background-color: rgba(167, 224, 255,48) !important;
 }
 .matrix-border{
     color: #000;
@@ -123,6 +123,7 @@
 /* 如果需要，可以添加一些额外的样式来美化toast */
 .matrix-toast-body {
     padding: 6px; /* 增加一些内边距 */
+    background-color: rgba(167, 224, 255,48) !important;
 }
 .matrix-padding {
     padding:0.5rem 0.5rem !important;

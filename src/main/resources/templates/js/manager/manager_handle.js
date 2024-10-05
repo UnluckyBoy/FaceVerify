@@ -1,6 +1,15 @@
 $(document).ready(function() {
     btnViewHandle();
     //userInfoTableHandle();
+    freshViewDatas();
+});
+
+function freshViewDatas(){
+    if ($.fn.DataTable.isDataTable('#user-info-table')) {
+        // 如果是，则销毁现有的 DataTables 实例
+        $('#user-info-table').DataTable().destroy();
+    }
+
     $('#user-info-table').DataTable({
         renderer:'bootstrap',//启用bootstrap渲染
         processing:true,//隐藏加载提示
@@ -42,20 +51,32 @@ $(document).ready(function() {
                 $(row).find('td:eq(2)').prop('contenteditable', true);
                 $(row).find('button.btn-primary').show();
             });
-
             $(row).find('button.btn-danger').on('click', function() {
                 // 删除操作
-                waringToast('平台提示','Delete button clicked for ' + data.uAccount);
+                confirmModal('平台提示','是否删除:' + data.uAccount+'？',function (confirmed){
+                    if(confirmed){
+                        remove(data.uAccount);
+                    }else{
+                        showToastTr('温馨提示','已取消操作!','error');
+                    }
+                });
             });
 
             $(row).find('button.btn-primary').on('click', function() {
-                $(row).find('td:eq(1)').prop('contenteditable', false);
-                $(row).find('td:eq(2)').prop('contenteditable', false);
-                $(row).find('button.btn-primary').hide();
+                confirmModal('平台提示','是否确认修改:' + data.uAccount+'信息？',function (confirmed){
+                    if(confirmed){
+                        $(row).find('td:eq(1)').prop('contenteditable', false);
+                        $(row).find('td:eq(2)').prop('contenteditable', false);
+                        $(row).find('button.btn-primary').hide();
+                        updateOrganization(data.uAccount,$(row).find('td:eq(1)').text(),$(row).find('td:eq(2)').text());
+                    }else{
+                        showToastTr('温馨提示','已取消操作!','error');
+                    }
+                });
             });
         }
     });
-});
+}
 
 /**
  * 显示视图逻辑
@@ -86,4 +107,62 @@ function btnViewHandle() {
     });
     // 可以设置一个默认视图
     // $('#view-user-info').show();
+}
+
+/***
+ * 删除请求
+ * @param uAccount
+ */
+function remove(uAccount){
+    $.ajax({
+        url:'/api/remove_user',
+        type: 'POST',
+        data: {
+            uAccount: uAccount
+        },
+        dataType: 'json',
+        success: function(response) {
+            if(response.handleType){
+                showToastTr('温馨提示',response.handleMessage,'success');
+                freshViewDatas();
+            }else{
+                showToastTr('温馨提示',response.handleMessage,'error');
+            }
+        },
+        error: function(xhr, status, error) {
+            //console.error("AJAX请求失败: " +xhr.responseText);
+            waringToast('平台提示','请求失败:'+xhr.responseText);
+        }
+    });
+}
+
+/***
+ * 更新机构信息
+ * @param uAccount
+ * @param organization_code
+ * @param organization_name
+ */
+function updateOrganization(uAccount,organization_code,organization_name){
+    $.ajax({
+        url:'/api/fresh_user_organization',
+        type: 'POST',
+        data: {
+            uAccount: uAccount,
+            organization_code:organization_code,
+            organization_name:organization_name
+        },
+        dataType: 'json',
+        success: function(response) {
+            if(response.handleType){
+                showToastTr('温馨提示',response.handleMessage,'success');
+                freshViewDatas();
+            }else{
+                showToastTr('温馨提示',response.handleMessage,'error');
+            }
+        },
+        error: function(xhr, status, error) {
+            //console.error("AJAX请求失败: " +xhr.responseText);
+            waringToast('平台提示','请求失败:'+xhr.responseText);
+        }
+    });
 }

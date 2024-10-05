@@ -4,7 +4,7 @@ $(document).ready(function() {
         var account=$("#account").val();
         var password=$("#password").val();
         if(account.trim()===''|password.trim()===''){
-            simple_modal('平台提示','请检查输入情况!',function (){
+            warningModal('平台提示','请检查输入情况!',function (){
                 return;
             });
         }
@@ -22,7 +22,7 @@ $(document).ready(function() {
                     location.href='/index';
                 }else{
                     //waringToast('平台提示',"登录状态码:"+data.handleCode+"---"+data.handleMessage);
-                    simple_modal('平台提示',"登录状态码:"+data.handleCode+"---"+data.handleMessage,function (){
+                    warningModal('平台提示',"登录状态码:"+data.handleCode+"---"+data.handleMessage,function (){
                         location.reload(true);
                     });
                 }

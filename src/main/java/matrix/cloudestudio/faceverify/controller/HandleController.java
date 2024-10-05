@@ -83,9 +83,11 @@ public class HandleController {
         boolean freshKey=baseInfoService.fresh_user_organization(requestMap);
         response.setContentType("application/json;charset=UTF-8");
         if(freshKey){
-            response.getWriter().write(gson.toJson(WebServerResponse.success("请求成功")));
+            System.out.println("更新用户"+uAccount+"信息成功!");
+            response.getWriter().write(gson.toJson(WebServerResponse.success("更新用户"+uAccount+"信息成功!")));
         }else{
-            response.getWriter().write(gson.toJson(WebServerResponse.failure("请求失败")));
+            System.out.println("更新用户"+uAccount+"信息失败!");
+            response.getWriter().write(gson.toJson(WebServerResponse.failure("更新用户"+uAccount+"信息失败!")));
         }
     }
     /*************************************************更新类**********************************************************/
@@ -96,9 +98,9 @@ public class HandleController {
         boolean removeKey=baseInfoService.delete_user(uAccount);
         response.setContentType("application/json;charset=UTF-8");
         if(removeKey){
-            response.getWriter().write(gson.toJson(WebServerResponse.success("请求成功")));
+            response.getWriter().write(gson.toJson(WebServerResponse.success("删除用户"+uAccount+"成功!")));
         }else{
-            response.getWriter().write(gson.toJson(WebServerResponse.failure("请求失败")));
+            response.getWriter().write(gson.toJson(WebServerResponse.failure("删除用户"+uAccount+"失败!")));
         }
     }
     /*************************************************Delete类**********************************************************/
