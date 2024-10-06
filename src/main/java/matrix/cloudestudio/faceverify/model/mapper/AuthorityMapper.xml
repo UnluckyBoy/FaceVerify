@@ -3,6 +3,8 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="matrix.cloudestudio.faceverify.model.mapper.AuthorityMapper">
+    <!--查询逻辑-->
+    <!--查询用户权限-->
     <select id="queryAuthority" parameterType="String" resultType="AuthorityInfo">
         SELECT
             *
@@ -10,5 +12,16 @@
             authority_table
         WHERE
             authority_code IN ( SELECT authority_code FROM user_authority_table WHERE uAccount = #{account});
+    </select>
+    <!--联合权限表查询用户和权限-->
+    <select id="queryAccount_Authority" resultType="UserAuthorityInfoBean">
+        SELECT
+            user_authority_table.uAccount,
+            authority_table.authority_code,
+            authority_table.authority_name,
+            authority_table.authority_type
+        FROM
+            authority_table
+        INNER JOIN user_authority_table ON user_authority_table.authority_code=authority_table.authority_code;
     </select>
 </mapper>

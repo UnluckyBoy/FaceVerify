@@ -21,13 +21,22 @@
                             <h4 class="text-center">登录</h4>
                         </div>
                         <div class="card-body">
-                            <div class="mb-3">
-                                <label for="account" class="form-label">账号</label>
-                                <input type="text" class="form-control" id="account" name="account" required>
+<!--                            <div class="mb-3">-->
+<!--                                <label for="account" class="form-label">账号</label>-->
+<!--                                <input type="text" class="form-control" id="account" name="account" required>-->
+<!--                            </div>-->
+<!--                            <div class="mb-3">-->
+<!--                                <label for="password" class="form-label">密码</label>-->
+<!--                                <input type="password" class="form-control" id="password" name="password" required>-->
+<!--                            </div>-->
+                            <div class="form-floating mb-3 mt-3">
+                                <input type="text" class="form-control" id="account" placeholder="输入账号" name="account" required>
+                                <label for="account">账号</label>
                             </div>
-                            <div class="mb-3">
-                                <label for="password" class="form-label">密码</label>
-                                <input type="password" class="form-control" id="password" name="password" required>
+                            <div class="form-floating mt-3 mb-3 position-relative">
+                                <input type="password" class="form-control" id="password" placeholder="输入密码" name="password" required>
+                                <label for="password">密码</label>
+<!--                                <img class="password-toggle" id="showBtn" src="img/eye_hide.png" width="16" height="16"></i></img>-->
                             </div>
                             <div class="matrix-item-center">
                                 <button type="submit" class="btn btn-primary btn-block" id="login_btn">登录</button>

@@ -171,6 +171,18 @@
 .matrix-width-fill{
     width: 100%;
 }
+.matrix-width-auto{
+    width:auto;
+}
+.matrix-width-8rem{
+    display: flex;
+    width:8rem;
+    color: transparent;
+    border: 1px solid #000;
+    border-radius: 2px;
+    padding: 2px;
+    align-items: center;
+}
 /*行高*/
 .matrix-line-height{
     line-height:1;
@@ -232,4 +244,11 @@
     flex-grow: 1; /* 使内容容器填充剩余空间 */
     display: flex; /* 如果需要，可以在这里启用另一个Flexbox来进一步控制标题和段落的布局 */
     flex-direction: column; /* 使标题和段落垂直排列 */
+}
+.matrix-password-toggle {
+    cursor: pointer;
+    position: absolute;
+    right: 15px; /* 调整位置以适应你的布局 */
+    top: 50%;
+    transform: translateY(-50%);
 }

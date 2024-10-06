@@ -12,5 +12,7 @@ public class UserAuthorityInfoBean {
     private String uAccount;
     private String organization_code;
     private String organization_name;
+    private String authority_code;
+    private String authority_name;
     private String authority_type;
 }

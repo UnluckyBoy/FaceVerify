@@ -33,4 +33,9 @@ public class BaseInfoImpl implements BaseInfoService {
     public boolean delete_user(String uAccount) {
         return userMapper.delete_user(uAccount);
     }
+
+    @Override
+    public List<UserAuthorityInfoBean> queryTest() {
+        return userMapper.queryTest();
+    }
 }

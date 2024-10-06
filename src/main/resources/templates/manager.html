@@ -35,14 +35,14 @@
                     <table id="user-info-table" class="display matrix-common-table">
                         <thead>
                             <tr>
-                                <th class="text-center">用户账户</th>
-                                <th class="text-center">机构代码</th>
-                                <th class="text-center">机构名称</th>
-                                <th class="text-center">角色类型</th>
-                                <th class="text-center">操作</th>
+                                <th>用户账户</th><!--class="text-center"-->
+                                <th>机构代码</th>
+                                <th>机构名称</th>
+                                <th>角色类型</th>
+                                <th>操作</th>
                             </tr>
                         </thead>
-                        <tbody id="user-info-table-body" class="text-center">
+                        <tbody id="user-info-table-body">
                         <!--在manager_handle.js中动态加载-->
                         </tbody>
                     </table>
@@ -50,8 +50,14 @@
             </div>
             <div id="view-authority" class="matrix-hide-view">
                 <!-- 权限管理视图内容 -->
-                <h2 class="text-center">权限管理</h2>
-                <p>这里是权限管理的内容。</p>
+                <h2 class="text-center">权限管理</h2><!--id="user_authority_view"-->
+                <div class="container mt-3">
+                    <div class="flex-row">
+                        <div class="matrix-width-8rem flex-column align-items-center" id="user_authority_view">
+
+                        </div>
+                    </div>
+                </div>
             </div>
             <div id="view-other" class="matrix-hide-view">
                 <!-- 其他管理视图内容 -->

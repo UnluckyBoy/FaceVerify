@@ -1,6 +1,7 @@
 package matrix.cloudestudio.faceverify.service.Impl;
 
 import matrix.cloudestudio.faceverify.model.AuthorityInfo;
+import matrix.cloudestudio.faceverify.model.UserAuthorityInfoBean;
 import matrix.cloudestudio.faceverify.model.mapper.AuthorityMapper;
 import matrix.cloudestudio.faceverify.service.AuthorityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +23,10 @@ public class AuthorityImpl implements AuthorityService {
     @Override
     public List<AuthorityInfo> queryAuthority(String account) {
         return authorityMapper.queryAuthority(account);
+    }
+
+    @Override
+    public List<UserAuthorityInfoBean> queryAccount_Authority() {
+        return authorityMapper.queryAccount_Authority();
     }
 }

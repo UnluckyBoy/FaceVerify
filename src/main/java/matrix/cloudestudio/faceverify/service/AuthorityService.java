@@ -1,6 +1,7 @@
 package matrix.cloudestudio.faceverify.service;
 
 import matrix.cloudestudio.faceverify.model.AuthorityInfo;
+import matrix.cloudestudio.faceverify.model.UserAuthorityInfoBean;
 
 import java.util.List;
 
@@ -11,4 +12,5 @@ import java.util.List;
  */
 public interface AuthorityService {
     List<AuthorityInfo> queryAuthority(String account);
+    List<UserAuthorityInfoBean>queryAccount_Authority();
 }

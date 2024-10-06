@@ -55,13 +55,29 @@ public class HandleController {
     }
 
     /**
-     * 联合查询用户信息、角色类别
+     * 联合查询所有用户信息、角色类别
      * @param response
      * @throws IOException
      */
-    @RequestMapping("/query_userInfo_authority")
+    @RequestMapping("/query_allUserInfo_authority")
     public void queryUserAuthorityInfo(HttpServletResponse response) throws IOException{
         List<UserAuthorityInfoBean> userAuthorityInfoBeanList=baseInfoService.queryUserAuthorityInfo();
+        response.setContentType("application/json;charset=UTF-8");
+        if (userAuthorityInfoBeanList.size()>0) {
+            response.getWriter().write(gson.toJson(WebServerResponse.success("请求成功",userAuthorityInfoBeanList)));
+        }else{
+            response.getWriter().write(gson.toJson(WebServerResponse.failure("请求失败")));
+        }
+    }
+
+    /**
+     * 查询所有用户权限
+     * @param response
+     * @throws IOException
+     */
+    @RequestMapping("/query_all_authority")
+    public void queryAllAuthorityInfo(HttpServletResponse response) throws IOException{
+        List<UserAuthorityInfoBean> userAuthorityInfoBeanList=authorityService.queryAccount_Authority();
         response.setContentType("application/json;charset=UTF-8");
         if (userAuthorityInfoBeanList.size()>0) {
             response.getWriter().write(gson.toJson(WebServerResponse.success("请求成功",userAuthorityInfoBeanList)));

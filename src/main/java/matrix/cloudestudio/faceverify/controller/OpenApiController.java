@@ -3,6 +3,7 @@ package matrix.cloudestudio.faceverify.controller;
 import com.google.gson.Gson;
 import jakarta.servlet.http.HttpServletResponse;
 import matrix.cloudestudio.faceverify.model.UserAuthorityInfoBean;
+import matrix.cloudestudio.faceverify.service.AuthorityService;
 import matrix.cloudestudio.faceverify.service.BaseInfoService;
 import matrix.cloudestudio.faceverify.util.WebServerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ public class OpenApiController {
     private BaseInfoService baseInfoService;
 
     @Autowired
+    private AuthorityService authorityService;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     private static Gson gson=new Gson();
@@ -47,9 +51,19 @@ public class OpenApiController {
 
     @RequestMapping("/test_password")
     public ResponseEntity<Map<String, Object>> getData(@RequestParam("password") String password) {
-        // 准备返回的数据
         Map<String, Object> data = new HashMap<>();
         data.put("password", passwordEncoder.encode(password));
         return ResponseEntity.ok(data);
+    }
+
+    @RequestMapping("/test_query")
+    public ResponseEntity<List<UserAuthorityInfoBean>> test_query() {
+        List<UserAuthorityInfoBean> list=baseInfoService.queryTest();
+        return ResponseEntity.ok(list);
+    }
+    @RequestMapping("/test_query_authority")
+    public ResponseEntity<List<UserAuthorityInfoBean>> testQuery() {
+        List<UserAuthorityInfoBean> list=authorityService.queryAccount_Authority();
+        return ResponseEntity.ok(list);
     }
 }

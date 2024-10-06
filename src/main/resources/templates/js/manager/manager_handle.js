@@ -1,15 +1,44 @@
 $(document).ready(function() {
     btnViewHandle();
-    //userInfoTableHandle();
-    freshViewDatas();
+    //freshViewDatas();
 });
+
+/**
+ * 显示视图逻辑
+ * */
+function btnViewHandle() {
+    // 绑定按钮点击事件
+    $('#edit-user-info').click(function() {
+        // 隐藏所有视图
+        $('#view-user-info, #view-authority, #view-other').hide();
+        // 显示人员管理视图
+        $('#view-user-info').show();
+        freshViewDatas();
+    });
+    $('#edit-authority').click(function() {
+        // 隐藏所有视图
+        $('#view-user-info, #view-authority, #view-other').hide();
+        // 显示权限管理视图
+        $('#view-authority').show();
+        bindAuthorityView();
+    });
+    $('#edit-other').click(function() {
+        // 隐藏所有视图
+        $('#view-user-info, #view-authority, #view-other').hide();
+        // 显示其他管理视图
+        $('#view-other').show();
+        // 也可以将内容复制到#view-container，如果需要的话
+        // $('#view-container').html($('#view-other').html());
+    });
+    // 可以设置一个默认视图
+    // $('#view-user-info').show();
+}
 
 function freshViewDatas(){
     if ($.fn.DataTable.isDataTable('#user-info-table')) {
         // 如果是，则销毁现有的 DataTables 实例
         $('#user-info-table').DataTable().destroy();
     }
-
     $('#user-info-table').DataTable({
         renderer:'bootstrap',//启用bootstrap渲染
         processing:true,//隐藏加载提示
@@ -22,16 +51,20 @@ function freshViewDatas(){
             url: '../datatables/location/Chinese.json'
         },
         ajax: {
-            url: '/api/query_userInfo_authority', // 替换为你的实际后台API地址
+            url: '/api/query_allUserInfo_authority', // 替换为你的实际后台API地址
             type: 'POST', // 根据你的API需求，这里可以是"GET"或"POST"
             dataType: 'json',
             dataSrc: 'handleData'
         },
         columns: [
-            { "data": "uAccount" },
-            { "data": "organization_code" },
-            { "data": "organization_name" }, // 假设这是CloudStudio的字段名
-            { "data": "authority_type" },   // 假设这是管理员的字段名
+            { "data": "uAccount", "type": "string" },
+            { "data": "organization_code", "type": "string"},
+            { "data": "organization_name", "type": "string" }, // 机构字段名
+            { "data": "authority_type", "type": "string"
+                ,"render": function (data, type, row, meta) {
+                    return '<strong class="text-danger">' + data + '</strong>';
+                }
+            },   // 角色字段名
             {
                 // 这个列不映射到任何数据字段，我们将在这里添加按钮
                 "render": function (data, type, row, meta) {
@@ -71,6 +104,9 @@ function freshViewDatas(){
                         updateOrganization(data.uAccount,$(row).find('td:eq(1)').text(),$(row).find('td:eq(2)').text());
                     }else{
                         showToastTr('温馨提示','已取消操作!','error');
+                        $(row).find('td:eq(1)').prop('contenteditable', false);
+                        $(row).find('td:eq(2)').prop('contenteditable', false);
+                        $(row).find('button.btn-primary').hide();
                     }
                 });
             });
@@ -78,37 +114,39 @@ function freshViewDatas(){
     });
 }
 
-/**
- * 显示视图逻辑
- * */
-function btnViewHandle() {
-    // 绑定按钮点击事件
-    $('#edit-user-info').click(function() {
-        // 隐藏所有视图
-        $('#view-user-info, #view-authority, #view-other').hide();
-        // 显示人员管理视图
-        $('#view-user-info').show();
+function bindAuthorityView(){
+    $.ajax({
+        url:'/api/query_all_authority',
+        type: 'POST',
+        dataType: 'json',
+        success: function(response) {
+            if(response.handleType){
+                //console.log(response.handleData.uAccount);
+                const container = $('#user_authority_view'); // 获取父元素
+                const handleData = response.handleData;
+                const addedAccounts = new Set(); // 用于跟踪已经添加过的uAccount
+                container.empty();
+                handleData.forEach(function(itemTemp) {
+                    if (!addedAccounts.has(itemTemp.uAccount)) {
+                        const button = $('<button>')
+                            .addClass('btn btn-sm btn-primary my-1') // 添加Bootstrap的按钮样式
+                            .text(itemTemp.uAccount); // 设置按钮的文本
+                        // 将按钮添加到父元素中
+                        container.append(button);
+                        // 标记为已添加
+                        addedAccounts.add(itemTemp.uAccount);
+                    }
+                    // 如果需要处理重复项，可以在这里添加逻辑
+                });
+            }else{
+                console.log(response.handleMessage);
+            }
+        },
+        error: function(xhr, status, error) {
+            waringToast('平台提示','请求失败:'+xhr.responseText);
+        }
     });
-    $('#edit-authority').click(function() {
-        // 隐藏所有视图
-        $('#view-user-info, #view-authority, #view-other').hide();
-        // 显示权限管理视图
-        $('#view-authority').show();
-        // 也可以将内容复制到#view-container，如果需要的话
-        // $('#view-container').html($('#view-authority').html());
-    });
-    $('#edit-other').click(function() {
-        // 隐藏所有视图
-        $('#view-user-info, #view-authority, #view-other').hide();
-        // 显示其他管理视图
-        $('#view-other').show();
-        // 也可以将内容复制到#view-container，如果需要的话
-        // $('#view-container').html($('#view-other').html());
-    });
-    // 可以设置一个默认视图
-    // $('#view-user-info').show();
 }
-
 /***
  * 删除请求
  * @param uAccount

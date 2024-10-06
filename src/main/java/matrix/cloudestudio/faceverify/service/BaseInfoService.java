@@ -14,4 +14,6 @@ public interface BaseInfoService {
     List<UserAuthorityInfoBean> queryUserAuthorityInfo();
     boolean fresh_user_organization(Map<String,Object> map);
     boolean delete_user(String uAccount);
+
+    List<UserAuthorityInfoBean> queryTest();
 }
