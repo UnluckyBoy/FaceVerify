@@ -22,6 +22,10 @@ public class WebController {
     public String verifyWebView(){
         return "verify";
     }
+    @RequestMapping("/warehouse")
+    public String warehouseWebView(){
+        return "warehouse";
+    }
     @RequestMapping("/about")
     public String aboutWebView(){
         return "about";

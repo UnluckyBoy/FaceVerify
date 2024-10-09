@@ -1,10 +1,12 @@
 package matrix.cloudestudio.faceverify.controller;
 
 import com.google.gson.Gson;
+import com.google.zxing.WriterException;
 import jakarta.servlet.http.HttpServletResponse;
 import matrix.cloudestudio.faceverify.model.UserAuthorityInfoBean;
 import matrix.cloudestudio.faceverify.service.AuthorityService;
 import matrix.cloudestudio.faceverify.service.BaseInfoService;
+import matrix.cloudestudio.faceverify.tool.QRCodeUtil;
 import matrix.cloudestudio.faceverify.util.WebServerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -65,5 +67,45 @@ public class OpenApiController {
     public ResponseEntity<List<UserAuthorityInfoBean>> testQuery() {
         List<UserAuthorityInfoBean> list=authorityService.queryAccount_Authority();
         return ResponseEntity.ok(list);
+    }
+
+//    @RequestMapping("/generateQRCode")
+//    public ResponseEntity<byte[]> generateQRCode(@RequestParam("text") String text) {
+//        try {
+//            byte[] qrCodeImage = QRCodeUtil.generateQRCodeImage(text);
+//            HttpHeaders headers = new HttpHeaders();
+//            headers.add("Content-Type", "image/png");
+//            return new ResponseEntity<>(qrCodeImage, headers, HttpStatus.OK);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
+
+    @RequestMapping("/generateQRCode")
+    public void generateQRCode2(@RequestParam("text") String text,HttpServletResponse response) throws IOException, WriterException {
+        //byte[] qrCodeImage = QRCodeUtil.generateQRCodeImage(text);
+        //String base64Image = Base64.getEncoder().encodeToString(qrCodeImage);
+        String qrCodeImage = QRCodeUtil.generateQRCodeImage(text);
+        response.setContentType("application/json;charset=UTF-8");
+        if (qrCodeImage != null || !(qrCodeImage.isEmpty())) {
+            Map<String, String> responseMap = new HashMap<>();
+            responseMap.put("qrCodeImage", qrCodeImage);
+            response.getWriter().write(gson.toJson(WebServerResponse.success("请求成功",responseMap)));
+        }else{
+            response.getWriter().write(gson.toJson(WebServerResponse.failure("请求失败")));
+        }
+    }
+    @RequestMapping("/generateBarcode")
+    public void generateBarcode(@RequestParam("text") String text,HttpServletResponse response) throws IOException, WriterException {
+        String qrCodeImage = QRCodeUtil.generateBarcodeImage(text);
+        response.setContentType("application/json;charset=UTF-8");
+        if (qrCodeImage != null || !(qrCodeImage.isEmpty())) {
+            Map<String, String> responseMap = new HashMap<>();
+            responseMap.put("qrCodeImage", qrCodeImage);
+            response.getWriter().write(gson.toJson(WebServerResponse.success("请求成功",responseMap)));
+        }else{
+            response.getWriter().write(gson.toJson(WebServerResponse.failure("请求失败")));
+        }
     }
 }

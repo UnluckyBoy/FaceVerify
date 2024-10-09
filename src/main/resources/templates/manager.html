@@ -7,7 +7,7 @@
     <!-- 引入Bootstrap CSS -->
     <link href="css/matrix_style.css" rel="stylesheet">
     <link href="css/bootstrap_5.2.3.min.css" rel="stylesheet">
-    <!--CDN图标库-->
+    <!--fontawesome图标库-->
     <link type="text/css" href="fontawesome-free-6.6.0-web/css/all.min.css" rel="stylesheet">
     <!--表格CSS库-->
     <link type="text/css" href="datatables/css/datatables.min.css" rel="stylesheet">
@@ -20,9 +20,9 @@
     <div class="matrix-only-flex-display matrix-only-flex-content flex-column">
         <div class="matrix-fixed-content">
             <div class="btn-group" id="btn-group-view" role="group" aria-label="">
-                <button type="button" class="btn btn-primary" id="edit-user-info"><span><i class="fa-solid fa-users-gear"></i></span>&nbsp;人员管理</button>
-                <button type="button" class="btn btn-primary" id="edit-authority"><span><i class="fa-solid fa-user-lock"></i></span>&nbsp;权限管理</button>
-                <button type="button" class="btn btn-primary" id="edit-other"><span><i class="fa-solid fa-globe"></i></span>&nbsp;其他管理</button>
+                <button type="button" class="btn btn-sm btn-primary" id="edit-user-info"><span><i class="fa-solid fa-users-gear"></i></span>&nbsp;人员管理</button>
+                <button type="button" class="btn btn-sm btn-primary" id="edit-authority"><span><i class="fa-solid fa-user-lock"></i></span>&nbsp;权限管理</button>
+                <button type="button" class="btn btn-sm btn-primary" id="edit-other"><span><i class="fa-solid fa-globe"></i></span>&nbsp;其他管理</button>
             </div>
         </div>
         <!-- 切换视图的容器 -->
@@ -34,13 +34,13 @@
                 <div class="container mt-3"><!--container-->
                     <table id="user-info-table" class="display matrix-common-table">
                         <thead>
-                            <tr>
-                                <th>用户账户</th><!--class="text-center"-->
-                                <th>机构代码</th>
-                                <th>机构名称</th>
-                                <th>角色类型</th>
-                                <th>操作</th>
-                            </tr>
+                        <tr>
+                            <th>用户账户</th><!--class="text-center"-->
+                            <th>机构代码</th>
+                            <th>机构名称</th>
+                            <th>角色类型</th>
+                            <th>操作</th>
+                        </tr>
                         </thead>
                         <tbody id="user-info-table-body">
                         <!--在manager_handle.js中动态加载-->
@@ -52,10 +52,8 @@
                 <!-- 权限管理视图内容 -->
                 <h2 class="text-center">权限管理</h2><!--id="user_authority_view"-->
                 <div class="container mt-3">
-                    <div class="flex-row">
-                        <div class="matrix-width-8rem flex-column align-items-center" id="user_authority_view">
+                    <div class="matrix-width-8rem flex-column align-items-start" id="user_authority_view">
 
-                        </div>
                     </div>
                 </div>
             </div>

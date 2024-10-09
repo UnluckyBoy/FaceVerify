@@ -7,30 +7,22 @@
     <link href="css/matrix_style.css" rel="stylesheet">
     <!-- 引入Bootstrap CSS -->
     <link href="css/bootstrap_5.2.3.min.css" rel="stylesheet">
-    <!--CDN图标库-->
+    <!--fontawesome图标库-->
     <link type="text/css" href="fontawesome-free-6.6.0-web/css/all.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="matrix-flex-display flex-column">
     <!--导航栏-->
     <nav class="matrix-border-radius-1 matrix-bg-1 matrix-padding-2 matrix-border matrix-margin-top text-black navbar navbar-dark" th:fragment="web-navber">
-        <div class="dropdown">
-            <button class="matrix-padding-3 matrix-btn-transparent btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                <img class="rounded-circle matrix-border me-2 dropdown-toggle-img" id="headerView" th:src="${null?:'./img/default.png'}" alt="" width="32" height="32">
-                <strong id="nameView" th:text="${null?:'游客'}"></strong>
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <li><a class="dropdown-item" href="#">个人信息</a></li>
-                <li><a class="dropdown-item" href="#">安全退出&nbsp;<span class="fa fa-sign-out"></span></a></li>
-            </ul>
+        <div class="btn-group" id="btn-group-view" role="group" aria-label="">
+            <!--commondatahandle.js中动态加载-->
         </div>
-        <button class="matrix-padding-2 matrix-btn-transparent matrix-margin-end-1 btn text-black" type="button" data-bs-toggle="collapse" data-bs-target="#webNavbar">
-            <span class="fas fa-ellipsis-v"></span>
-        </button>
-        <div class="collapse navbar-collapse my-2" id="webNavbar">
-            <div class="btn-group" id="btn-group-view" role="group" aria-label="Basic example">
-                <!--commondatahandle.js中动态加载-->
+        <div class="matrix-only-flex-display matrix-margin-top align-items-center matrix-padding-2 flex-row matrix-item-end">
+            <div class="me-2" id="name-parent-view" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Base Tooltip Label">
+                <label class="text-sm-center">你好!</label><strong class="fs-4 text-success" id="nameView" th:text="${null?:'游客'}"></strong>
             </div>
+            <img class="rounded-circle matrix-border me-2 dropdown-toggle-img" id="headerView" th:src="${null?:'./img/default.png'}" alt="" width="32" height="32">
+            <button class="matrix-padding-3 matrix-btn-transparent btn fa fa-sign-out" id="exit-btn" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Base Tooltip Label"></button>
         </div>
     </nav>
     <!--页面主体-->

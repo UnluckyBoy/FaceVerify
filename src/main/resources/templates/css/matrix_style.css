@@ -64,6 +64,10 @@
     justify-content: center; /* 水平居中 */
     align-items: center; /* 垂直居中 */
 }
+.matrix-item-end{
+    justify-content: center; /* 水平居中 */
+    align-items: end;
+}
 .matrix-content-top-view{
     flex-grow: 1;
 }

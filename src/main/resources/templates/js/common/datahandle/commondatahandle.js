@@ -2,6 +2,13 @@
  * 公共数据加载逻辑
  */
 $(document).ready(function() {
+    /** *按钮提示* **/
+    const exit_tooltipTriggerEl = $('#exit-btn');
+    const exit_tooltip = new bootstrap.Tooltip(exit_tooltipTriggerEl, {
+        placement: 'bottom', // 放置位置
+        title: '安全退出!' // 提示框的标题
+    });
+
     getUserInfoData();
 });
 
@@ -18,15 +25,14 @@ function getUserInfoData() {
                 console.log(data);
                 console.log('权限:'+data.handleData.authorities[0]);
                 $('#headerView').attr('src', '/image'+data.handleData.headerImageUrl);
-                //$('#nameLabel').html('您好!<strong>' + data.handleData.uAccount + '</strong>');
-                //$('#organizationLabel').text(data.handleData.organization_name);
                 $('#nameView').text(data.handleData.uAccount);
                 createHtmlView(data.handleData.authorities);
+                createOrganizationToolTip(data.handleData.organization_name);
             }
         },
         error: function(xhr, status, error) {
             console.error("请求失败: " +error);
-            simpleToast('平台提示','请求失败:' +error);
+            waringToast('平台提示','请求失败:' +error);
         }
     });
 }
@@ -47,6 +53,7 @@ function createHtmlView(authorities){
             case '10001':
                 htmlView += createMenuItem('fa fa-cog', '系统维护', '/manager');
                 htmlView += createMenuItem('fas fa-id-card', '实名认证', '/verify');
+                htmlView += createMenuItem('fa-solid fa-warehouse', '仓库管理', '/warehouse');
                 break;
             case '10002':
                 htmlView += '';
@@ -58,4 +65,12 @@ function createHtmlView(authorities){
     }
     htmlView+='<a href="/about" class="btn btn-primary" id="about" role="button"><span class="fas fa-paper-plane"></span>&nbsp;商务合作</a>';
     $('#btn-group-view').html(htmlView);
+}
+
+function createOrganizationToolTip(content){
+    const name_tooltipTriggerEl = $('#name-parent-view');
+    const name_tooltip = new bootstrap.Tooltip(name_tooltipTriggerEl, {
+        placement: 'bottom', // 放置位置
+        title: '所属机构:'+content // 提示框的标题
+    });
 }

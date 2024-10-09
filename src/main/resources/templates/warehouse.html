@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>关于我们</title>
+    <title>仓库管理</title>
     <!-- 引入Bootstrap CSS -->
     <link href="css/matrix_style.css" rel="stylesheet">
     <link href="css/bootstrap_5.2.3.min.css" rel="stylesheet">
@@ -13,8 +13,14 @@
 <body>
 <div class="matrix-flex-display flex-column">
     <div th:replace="index::web-navber"></div>
-    <div class="matrix-only-flex-content container mt-5">
-        <p>这是页面主体</p>
+    <div class="matrix-only-flex-display matrix-only-flex-content flex-column">
+        <div class="matrix-fixed-content matrix-item-center">
+            <div class="btn-group" id="btn-group-view" role="group" aria-label="">
+                <button type="button" class="btn btn-sm btn-primary" id="generate-barcode"><span><i class="fa-solid fa-barcode"></i></span>&nbsp;条码生成</button>
+                <button type="button" class="btn btn-sm btn-primary" id="warehouse-manager"><span><i class="fa-solid fa-list-check"></i></span>&nbsp;库存管理</button>
+                <button type="button" class="btn btn-sm btn-primary" id="edit-other"><span><i class="fa-solid fa-globe"></i></span>&nbsp;其他管理</button>
+            </div>
+        </div>
     </div>
     <footer class="bg-light text-center text-black p-0" th:replace="index::web-foot">
     </footer>

@@ -40,7 +40,6 @@ public class BaiduApiController {
     @RequestMapping("/test")
     //public Mono<Mono<Object>> testAccessToken() {
     public Mono<String> getAccessToken() {
-        // 注意：image 参数在这个上下文中未使用，如果你需要它，请相应调整
         return webClient.post()
                 .uri(TOKEN_URL)
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
