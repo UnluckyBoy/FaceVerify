@@ -30,8 +30,6 @@ function btnViewHandle() {
         // 也可以将内容复制到#view-container，如果需要的话
         // $('#view-container').html($('#view-other').html());
     });
-    // 可以设置一个默认视图
-    // $('#view-user-info').show();
 }
 
 function freshViewDatas(){

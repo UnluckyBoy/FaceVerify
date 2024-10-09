@@ -16,9 +16,60 @@
     <div class="matrix-only-flex-display matrix-only-flex-content flex-column">
         <div class="matrix-fixed-content matrix-item-center">
             <div class="btn-group" id="btn-group-view" role="group" aria-label="">
-                <button type="button" class="btn btn-sm btn-primary" id="generate-barcode"><span><i class="fa-solid fa-barcode"></i></span>&nbsp;条码生成</button>
                 <button type="button" class="btn btn-sm btn-primary" id="warehouse-manager"><span><i class="fa-solid fa-list-check"></i></span>&nbsp;库存管理</button>
-                <button type="button" class="btn btn-sm btn-primary" id="edit-other"><span><i class="fa-solid fa-globe"></i></span>&nbsp;其他管理</button>
+                <button type="button" class="btn btn-sm btn-primary" id="generate-barcode"><span><i class="fa-solid fa-barcode"></i></span>&nbsp;条码生成</button>
+                <button type="button" class="btn btn-sm btn-primary" id="other"><span><i class="fa-solid fa-globe"></i></span>&nbsp;其他管理</button>
+            </div>
+        </div>
+        <!-- 切换视图的容器 -->
+        <div class="flex-column" id="view-container">
+            <div id="view-warehouse-manager" class="matrix-hide-view">
+                <!-- 权限管理视图内容 -->
+                <h4 class="text-center">库存管理</h4><!--id="user_authority_view"-->
+                <div class="container mt-3">
+
+                </div>
+            </div>
+            <div id="view-generate-barcode" class="matrix-hide-view">
+                <h4 class="text-center">条码生成</h4>
+                <div class="container matrix-only-flex-content matrix-item-center mt-2">
+                    <div class="col-md-5">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="flex-row mt-1">
+                                    <select class="form-select" aria-label="" id="medicine-select-view">
+                                        <!--<option selected>请选择药品</option>-->
+                                        <!--<option value="1">药品A</option>-->
+                                        <!--<option value="2">药品B</option>-->
+                                        <!--<option value="3">药品C</option>-->
+                                        <!--在warehouse_handle.js动态添加-->
+                                    </select>
+                                    <div class="flex-row matrix-item-center mt-2">
+                                        <label>药品ID:</label>
+                                        <strong id="medicine-code-label"></strong>
+                                        &nbsp;&nbsp;&nbsp;
+                                        <label>售价:</label>
+                                        <strong id="medicine-price-label"></strong>
+                                    </div>
+                                    <div class="flex-row matrix-item-center mt-2">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="medicine-batch-number" placeholder="批量" name="medicine-batch-number">
+                                            <label for="medicine-batch-number">生成批次</label>
+                                        </div>
+                                    </div>
+                                    <div class="flex-row matrix-item-center mt-2">
+                                        <button class="btn btn-sm btn-primary" id="batch-generate-barcode"><span><i class="fa-solid fa-hourglass-start"></i></span>&nbsp;批量生成</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="view-other" class="matrix-hide-view">
+                <!-- 其他管理视图内容 -->
+                <h4 class="text-center">其他管理</h4>
+                <p>这里是其他管理的内容。</p>
             </div>
         </div>
     </div>
@@ -30,5 +81,6 @@
 <script src="js/common/matrix_modal_tool.js"></script>
 <script src="js/common/datahandle/commondatahandle.js"></script>
 <script src="js/common/matrix_modal_tool.js"></script>
+<script src="js/warehouse/warehouse_handle.js"></script>
 </body>
 </html>
