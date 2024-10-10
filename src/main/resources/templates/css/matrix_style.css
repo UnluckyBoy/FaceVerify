@@ -1,3 +1,38 @@
+/*打印样式*/
+/* 这些样式将用于打印 */
+@media print {
+    body * {
+        font-size: 12pt; /* 通常使用pt单位以适应打印 */
+        color: #000; /* 打印时通常使用黑色字体 */
+        background-color: #fff !important; /* 确保背景色为白色，以防打印背景图 */
+    }
+    title {
+        display: none;
+    }
+    /*隐藏页面右下角的页码*/
+    .page-break {
+        display: none;
+    }
+    /*移除页边距,避免页面内容在打印时被截断*/
+    @page {
+        margin: 0;
+        size: auto;/*自动大小,可改变大小*/
+    }
+    .print-area,
+    .print-area * {
+        display:flex;/*控制内部元素中心对齐:text-align: center*/
+        flex-direction: column;
+        visibility: visible; /* 显示打印区域的元素 */
+    }
+    .print-area > :first-child {
+        /*仅应用于.print-area的直接子元素中的第一个*/
+        margin-top: 20%;
+    }
+    .not-print,
+    .not-print * {
+        display: none; /* 隐藏打印区域的元素 */
+    }
+}
 /*定义颜色动画*/
 /*定义颜色动画*/
 @keyframes bgAnimation {

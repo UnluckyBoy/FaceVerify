@@ -47,3 +47,31 @@ function showToastTr(title,content,result){
             break;
     }
 }
+
+function printBarcode(ObjectDatas,createTime,printCount){
+    console.log('打印次数:'+printCount);
+    const printTemplate = new hiprint.PrintTemplate({template: JSON.parse($('#barcode-textarea').val())});
+    const $html = printTemplate.getHtml([{
+        medicineName: ObjectDatas.medicine_name, medicinePrice: ObjectDatas.medicine_price, medicineCode: ObjectDatas.medicine_code,
+        medicineCreateTime:createTime,medicineBatch:(ObjectDatas.medicine_batch_number+1)
+    }]);
+    printTemplate.printByHtml($html);
+
+    // 创建数组来存储 PrintTemplate 实例
+    // const printTemplates = [];
+    // for (let i = 0; i < printCount; i++) {
+    //     const printTemplate = new hiprint.PrintTemplate({ template: JSON.parse($('#barcode-textarea').val())});
+    //     // 将创建的 PrintTemplate 实例添加到数组中
+    //     printTemplates.push(printTemplate);
+    // }
+    // for (let i = 0; i < printCount; i++) {
+    //     const $html = printTemplates[i].getHtml([{
+    //         medicineName: ObjectDatas.medicine_name,
+    //         medicinePrice: ObjectDatas.medicine_price,
+    //         medicineCode: ObjectDatas.medicine_code,
+    //         medicineCreateTime: createTime,
+    //         medicineBatch: (ObjectDatas.medicine_batch_number + 1) // 如果需要每次打印的批次号都不同，可以在这里加上i
+    //     }]);
+    //     printTemplates[i].printByHtml($html);
+    // }
+}

@@ -19,4 +19,5 @@ public interface MedicineMapper {
     List<MedicineBaseBean> query_medicine_code();//查询药品编码
     List<MedicineBaseBean> query_medicine_name();//查询药品名称
     List<MedicineBaseBean> query_medicine_baseInfo();//查询药品名称、编码
+    MedicineBaseBean queryNearMedicineInfo(String medicine_code);//查询最新批次药品信息
 }

@@ -16,6 +16,7 @@ function createViewHandle() {
         // 显示人员管理视图
         $('#view-generate-barcode').show();
         getMedicineName();
+        createMedicineBarcode();
     });
     $('#other').click(function() {
         // 隐藏所有视图
@@ -35,11 +36,9 @@ function getMedicineName(){
                 console.log(response.handleData);
                 if (response.handleType) {
                     const medicineData = {}; // 创建对象存储药品名称和价格键值对
-
-                    // 获取select元素
                     const selectElement = $('#medicine-select-view');
-                    // 清空现有的option项
-                    selectElement.empty();
+                    // 获取select元素
+                    clearGenerateView();//清空所有
                     // 添加一个默认的option项
                     selectElement.append('<option selected>请选择药品</option>');
                     // 遍历handleData数组，并动态添加option项
@@ -63,6 +62,48 @@ function getMedicineName(){
         },
         error: function(xhr, status, error) {
             waringToast('平台提示','请求失败:'+xhr.responseText);
+        }
+    });
+}
+function clearGenerateView(){
+    $('#medicine-select-view').empty();
+    $('#medicine-code-label').text('');
+    $('#medicine-price-label').text('');
+    $('#medicine-create-time').val('');
+    $('#barcode-num').val('');
+}
+
+function createMedicineBarcode(){
+    $('#batch-generate-barcode').click(function (){
+        const medicine_code=$('#medicine-code-label').text().trim();
+        const create_time=$('#medicine-create-time').val().trim();
+        const barcode_num=$('#barcode-num').val().trim();
+        console.log("时间:"+create_time);
+        if(!(isEmptyString(medicine_code))&&!(isEmptyString(create_time))&&!(isEmptyString(barcode_num))){
+            $.ajax({
+                url:'/MedicineApi/queryNearMedicineInfo',
+                type: 'POST',
+                data:{
+                    medicine_code:medicine_code
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if(response.handleType){
+                        console.log(response.handleData);
+                        if (response.handleType) {
+                            printBarcode(response.handleData,create_time,barcode_num);
+                            // for (let i = 0; i < barcode_num; i++){
+                            //     printBarcode(response.handleData,create_time,barcode_num);
+                            // }
+                        }
+                    }
+                },
+                error: function(xhr, status, error) {
+                    waringToast('平台提示','请求失败:'+xhr.responseText);
+                }
+            });
+        }else{
+            waringToast('平台提示','请检查输入操作');
         }
     });
 }

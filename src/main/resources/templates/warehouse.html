@@ -4,11 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>仓库管理</title>
-    <!-- 引入Bootstrap CSS -->
     <link href="css/matrix_style.css" rel="stylesheet">
+    <!-- 引入Bootstrap CSS -->
     <link href="css/bootstrap_5.2.3.min.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" media="print" href="css/bootstrap_5.2.3.min.css">
     <!--fontawesome图标库-->
     <link type="text/css" href="fontawesome-free-6.6.0-web/css/all.min.css" rel="stylesheet">
+    <!--打印-->
+    <link rel="stylesheet" type="text/css" media="print" href="vue-plugin-hiprint/css/print-lock.css">
+    <link href="vue-plugin-hiprint/css/hiprint.css" rel="stylesheet" />
 </head>
 <body>
 <div class="matrix-flex-display flex-column">
@@ -45,20 +49,24 @@
                                         <!--在warehouse_handle.js动态添加-->
                                     </select>
                                     <div class="flex-row matrix-item-center mt-2">
-                                        <label>药品ID:</label>
+                                        <label>药品编码:</label>
                                         <strong id="medicine-code-label"></strong>
                                         &nbsp;&nbsp;&nbsp;
-                                        <label>售价:</label>
+                                        <label>售价(￥):</label>
                                         <strong id="medicine-price-label"></strong>
                                     </div>
                                     <div class="flex-row matrix-item-center mt-2">
                                         <div class="form-floating">
-                                            <input type="text" class="form-control" id="medicine-batch-number" placeholder="批量" name="medicine-batch-number">
-                                            <label for="medicine-batch-number">生成批次</label>
+                                            <input type="input" class="form-control" id="barcode-num" placeholder="条码数量" name="barcode-num">
+                                            <label for="barcode-num">条码数量</label>
+                                        </div>
+                                        &nbsp;&nbsp;&nbsp;
+                                        <div class="matrix-width-auto">
+                                            <input type="date" class="form-control" id="medicine-create-time" placeholder="日期" name="medicine-create-time">
                                         </div>
                                     </div>
                                     <div class="flex-row matrix-item-center mt-2">
-                                        <button class="btn btn-sm btn-primary" id="batch-generate-barcode"><span><i class="fa-solid fa-hourglass-start"></i></span>&nbsp;批量生成</button>
+                                        <button class="btn btn-sm btn-primary" id="batch-generate-barcode"><span><i class="fa-solid fa-hourglass-start"></i></span>&nbsp;批号生成</button>
                                     </div>
                                 </div>
                             </div>
@@ -76,11 +84,28 @@
     <footer class="bg-light text-center text-black p-0" th:replace="index::web-foot">
     </footer>
 </div>
+<textarea class="matrix-hide-view" rows="10" id="barcode-textarea">
+    {"panels":[{"index":0,"name":1,"height":30,"width":50,"paperHeader":0,"paperFooter":78,"printElements":[{"options":{"left":4,"top":3,"height":12,"width":85,"title":"品名","field":"medicineName","testData":"山楂柠檬茶(1号)","coordinateSync":false,"widthHeightSync":false,"fontSize":7.5,"qrCodeLevel":0,"fontWeight":"bold"},"printElementType":{"title":"文本","type":"text"}},{"options":{"left":91.5,"top":3,"height":12,"width":46,"title":"售价","field":"medicinePrice","testData":"20.66","coordinateSync":false,"widthHeightSync":false,"fontSize":7.5,"qrCodeLevel":0,"right":140.25,"bottom":13.5,"vCenter":119.25,"hCenter":8.625,"fontFamily":"STHeitiSC-Light","fontWeight":"bold"},"printElementType":{"title":"文本","type":"text"}},{"options":{"left":3,"top":18,"height":36,"width":134,"title":"ID","barcodeType":"code128","testData":"YP1002","coordinateSync":false,"widthHeightSync":false,"field":"medicineCode"},"printElementType":{"title":"条形码","type":"barcode"}},{"options":{"left":84,"top":67,"height":9.75,"width":51,"title":"批号","right":148.5,"bottom":77.2500057220459,"vCenter":117,"hCenter":72.3750057220459,"field":"medicineBatch","testData":"0001","coordinateSync":false,"widthHeightSync":false,"fontFamily":"STHeitiSC-Light","qrCodeLevel":0},"printElementType":{"title":"这是更新后的元素","type":"text"}},{"options":{"left":3,"top":67,"height":9.75,"width":76.5,"title":"日期","right":125.25,"bottom":77.2500057220459,"vCenter":65.25,"hCenter":72.3750057220459,"field":"medicineCreateTime","testData":"2024-10-09","coordinateSync":false,"widthHeightSync":false,"qrCodeLevel":0,"fontFamily":"STHeitiSC-Light"},"printElementType":{"title":"这是更新后的元素","type":"text"}}],"paperNumberLeft":58.5,"paperNumberTop":57,"paperNumberDisabled":true,"paperNumberContinue":true,"watermarkOptions":{"content":"","fillStyle":"rgba(184, 184, 184, 0.3)","fontSize":"14px","rotate":25,"width":200,"height":200,"timestamp":false,"format":"YYYY-MM-DD HH:mm"},"panelLayoutOptions":{"layoutType":"column","layoutRowGap":0,"layoutColumnGap":0}}]}
+</textarea>
 <script src="js/common/jquery.min.js"></script>
 <script src="js/common/bootstrap_5.2.3.bundle.js"></script>
-<script src="js/common/matrix_modal_tool.js"></script>
+<!--hiprint插件核心插件库-->
+<!--polyfill.min.js解决浏览器兼容性问题v6.26.0-->
+<script type="application/javascript" src="vue-plugin-hiprint/js/hiprint/polyfill.min.js"></script>
+<!--hiprint核心js-->
+<script type="application/javascript" src="vue-plugin-hiprint/js/hiprint/plugins/socket.io.js"></script>
+<!--vue-plugin-hiprint-->
+<script type="application/javascript" src="vue-plugin-hiprint/js/vue-plugin-hiprint.js"></script>
+<!--条形码库-->
+<script type="application/javascript" src="vue-plugin-hiprint/js/hiprint/plugins/JsBarcode.all.min.js"></script>
+<!--二维码生成组件-->
+<script type="application/javascript" src="vue-plugin-hiprint/js/hiprint/plugins/qrcode.js"></script>
+<!--调用浏览器打印窗口helper类,可自行替换-->
+<script type="application/javascript" src="vue-plugin-hiprint/js/hiprint/plugins/jquery.hiwprint.js"></script>
+<!--hiprint插件核心插件库-->
 <script src="js/common/datahandle/commondatahandle.js"></script>
 <script src="js/common/matrix_modal_tool.js"></script>
+<script src="js/common/matrix_tool.js"></script>
 <script src="js/warehouse/warehouse_handle.js"></script>
 </body>
 </html>

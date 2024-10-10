@@ -24,4 +24,19 @@
         FROM
             medicine_base_table;
     </select>
+    <!--查询最新入库信息:返回code,批次,name,price-->
+    <select id="queryNearMedicineInfo" parameterType="String" resultType="MedicineBaseBean">
+        SELECT
+            medicine_warehouse_table.medicine_code,
+            medicine_warehouse_table.medicine_batch_number,
+            medicine_base_table.medicine_name,
+            medicine_base_table.medicine_price
+        FROM
+            medicine_warehouse_table
+                INNER JOIN medicine_base_table ON medicine_base_table.medicine_code = medicine_warehouse_table.medicine_code
+        WHERE
+            medicine_warehouse_table.medicine_code = #{medicine_code}
+        ORDER BY
+            medicine_warehouse_table.medicine_batch_number DESC LIMIT 1;
+    </select>
 </mapper>

@@ -32,4 +32,9 @@ public class MedicineImpl implements MedicineService {
     public List<MedicineBaseBean> query_medicine_baseInfo() {
         return medicineMapper.query_medicine_baseInfo();
     }
+
+    @Override
+    public MedicineBaseBean queryNearMedicineInfo(String medicine_code) {
+        return medicineMapper.queryNearMedicineInfo(medicine_code);
+    }
 }

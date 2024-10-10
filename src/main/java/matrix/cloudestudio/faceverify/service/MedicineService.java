@@ -13,4 +13,5 @@ public interface MedicineService {
     List<MedicineBaseBean> query_medicine_code();
     List<MedicineBaseBean> query_medicine_name();
     List<MedicineBaseBean> query_medicine_baseInfo();
+    MedicineBaseBean queryNearMedicineInfo(String medicine_code);
 }
