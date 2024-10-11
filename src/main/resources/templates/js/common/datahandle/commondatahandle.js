@@ -25,7 +25,7 @@ function getUserInfoData() {
                 console.log(data);
                 console.log('权限:'+data.handleData.authorities[0]);
                 $('#headerView').attr('src', '/image'+data.handleData.headerImageUrl);
-                $('#nameView').text(data.handleData.uAccount);
+                $('#nameView').text(data.handleData.uName);
                 createHtmlView(data.handleData.authorities);
                 createOrganizationToolTip(data.handleData.organization_name);
             }
@@ -60,6 +60,9 @@ function createHtmlView(authorities){
                 break;
             case '10003':
                 htmlView += createMenuItem('fas fa-id-card', '实名认证', '/verify');
+                break;
+            case '10004':
+                htmlView += createMenuItem('fa-solid fa-warehouse', '仓库管理', '/warehouse');
                 break;
         }
     }

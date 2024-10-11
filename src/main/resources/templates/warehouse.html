@@ -20,7 +20,15 @@
     <div class="matrix-only-flex-display matrix-only-flex-content flex-column">
         <div class="matrix-fixed-content matrix-item-center">
             <div class="btn-group" id="btn-group-view" role="group" aria-label="">
-                <button type="button" class="btn btn-sm btn-primary" id="warehouse-manager"><span><i class="fa-solid fa-list-check"></i></span>&nbsp;库存管理</button>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown" id="warehouse-manager"><span><i class="fa-solid fa-list-check"></i></span>&nbsp;库存管理</button>
+                    <ul class="matrix-width-auto dropdown-menu">
+                        <li><button class="dropdown-item btn btn-link" id="addMedicine"><span><i class="fa-solid fa-plus"></i></span>&nbsp;添加药剂</button></li>
+                        <li><button class="dropdown-item btn btn-link" id="medicineDictionary"><span><i class="fa-solid fa-spell-check"></i></span>&nbsp;字典维护</button></li>
+                        <li><button class="dropdown-item btn btn-link" id="receiveMedicine"><span><i class="fa-solid fa-truck-front"></i></span>&nbsp;药剂入库</button></li>
+                        <li><button class="dropdown-item btn btn-link" id="dispatchMedicine"><span><i class="fa-solid fa-truck"></i></span>&nbsp;药剂出库</button></li>
+                    </ul>
+                </div>
                 <button type="button" class="btn btn-sm btn-primary" id="generate-barcode"><span><i class="fa-solid fa-barcode"></i></span>&nbsp;条码生成</button>
                 <button type="button" class="btn btn-sm btn-primary" id="other"><span><i class="fa-solid fa-globe"></i></span>&nbsp;其他管理</button>
             </div>
@@ -28,10 +36,33 @@
         <!-- 切换视图的容器 -->
         <div class="flex-column" id="view-container">
             <div id="view-warehouse-manager" class="matrix-hide-view">
-                <!-- 权限管理视图内容 -->
-                <h4 class="text-center">库存管理</h4><!--id="user_authority_view"-->
-                <div class="container mt-3">
-
+<!--                <h4 class="text-center">库存管理</h4>-->
+                <div class="container mt-2 flex-column">
+                    <!-- 仓库管理视图内容 -->
+                    <div class="matrix-hide-view flex-column mt-2" id="addMedicineView">
+                        <h6 class="text-center">药剂添加</h6>
+                        <div class="container mt-2">
+                            <p>添加药剂视图</p>
+                        </div>
+                    </div>
+                    <div class="matrix-hide-view flex-column mt-2" id="medicineDictionaryView">
+                        <h6 class="text-center">药剂字典维护</h6>
+                        <div class="container mt-2">
+                            <p>药剂字典维护视图</p>
+                        </div>
+                    </div>
+                    <div class="matrix-hide-view flex-column mt-2" id="receiveMedicineView">
+                        <h6 class="text-center">药剂入库</h6>
+                        <div class="container mt-2">
+                            <p>药剂入库视图</p>
+                        </div>
+                    </div>
+                    <div class="matrix-hide-view flex-column mt-2" id="dispatchMedicineView">
+                        <h6 class="text-center">药剂出库</h6>
+                        <div class="container mt-2">
+                            <p>药剂出库视图</p>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div id="view-generate-barcode" class="matrix-hide-view">
@@ -77,16 +108,18 @@
             <div id="view-other" class="matrix-hide-view">
                 <!-- 其他管理视图内容 -->
                 <h4 class="text-center">其他管理</h4>
-                <p>这里是其他管理的内容。</p>
+                <div class="container matrix-only-flex-content matrix-item-center mt-2">
+                    <p>功能尚在开发,敬请期待！</p>
+                </div>
             </div>
         </div>
     </div>
     <footer class="bg-light text-center text-black p-0" th:replace="index::web-foot">
     </footer>
 </div>
-<textarea class="matrix-hide-view" rows="10" id="barcode-textarea">
-    {"panels":[{"index":0,"name":1,"height":30,"width":50,"paperHeader":0,"paperFooter":78,"printElements":[{"options":{"left":4,"top":3,"height":12,"width":85,"title":"品名","field":"medicineName","testData":"山楂柠檬茶(1号)","coordinateSync":false,"widthHeightSync":false,"fontSize":7.5,"qrCodeLevel":0,"fontWeight":"bold"},"printElementType":{"title":"文本","type":"text"}},{"options":{"left":91.5,"top":3,"height":12,"width":46,"title":"售价","field":"medicinePrice","testData":"20.66","coordinateSync":false,"widthHeightSync":false,"fontSize":7.5,"qrCodeLevel":0,"right":140.25,"bottom":13.5,"vCenter":119.25,"hCenter":8.625,"fontFamily":"STHeitiSC-Light","fontWeight":"bold"},"printElementType":{"title":"文本","type":"text"}},{"options":{"left":3,"top":18,"height":36,"width":134,"title":"ID","barcodeType":"code128","testData":"YP1002","coordinateSync":false,"widthHeightSync":false,"field":"medicineCode"},"printElementType":{"title":"条形码","type":"barcode"}},{"options":{"left":84,"top":67,"height":9.75,"width":51,"title":"批号","right":148.5,"bottom":77.2500057220459,"vCenter":117,"hCenter":72.3750057220459,"field":"medicineBatch","testData":"0001","coordinateSync":false,"widthHeightSync":false,"fontFamily":"STHeitiSC-Light","qrCodeLevel":0},"printElementType":{"title":"这是更新后的元素","type":"text"}},{"options":{"left":3,"top":67,"height":9.75,"width":76.5,"title":"日期","right":125.25,"bottom":77.2500057220459,"vCenter":65.25,"hCenter":72.3750057220459,"field":"medicineCreateTime","testData":"2024-10-09","coordinateSync":false,"widthHeightSync":false,"qrCodeLevel":0,"fontFamily":"STHeitiSC-Light"},"printElementType":{"title":"这是更新后的元素","type":"text"}}],"paperNumberLeft":58.5,"paperNumberTop":57,"paperNumberDisabled":true,"paperNumberContinue":true,"watermarkOptions":{"content":"","fillStyle":"rgba(184, 184, 184, 0.3)","fontSize":"14px","rotate":25,"width":200,"height":200,"timestamp":false,"format":"YYYY-MM-DD HH:mm"},"panelLayoutOptions":{"layoutType":"column","layoutRowGap":0,"layoutColumnGap":0}}]}
-</textarea>
+<!--<textarea class="matrix-hide-view" rows="10" id="barcode-textarea">-->
+<!--    {"panels":[{"index":0,"name":1,"height":30,"width":50,"paperHeader":0,"paperFooter":78,"printElements":[{"options":{"left":4,"top":3,"height":12,"width":85,"title":"品名","field":"medicineName","testData":"山楂柠檬茶(1号)","coordinateSync":false,"widthHeightSync":false,"fontSize":7.5,"qrCodeLevel":0,"fontWeight":"bold"},"printElementType":{"title":"文本","type":"text"}},{"options":{"left":91.5,"top":3,"height":12,"width":46,"title":"售价","field":"medicinePrice","testData":"20.66","coordinateSync":false,"widthHeightSync":false,"fontSize":7.5,"qrCodeLevel":0,"right":140.25,"bottom":13.5,"vCenter":119.25,"hCenter":8.625,"fontFamily":"STHeitiSC-Light","fontWeight":"bold"},"printElementType":{"title":"文本","type":"text"}},{"options":{"left":3,"top":18,"height":36,"width":134,"title":"ID","barcodeType":"code128","testData":"YP1002","coordinateSync":false,"widthHeightSync":false,"field":"medicineCode"},"printElementType":{"title":"条形码","type":"barcode"}},{"options":{"left":84,"top":67,"height":9.75,"width":51,"title":"批号","right":148.5,"bottom":77.2500057220459,"vCenter":117,"hCenter":72.3750057220459,"field":"medicineBatch","testData":"0001","coordinateSync":false,"widthHeightSync":false,"fontFamily":"STHeitiSC-Light","qrCodeLevel":0},"printElementType":{"title":"这是更新后的元素","type":"text"}},{"options":{"left":3,"top":67,"height":9.75,"width":76.5,"title":"日期","right":125.25,"bottom":77.2500057220459,"vCenter":65.25,"hCenter":72.3750057220459,"field":"medicineCreateTime","testData":"2024-10-09","coordinateSync":false,"widthHeightSync":false,"qrCodeLevel":0,"fontFamily":"STHeitiSC-Light"},"printElementType":{"title":"这是更新后的元素","type":"text"}}],"paperNumberLeft":58.5,"paperNumberTop":57,"paperNumberDisabled":true,"paperNumberContinue":true,"watermarkOptions":{"content":"","fillStyle":"rgba(184, 184, 184, 0.3)","fontSize":"14px","rotate":25,"width":200,"height":200,"timestamp":false,"format":"YYYY-MM-DD HH:mm"},"panelLayoutOptions":{"layoutType":"column","layoutRowGap":0,"layoutColumnGap":0}}]}-->
+<!--</textarea>-->
 <script src="js/common/jquery.min.js"></script>
 <script src="js/common/bootstrap_5.2.3.bundle.js"></script>
 <!--hiprint插件核心插件库-->

@@ -14,16 +14,18 @@ import java.util.List;
 public class UserInfoSimple implements Serializable {
     private int uId;
     private String uAccount;
+    private String uName;
     private String organization_code;
     private String organization_name;
     private int uStatus;
     private String headerImageUrl;
     private List<String> authorities;
 
-    public UserInfoSimple(int id, String account, String organization_code,
+    public UserInfoSimple(int id, String account,String name, String organization_code,
                           String organization_name, int status, String headerUrl, List<String> authorities){
         this.uId=id;
         this.uAccount=account;
+        this.uName=name;
         this.organization_code=organization_code;
         this.organization_name=organization_name;
         this.uStatus=status;

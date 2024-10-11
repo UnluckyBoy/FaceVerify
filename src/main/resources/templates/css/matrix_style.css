@@ -211,7 +211,7 @@
     width: 100%;
 }
 .matrix-width-auto{
-    width:auto;
+    width:auto !important;
 }
 .matrix-width-8rem{
     display: flex;

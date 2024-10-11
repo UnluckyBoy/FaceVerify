@@ -9,6 +9,7 @@
             login_info_table.uId,
             login_info_table.uAccount,
             login_info_table.uPassword,
+            login_info_table.uName,
             login_info_table.organization_code,
             login_info_table.organization_name,
             login_info_table.uStatus,
@@ -21,6 +22,7 @@
     <select id="queryUserAuthorityInfo" resultType="UserAuthorityInfoBean">
         SELECT DISTINCT
             login_info_table.uAccount,
+            login_info_table.uName,
             login_info_table.organization_code,
             login_info_table.organization_name,
             authority_table.authority_type

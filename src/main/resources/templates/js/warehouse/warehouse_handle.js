@@ -1,15 +1,20 @@
 $(document).ready(function() {
     createViewHandle();
 });
-
+/**
+ * 仓库管理主视图创建
+ * **/
 function createViewHandle() {
-    // 绑定按钮点击事件
+    /** 绑定按钮点击事件 **/
+    /** 仓库管理按钮组视图 **/
     $('#warehouse-manager').click(function() {
         // 隐藏所有视图
         $('#view-generate-barcode, #view-warehouse-manager, #view-other').hide();
         // 显示权限管理视图
         $('#view-warehouse-manager').show();
+        createWareHouseView();
     });
+
     $('#generate-barcode').click(function() {
         // 隐藏所有视图
         $('#view-generate-barcode, #view-warehouse-manager, #view-other').hide();
@@ -25,7 +30,31 @@ function createViewHandle() {
         $('#view-other').show();
     });
 }
+/**
+ * 出库、入库等视图创建
+ * **/
+function createWareHouseView(){
+    $('#addMedicine').click(function() {
+        $('#addMedicineView, #medicineDictionaryView, #receiveMedicineView, #dispatchMedicineView').hide();
+        $('#addMedicineView').show();
+    });
+    $('#medicineDictionary').click(function() {
+        $('#addMedicineView, #medicineDictionaryView, #receiveMedicineView, #dispatchMedicineView').hide();
+        $('#medicineDictionaryView').show();
+    });
+    $('#receiveMedicine').click(function() {
+        $('#addMedicineView, #medicineDictionaryView, #receiveMedicineView, #dispatchMedicineView').hide();
+        $('#receiveMedicineView').show();
+    });
+    $('#dispatchMedicine').click(function() {
+        $('#addMedicineView, #medicineDictionaryView, #receiveMedicineView, #dispatchMedicineView').hide();
+        $('#dispatchMedicineView').show();
+    });
+}
 
+/**
+ * 发起后台查询获得药剂，名并绑定到选择器
+ */
 function getMedicineName(){
     $.ajax({
         url:'/MedicineApi/queryMedicineBaseInfo',
@@ -65,6 +94,10 @@ function getMedicineName(){
         }
     });
 }
+
+/***
+ * 清空生成条码视图组件
+ */
 function clearGenerateView(){
     $('#medicine-select-view').empty();
     $('#medicine-code-label').text('');

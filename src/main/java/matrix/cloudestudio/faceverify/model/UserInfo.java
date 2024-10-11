@@ -20,6 +20,7 @@ public class UserInfo implements UserDetails {
     private int uId;
     private String uAccount;
     private String uPassword;
+    private String uName;
     private String organization_code;
     private String organization_name;
     private int uStatus;
@@ -100,6 +101,6 @@ public class UserInfo implements UserDetails {
      */
     public UserInfoSimple toUserInfoSimple() {
         // 直接使用当前对象的 authorities 列表
-        return new UserInfoSimple(uId, uAccount, organization_code, organization_name, uStatus, headerImageUrl, authorities);
+        return new UserInfoSimple(uId, uAccount,uName, organization_code, organization_name, uStatus, headerImageUrl, authorities);
     }
 }
