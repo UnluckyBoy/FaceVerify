@@ -1,8 +1,8 @@
 /**
- * 简单弹窗
+ * 简单提醒弹窗
  * */
 function warningModal(title,content,onCloseCallback){
-    var modalHTML = `
+    const modalHTML = `
         <div class="modal fade" id="warningModal">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -19,7 +19,7 @@ function warningModal(title,content,onCloseCallback){
                 </div>
               </div>
               <!-- 模态框底部 -->
-              <div class="modal-footer">
+              <div class="modal-footer matrix-item-center">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">关闭</button>
               </div>
             </div>
@@ -33,6 +33,44 @@ function warningModal(title,content,onCloseCallback){
     $('#warningModal').modal('show');
     // 监听模态框隐藏事件
     $('#warningModal').on('hide.bs.modal', function () {
+        if (onCloseCallback && typeof onCloseCallback === 'function') {
+            onCloseCallback();
+        }
+    });
+}
+
+function successModal(title,content,onCloseCallback){
+    const modalHTML = `
+        <div class="modal fade" id="successModal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <!-- 模态框头部 -->
+              <div class="modal-header">
+                <h4 class="modal-title">${title}</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+              <!-- 模态框内容 -->
+              <div class="modal-body">
+                <div class="flex-row">
+                    <span class="text-primary"><i class="fa-regular fa-thumbs-up"></i></span>
+                    <div class="text-center">${content}</div>
+                </div>
+              </div>
+              <!-- 模态框底部 -->
+              <div class="modal-footer matrix-item-center">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">关闭</button>
+              </div>
+            </div>
+          </div>
+        </div>
+`;
+    // 将Modal的HTML添加到body中
+    $('body').append(modalHTML);
+    $('#successModal').modal({backdrop: 'static', keyboard: false});//禁用空白关闭
+    // 显示Modal
+    $('#successModal').modal('show');
+    // 监听模态框隐藏事件
+    $('#successModal').on('hide.bs.modal', function () {
         if (onCloseCallback && typeof onCloseCallback === 'function') {
             onCloseCallback();
         }
@@ -97,19 +135,35 @@ function confirmModal(title,content,onConfirmCallback){
 }
 
 /***
- * 弹窗
+ * 提醒弹窗
  * @param title
  * @param content
  */
 function waringToast(title,content){
     let toastHTML = `
-        <div class="toast matrix-toast show" id="simpleToast">
+        <div class="matrix-toast toast show" id="simpleToast">
             <div class="toast-header">
                 <strong class="me-auto">${title}</strong>
                 <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
             </div>
             <div class="matrix-toast-body matrix-border-radius-1 flex-row toast-body text-center">
                 <span class="text-danger fa fa-warning"></span>
+                <strong>${content}</strong>
+            </div>
+        </div>
+    `;
+    $('body').append(toastHTML);
+}
+
+function successToast(title,content){
+    let toastHTML = `
+        <div class="matrix-toast toast show" id="successToast">
+            <div class="toast-header">
+                <strong class="me-auto">${title}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+            </div>
+            <div class="matrix-toast-body matrix-border-radius-1 flex-row toast-body text-center">
+                <span class="text-primary fa-regular fa-thumbs-up"></span>
                 <strong>${content}</strong>
             </div>
         </div>

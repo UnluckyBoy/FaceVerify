@@ -3,9 +3,11 @@ package matrix.cloudestudio.faceverify.controller;
 import com.google.gson.Gson;
 import com.google.zxing.WriterException;
 import jakarta.servlet.http.HttpServletResponse;
+import matrix.cloudestudio.faceverify.model.PrintStyleBean;
 import matrix.cloudestudio.faceverify.model.UserAuthorityInfoBean;
 import matrix.cloudestudio.faceverify.service.AuthorityService;
 import matrix.cloudestudio.faceverify.service.BaseInfoService;
+import matrix.cloudestudio.faceverify.service.PrintStyleService;
 import matrix.cloudestudio.faceverify.tool.QRCodeUtil;
 import matrix.cloudestudio.faceverify.util.WebServerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,9 @@ public class OpenApiController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private PrintStyleService printStyleService;
 
     private static Gson gson=new Gson();
 
@@ -105,6 +110,21 @@ public class OpenApiController {
             responseMap.put("qrCodeImage", qrCodeImage);
             response.getWriter().write(gson.toJson(WebServerResponse.success("请求成功",responseMap)));
         }else{
+            response.getWriter().write(gson.toJson(WebServerResponse.failure("请求失败")));
+        }
+    }
+
+    @RequestMapping("/getPrintStyle")
+    public void getPrintStyle(@RequestParam("printName") String printName,HttpServletResponse response) throws IOException, WriterException {
+        PrintStyleBean printStyleBean = printStyleService.query_print_style(printName);
+        response.setContentType("application/json;charset=UTF-8");
+        if (printStyleBean != null) {
+            System.out.println("打印格式:"+printStyleBean.toString());
+            //Map<String, Object> responseMap = new HashMap<>();
+            //responseMap.put("qrCodeImage", printStyleBean);
+            response.getWriter().write(gson.toJson(WebServerResponse.success("请求成功",printStyleBean)));
+        }else{
+            System.out.println("打印格式:"+printStyleBean.toString());
             response.getWriter().write(gson.toJson(WebServerResponse.failure("请求失败")));
         }
     }

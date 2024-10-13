@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName MedicineImpl
@@ -36,5 +37,15 @@ public class MedicineImpl implements MedicineService {
     @Override
     public MedicineBaseBean queryNearMedicineInfo(String medicine_code) {
         return medicineMapper.queryNearMedicineInfo(medicine_code);
+    }
+
+    @Override
+    public MedicineBaseBean queryNearMedicineCode() {
+        return medicineMapper.queryNearMedicineCode();
+    }
+
+    @Override
+    public boolean addMedicineBaseInfo(Map<String, Object> map) {
+        return medicineMapper.addMedicineBaseInfo(map);
     }
 }

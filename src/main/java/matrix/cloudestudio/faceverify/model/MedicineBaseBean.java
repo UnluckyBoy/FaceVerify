@@ -15,6 +15,7 @@ public class MedicineBaseBean implements Serializable {
     private String medicine_code;
     private String medicine_name;
     private BigDecimal medicine_price;
+    private String medicine_time;
     private int medicine_batch_number;
     private int warehouse_count;
     private int canuse_count;

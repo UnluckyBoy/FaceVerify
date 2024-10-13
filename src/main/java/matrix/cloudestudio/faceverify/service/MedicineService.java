@@ -3,6 +3,7 @@ package matrix.cloudestudio.faceverify.service;
 import matrix.cloudestudio.faceverify.model.MedicineBaseBean;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName MedicineService
@@ -14,4 +15,6 @@ public interface MedicineService {
     List<MedicineBaseBean> query_medicine_name();
     List<MedicineBaseBean> query_medicine_baseInfo();
     MedicineBaseBean queryNearMedicineInfo(String medicine_code);
+    MedicineBaseBean queryNearMedicineCode();
+    boolean addMedicineBaseInfo(Map<String,Object> map);
 }

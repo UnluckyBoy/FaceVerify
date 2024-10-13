@@ -20,7 +20,8 @@
         SELECT
             medicine_base_table.medicine_code,
             medicine_base_table.medicine_name,
-            medicine_base_table.medicine_price
+            medicine_base_table.medicine_price,
+            medicine_base_table.medicine_time
         FROM
             medicine_base_table;
     </select>
@@ -39,4 +40,35 @@
         ORDER BY
             medicine_warehouse_table.medicine_batch_number DESC LIMIT 1;
     </select>
+    <!--查询最新创建的药剂编码-->
+    <select id="queryNearMedicineCode" resultType="MedicineBaseBean">
+        SELECT
+            medicine_base_table.medicine_code
+        FROM
+            medicine_base_table
+        ORDER BY
+            medicine_base_table.medicine_time DESC
+            LIMIT 1;
+    </select>
+
+    <!--插入逻辑-->
+    <!--创建药剂-->
+    <insert id="addMedicineBaseInfo" parameterType="java.util.Map">
+        INSERT INTO medicine_base_table
+            (medicine_code,medicine_name,medicine_price)
+        VALUES
+            (#{medicine_code},#{medicine_name},#{medicine_price});
+    </insert>
+
+    <!--Update逻辑-->
+    <update id="cancel_regis" parameterType="java.util.Map">
+        UPDATE backservice.gh_data_table
+        SET cancel_sign = '是',
+            cancel_operator = #{cancel_operator},
+            cancel_time = #{cancel_time}
+        WHERE
+            gh_number = #{gh_number}
+          AND cancel_sign = '否'
+          AND appointment_sign='否';
+    </update>
 </mapper>
