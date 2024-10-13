@@ -331,7 +331,7 @@ function bindMedicineDataTable(){
                 ,"render": function (data, type, row, meta) {
                     return '<strong>' + data + '</strong>';
                 }
-            },   // 角色字段名
+            },
             {
                 // 这个列不映射到任何数据字段,在这里添加按钮
                 "render": function (data, type, row, meta) {
