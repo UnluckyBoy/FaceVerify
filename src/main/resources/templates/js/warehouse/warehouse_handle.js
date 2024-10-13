@@ -326,7 +326,7 @@ function bindMedicineDataTable(){
         columns: [
             { "data": "medicine_code", "type": "string" },
             { "data": "medicine_name", "type": "string"},
-            { "data": "medicine_price", "type": "string" }, // 机构字段名
+            { "data": "medicine_price", "type": "string" },
             { "data": "medicine_time", "type": "string"
                 ,"render": function (data, type, row, meta) {
                     return '<strong>' + data + '</strong>';
