@@ -23,4 +23,6 @@ public interface MedicineMapper {
     MedicineBaseBean queryNearMedicineInfo(String medicine_code);//查询最新批次药品信息
     MedicineBaseBean queryNearMedicineCode();//查询最新批次药品编码
     boolean addMedicineBaseInfo(Map<String,Object> map);//药剂基本信息Insert
+    MedicineBaseBean query_medicineBaseInfoByCode(String medicine_code);//编码查询药品信息
+    MedicineBaseBean queryWareHouseInfoByCodeCrTimeBaNum(Map<String,Object> map);//编码生产日期批次查询库存信息
 }

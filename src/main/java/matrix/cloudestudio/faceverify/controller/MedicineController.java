@@ -1,12 +1,15 @@
 package matrix.cloudestudio.faceverify.controller;
 
 import com.google.gson.Gson;
+import com.google.zxing.NotFoundException;
 import com.google.zxing.WriterException;
 import jakarta.servlet.http.HttpServletResponse;
 import matrix.cloudestudio.faceverify.model.MedicineBaseBean;
 import matrix.cloudestudio.faceverify.model.PrintStyleBean;
 import matrix.cloudestudio.faceverify.service.MedicineService;
 import matrix.cloudestudio.faceverify.service.PrintStyleService;
+import matrix.cloudestudio.faceverify.tool.QRCodeUtil;
+import matrix.cloudestudio.faceverify.tool.TimeUtil;
 import matrix.cloudestudio.faceverify.util.WebServerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -91,14 +94,33 @@ public class MedicineController {
      * @throws IOException
      */
     @RequestMapping("/queryNearMedicineInfo")
-    public void queryNearMedicineInfo(@RequestParam("medicine_code") String medicine_code, HttpServletResponse response) throws IOException {
+    public void queryNearMedicineInfo(@RequestParam("medicine_code") String medicine_code, HttpServletResponse response) throws IOException,WriterException {
         MedicineBaseBean request=medicineService.queryNearMedicineInfo(medicine_code);
-        System.out.println("最新批次药品信息:"+request.toString());
         response.setContentType("application/json;charset=UTF-8");
+        Map<String,Object> responseMap=new HashMap<>();
         if (request!=null) {
-            response.getWriter().write(gson.toJson(WebServerResponse.success("请求成功",request)));
+            int batch_num=request.getMedicine_batch_number()+1;//生成新批次
+            responseMap.put("medicine_name",request.getMedicine_name());
+            responseMap.put("medicine_price",request.getMedicine_price());
+            responseMap.put("medicine_code",QRCodeUtil.generateBarcodeImage2(request.getMedicine_code()+
+                    TimeUtil.timeToString(request.getCreate_time())+batch_num));
+            responseMap.put("medicine_batch_number",batch_num);
+            System.out.println("生成条码信息:"+responseMap.toString());
+            response.getWriter().write(gson.toJson(WebServerResponse.success("请求成功",responseMap)));
         }else{
-            response.getWriter().write(gson.toJson(WebServerResponse.failure("请求失败")));
+            MedicineBaseBean nullResult=medicineService.query_medicineBaseInfoByCode(medicine_code);
+            if(nullResult!=null){
+                int batch_number=1001;
+                responseMap.put("medicine_name",nullResult.getMedicine_name());
+                responseMap.put("medicine_price",nullResult.getMedicine_price());
+                responseMap.put("medicine_code",QRCodeUtil.generateBarcodeImage2(nullResult.getMedicine_code()
+                        +TimeUtil.timeToString(TimeUtil.GetTime(false))+batch_number));
+                responseMap.put("medicine_batch_number",batch_number);
+                System.out.println("生成条码信息:"+responseMap.toString());
+                response.getWriter().write(gson.toJson(WebServerResponse.success("请求成功",responseMap)));
+            }else{
+                response.getWriter().write(gson.toJson(WebServerResponse.failure("请求失败")));
+            }
         }
     }
 
@@ -160,6 +182,32 @@ public class MedicineController {
         }else{
             System.out.println("打印格式:"+printStyleBean.toString());
             response.getWriter().write(gson.toJson(WebServerResponse.failure("打印操作失异常!")));
+        }
+    }
+
+    @RequestMapping("/decodeBarcode")
+    public void decodeBarcodeFromBase64(@RequestParam("image") String image,
+                                         HttpServletResponse response) throws IOException, NotFoundException,WriterException {
+        String result= QRCodeUtil.BarcodeDecoderFromBase64(image);
+        response.setContentType("application/json;charset=UTF-8");
+        if (result!=null) {
+            System.out.println("解码结果:"+result);
+
+            String medicineCode = result.substring(0, 8);  // 提取前8个字符,得到编码
+            String createTime = result.substring(8, 16); // 提取接下来的8个字符,得到时间"yyyymmdd"
+            String batchNum = result.substring(16, 20); // 提取最后4个字符,得到批次
+            System.out.println("解码结果拆分:"+medicineCode+"\t"+createTime+"\t"+batchNum);
+            Map<String,Object> queryMap=new HashMap<>();
+            queryMap.put("medicine_code",medicineCode);
+            queryMap.put("create_time",createTime);
+            queryMap.put("medicine_batch_number",batchNum);
+            MedicineBaseBean queryBean=medicineService.queryWareHouseInfoByCodeCrTimeBaNum(queryMap);
+
+            Map<String,Object> resultMap=new HashMap<>();
+            resultMap.put("decodeResult",result);
+            response.getWriter().write(gson.toJson(WebServerResponse.success("请求成功",resultMap)));
+        }else{
+            response.getWriter().write(gson.toJson(WebServerResponse.failure("获取新药品编码异常!")));
         }
     }
 }

@@ -104,9 +104,23 @@ public class OpenApiController {
     @RequestMapping("/generateBarcode")
     public void generateBarcode(@RequestParam("text") String text,HttpServletResponse response) throws IOException, WriterException {
         String qrCodeImage = QRCodeUtil.generateBarcodeImage(text);
+        //String qrCodeImage = QRCodeUtil.generateBarcodeImage2(text);
         response.setContentType("application/json;charset=UTF-8");
         if (qrCodeImage != null || !(qrCodeImage.isEmpty())) {
-            Map<String, String> responseMap = new HashMap<>();
+            Map<String, Object> responseMap = new HashMap<>();
+            responseMap.put("qrCodeImage", qrCodeImage);
+            response.getWriter().write(gson.toJson(WebServerResponse.success("请求成功",responseMap)));
+        }else{
+            response.getWriter().write(gson.toJson(WebServerResponse.failure("请求失败")));
+        }
+    }
+    @RequestMapping("/generateBarcode2")
+    public void generateBarcode2(@RequestParam("text") String text,HttpServletResponse response) throws IOException, WriterException {
+        String qrCodeImage = QRCodeUtil.generateBarcodeImage(text);
+        //String qrCodeImage = QRCodeUtil.generateBarcodeImage2(text);
+        response.setContentType("application/json;charset=UTF-8");
+        if (qrCodeImage != null || !(qrCodeImage.isEmpty())) {
+            Map<String, Object> responseMap = new HashMap<>();
             responseMap.put("qrCodeImage", qrCodeImage);
             response.getWriter().write(gson.toJson(WebServerResponse.success("请求成功",responseMap)));
         }else{
@@ -120,8 +134,6 @@ public class OpenApiController {
         response.setContentType("application/json;charset=UTF-8");
         if (printStyleBean != null) {
             System.out.println("打印格式:"+printStyleBean.toString());
-            //Map<String, Object> responseMap = new HashMap<>();
-            //responseMap.put("qrCodeImage", printStyleBean);
             response.getWriter().write(gson.toJson(WebServerResponse.success("请求成功",printStyleBean)));
         }else{
             System.out.println("打印格式:"+printStyleBean.toString());

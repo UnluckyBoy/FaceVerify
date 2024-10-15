@@ -21,17 +21,6 @@
     <div class="matrix-only-flex-display matrix-only-flex-content flex-column">
         <div class="matrix-fixed-content matrix-item-center">
             <div class="btn-group" id="btn-group-view" role="group" aria-label="">
-                <!--
-                <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown" id="warehouseManager"><span><i class="fa-solid fa-list-check"></i></span>&nbsp;库存管理</button>
-                    <ul class="dropdown-menu" id="dropdownMenuView">
-                        <li><button class="dropdown-item btn btn-link" id="addMedicine"><span><i class="fa-solid fa-plus"></i></span>&nbsp;添加药剂</button></li>
-                        <li><button class="dropdown-item btn btn-link" id="medicineDictionary"><span><i class="fa-solid fa-spell-check"></i></span>&nbsp;字典维护</button></li>
-                        <li><button class="dropdown-item btn btn-link" id="receiveMedicine"><span><i class="fa-solid fa-truck-front"></i></span>&nbsp;药剂入库</button></li>
-                        <li><button class="dropdown-item btn btn-link" id="dispatchMedicine"><span><i class="fa-solid fa-truck"></i></span>&nbsp;药剂出库</button></li>
-                    </ul>
-                </div>
-                -->
                 <button type="button" class="btn btn-sm btn-primary" id="warehouseManager"><span><i class="fa-solid fa-list-check"></i></span>&nbsp;库存管理</button>
                 <button type="button" class="btn btn-sm btn-primary" id="generate-barcode"><span><i class="fa-solid fa-barcode"></i></span>&nbsp;条码生成</button>
                 <button type="button" class="btn btn-sm btn-primary" id="other"><span><i class="fa-solid fa-globe"></i></span>&nbsp;其他管理</button>
@@ -39,9 +28,9 @@
         </div>
         <!-- 切换视图的容器 -->
         <div class="flex-column" id="view-container">
-            <div id="view-warehouse-manager" class="matrix-hide-view matrix-item-center">
-                <h4 class="text-center">库存管理</h4>
-                <div class="matrix-only-flex-display matrix-only-flex-content matrix-item-center">
+            <div id="view-warehouse-manager" class="matrix-hide-view matrix-item-center matrix-border matrix-border-radius m-1">
+                <!--<h4 class="text-center">库存管理</h4>-->
+                <div class="matrix-only-flex-display matrix-only-flex-content matrix-item-center pt-1">
                     <div class="btn-group" id="btnWarehouseManagerGroup" role="group" aria-label="">
                         <button class="btn btn-sm btn-primary" id="addMedicine"><span><i class="fa-solid fa-plus"></i></span>&nbsp;添加药剂</button>
                         <button class="btn btn-sm btn-primary" id="medicineDictionary"><span><i class="fa-solid fa-spell-check"></i></span>&nbsp;字典维护</button>
@@ -52,7 +41,7 @@
                 <div class="container mt-2 flex-column">
                     <!-- 仓库管理视图内容 -->
                     <div class="matrix-hide-view matrix-item-center flex-column mt-2" id="commonWareHouseView">
-
+                        <!--动态添加-->
                     </div>
                 </div>
             </div>

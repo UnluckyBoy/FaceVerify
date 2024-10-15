@@ -66,7 +66,6 @@ function printBarcode(ObjectDatas,createTime,printCount,printConfig){
         const printTemplate = new hiprint.PrintTemplate({template: JSON.parse(printConfig)});
         printTemplates.push(printTemplate);
     }
-
     //将批量打印存入map
     const templatesArray = printTemplates.map((template, index) => {
         return {
@@ -74,9 +73,10 @@ function printBarcode(ObjectDatas,createTime,printCount,printConfig){
             data: [{
                 medicineName: ObjectDatas.medicine_name,
                 medicinePrice: ObjectDatas.medicine_price,
-                medicineCode: ObjectDatas.medicine_code,
+                medicineCode: 'image/'+ObjectDatas.medicine_code,
+                //medicineCode: 'https://img0.baidu.com/it/u=1711875334,20344900&fm=253&fmt=auto&app=120&f=JPEG?w=889&h=500',
                 medicineCreateTime: createTime,
-                medicineBatch: (ObjectDatas.medicine_batch_number + 1) // 如果每个批次需要递增，这里加上了 index
+                medicineBatch: (ObjectDatas.medicine_batch_number) // 批次已在后台+1需要递增，这里加上了 index
             }]
         };
     });

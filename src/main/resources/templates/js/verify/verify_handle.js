@@ -11,7 +11,7 @@ $(document).ready(function() {
                     $('#video').show(); // 显示视频元素
                 })
                 .catch(function(error) {
-                    console.error("无法启动摄像头：", error);
+                    waringToast('体统提示','无法启动摄像头：', error);
                 });
         });
         /**
@@ -60,7 +60,7 @@ $(document).ready(function() {
             const dataURL = canvas.toDataURL('image/png');
             $('#photo').prop('src', dataURL).show();
             image=dataURL.split(',')[1];
-            console.log('图片已显示,Base64 编码的图片数据:', image);
+            //console.log('图片已显示,Base64 编码的图片数据:', image);
         });
     } else {
         //console.error('您的浏览器不支持 getUserMedia API');

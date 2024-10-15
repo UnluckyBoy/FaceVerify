@@ -48,4 +48,14 @@ public class MedicineImpl implements MedicineService {
     public boolean addMedicineBaseInfo(Map<String, Object> map) {
         return medicineMapper.addMedicineBaseInfo(map);
     }
+
+    @Override
+    public MedicineBaseBean query_medicineBaseInfoByCode(String medicine_code) {
+        return medicineMapper.query_medicineBaseInfoByCode(medicine_code);
+    }
+
+    @Override
+    public MedicineBaseBean queryWareHouseInfoByCodeCrTimeBaNum(Map<String, Object> map) {
+        return medicineMapper.queryWareHouseInfoByCodeCrTimeBaNum(map);
+    }
 }

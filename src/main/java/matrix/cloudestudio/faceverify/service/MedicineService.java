@@ -17,4 +17,6 @@ public interface MedicineService {
     MedicineBaseBean queryNearMedicineInfo(String medicine_code);
     MedicineBaseBean queryNearMedicineCode();
     boolean addMedicineBaseInfo(Map<String,Object> map);
+    MedicineBaseBean query_medicineBaseInfoByCode(String medicine_code);
+    MedicineBaseBean queryWareHouseInfoByCodeCrTimeBaNum(Map<String,Object> map);
 }

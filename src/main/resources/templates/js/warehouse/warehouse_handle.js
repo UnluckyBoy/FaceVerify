@@ -79,7 +79,7 @@ function createWareHouseView(){
         });
     });
 
-    /**药剂字典维护视图逻辑**/
+    /**药剂入库视图逻辑**/
     $('#medicineDictionary').on('click',function() {
         $('#commonWareHouseView').show();
         const content = `  
@@ -90,7 +90,7 @@ function createWareHouseView(){
                   <tr>
                      <th>药剂编码</th>
                      <th>药剂名称</th>
-                     <th>药剂价格</th>
+                     <th>药剂价格(￥)</th>
                      <th>创建日期</th>
                      <th>操作</th>
                   </tr>
@@ -108,12 +108,38 @@ function createWareHouseView(){
         $('#commonWareHouseView').show();
         const content = `  
             <h6 class="text-center">药剂入库</h6>
-               <div class="container mt-2">
-                  <p>药剂入库视图</p>
-               </div>  
+            <div class="matrix-only-flex-display matrix-only-flex-content matrix-item-center flex-column mt-2">  
+                <div class="col-md-6">  
+                    <div class="matrix-only-flex-content flex-column matrix-only-flex-content matrix-item-center">  
+                        <div class="matrix-item-center flex-row col-md-4 p-1 gap-2">  
+                            <label class="col-form-label text-center">药剂编码:</label>  
+                            <strong class="text-center" id="inWareHouseCode"></strong>  
+                        </div>  
+                        <div class="col-md-4 p-1">  
+                            <div class="form-floating">  
+                                <input type="text" class="form-control" id="inWareHouseNum" placeholder="入库数量" name="inWareHouseNum">  
+                                <label for="inWareHouseNum">入库数量</label>  
+                            </div>  
+                        </div>
+                        <div class="flex-row p-1 gap-2 matrix-item-center">
+                            <button type="button" class="btn btn-sm btn-success" id="initCamera"><span><i class="fa-solid fa-video"></i></span>&nbsp;启动摄像头</button>
+                            <button type="button" class="btn btn-sm btn-primary" id="inWareHouseSave"><span><i class="fa-regular fa-floppy-disk"></i></span>&nbsp;药剂入库</button>
+                        </div>
+                        <div class="d-flex justify-content-center p-1">
+                                <video class="matrix-border-radius" id="barcodeVideo" width="256" height="192" autoplay></video>
+                                <canvas id="barcodeCanvas" width="256" height="192" style="display:none;"></canvas>
+                        </div>
+                    </div>  
+                </div>  
+            </div>  
         `;
         $('#commonWareHouseView').html(content);
+        $('#initCamera').on('click',function (){
+            decodeBarcodeHandle();
+        });
     });
+
+
     $('#dispatchMedicine').on('click',function() {
         $('#commonWareHouseView').show();
         const content = `  
@@ -201,8 +227,7 @@ function createMedicineBarcode(){
                     if(response.handleType){
                         //console.log(response.handleData);
                         if (response.handleType) {
-                            doPrint(response.handleData,create_time,barcode_num,"药剂条码打印");
-                            //printBarcode(response.handleData,create_time,barcode_num,);
+                            doPrint(response.handleData,create_time,barcode_num,"药剂条码");
                         }
                     }
                 },
@@ -304,8 +329,8 @@ function insertMedicineBaseInfo(){
  */
 function bindMedicineDataTable(){
     if ($.fn.DataTable.isDataTable('#medicineDictionaryTable')) {
-        // 如果是，则销毁现有的 DataTables 实例
-        $('#user-info-table').DataTable().destroy();
+        // 如果是,则销毁现有的 DataTables 实例
+        $('#medicineDictionaryTable').DataTable().destroy();
     }
     $('#medicineDictionaryTable').DataTable({
         renderer:'bootstrap',//启用bootstrap渲染
@@ -326,7 +351,19 @@ function bindMedicineDataTable(){
         columns: [
             { "data": "medicine_code", "type": "string" },
             { "data": "medicine_name", "type": "string"},
-            { "data": "medicine_price", "type": "string" },
+            // { "data": "medicine_price", "type": "string" },
+            {
+                "data": "medicine_price",
+                "type": "num", // 虽然这主要用于排序，但我们可以设置它，然后在渲染时格式化输出
+                "render": function (data, type, row, meta) {
+                    const price = parseFloat(data);
+                    if (!isNaN(price)) { // 检查转换是否成功
+                        return price.toFixed(2);
+                    } else {
+                        return data;
+                    }
+                }
+            },
             { "data": "medicine_time", "type": "string"
                 ,"render": function (data, type, row, meta) {
                     return '<strong>' + data + '</strong>';
@@ -344,7 +381,7 @@ function bindMedicineDataTable(){
         ],
         // 使用createdRow回调来添加事件监听器（如果需要的话）
         "createdRow": function(row, data, dataIndex) {
-            // 你可以在这里为按钮添加事件监听器
+            // 按钮添加事件监听器
             $(row).find('button.btn-info').on('click', function() {
                 // 编辑操作
                 $(row).find('td:eq(1)').prop('contenteditable', true).focus();
@@ -362,7 +399,7 @@ function bindMedicineDataTable(){
             //     });
             // });
             $(row).find('button.btn-primary').on('click', function() {
-                confirmModal('平台提示','是否确认修改:' + data.uAccount+'信息？',function (confirmed){
+                confirmModal('平台提示','是否确认修改:' + data.medicine_name+'信息？',function (confirmed){
                     if(confirmed){
                         $(row).find('td:eq(1)').prop('contenteditable', false);
                         $(row).find('td:eq(2)').prop('contenteditable', false);
@@ -376,6 +413,71 @@ function bindMedicineDataTable(){
                     }
                 });
             });
+        }
+    });
+}
+
+/***
+ * 入库逻辑
+ */
+function decodeBarcodeHandle(){
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        // 启动摄像头
+        navigator.mediaDevices.getUserMedia({video: true})
+            .then(function (stream) {
+                const videoElement = $('#barcodeVideo')[0]; // 获取DOM元素
+                videoElement.srcObject = stream; // 设置媒体流
+                videoElement.play(); // 开始播放视频
+                $('#barcodeVideo').show(); // 显示视频元素
+
+                // 设置6秒后暂停视频
+                setTimeout(function() {
+                    videoElement.pause(); // 暂停视频
+
+                    // 创建一个canvas元素并设置其大小与视频元素相同
+                    const canvas = $('#barcodeCanvas')[0];
+                    canvas.width = videoElement.videoWidth;
+                    canvas.height = videoElement.videoHeight;
+                    // 获取canvas的2D绘图上下文
+                    const context = canvas.getContext('2d');
+                    // 将视频当前帧绘制到canvas上
+                    context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+                    // 将canvas内容转换为Base64编码的字符串（PNG格式）
+                    const base64Image = (canvas.toDataURL('image/png')).split(',')[1];//去掉前缀
+                    console.log('图片Base64编码:'+base64Image);
+
+                    $('#barcodeVideo').hide();
+                    decodeBarcode(base64Image);
+                }, 6000); // 6000毫秒 = 6秒
+            })
+            .catch(function (error) {
+                waringToast('体统提示', '无法启动摄像头：', error);
+            });
+    }else{
+        waringToast('温馨提示','您的浏览器不支持获取摄像设备API');
+    }
+}
+
+/**
+ * 向后端发送条形码数据解码
+ */
+function decodeBarcode(base64Image){
+    $.ajax({
+        url:'/MedicineApi/decodeBarcode',
+        type: 'POST',
+        data:{
+            image:base64Image
+        },
+        dataType: 'json',
+        success: function(response) {
+            if(response.handleType){
+                console.log('信息:'+response.handleData.decodeResult);
+            }else{
+                waringToast('平台提示',response.handleMessage);
+            }
+        },
+        error: function(xhr, status, error) {
+            waringToast('平台提示','请求失败:'+xhr.responseText);
         }
     });
 }
