@@ -34,6 +34,7 @@
             medicine_base_table.medicine_code,
             medicine_base_table.medicine_name,
             medicine_base_table.medicine_price,
+            medicine_base_table.medicine_retail,
             medicine_base_table.medicine_time
         FROM
             medicine_base_table
@@ -45,8 +46,10 @@
         SELECT
             medicine_warehouse_table.medicine_code,
             medicine_warehouse_table.medicine_batch_number,
+            medicine_warehouse_table.create_time,
             medicine_base_table.medicine_name,
-            medicine_base_table.medicine_price
+            medicine_base_table.medicine_price,
+            medicine_base_table.medicine_retail
         FROM
             medicine_warehouse_table
                 INNER JOIN medicine_base_table ON medicine_base_table.medicine_code = medicine_warehouse_table.medicine_code
@@ -94,16 +97,31 @@
         VALUES
             (#{medicine_code},#{medicine_name},#{medicine_price});
     </insert>
+    <!--入库-->
+    <insert id="addMedicineToWareHouse" parameterType="java.util.Map">
+        INSERT INTO medicine_warehouse_table
+            (medicine_code,medicine_batch_number,warehouse_count,canuse_count,create_time)
+        VALUES
+            (#{medicine_code},#{medicine_batch_number},#{warehouse_count},#{canuse_count},STR_TO_DATE(#{create_time}, '%Y%m%d'));
+    </insert>
 
     <!--Update逻辑-->
-    <update id="cancel_regis" parameterType="java.util.Map">
-        UPDATE backservice.gh_data_table
-        SET cancel_sign = '是',
-            cancel_operator = #{cancel_operator},
-            cancel_time = #{cancel_time}
+    <update id="updateWarehouseCount" parameterType="java.util.Map">
+        UPDATE medicine_warehouse_table
+        SET medicine_warehouse_table.warehouse_count = #{warehouse_count},
+            medicine_warehouse_table.canuse_count = #{canuse_count}
         WHERE
-            gh_number = #{gh_number}
-          AND cancel_sign = '否'
-          AND appointment_sign='否';
+            medicine_warehouse_table.medicine_code = #{medicine_code}
+          AND medicine_warehouse_table.medicine_batch_number = #{medicine_batch_number}
+          AND medicine_warehouse_table.create_time=STR_TO_DATE(#{create_time}, '%Y%m%d');
+    </update>
+    <!--更新可用库存数-->
+    <update id="updateCanuseCount" parameterType="java.util.Map">
+        UPDATE medicine_warehouse_table
+        SET medicine_warehouse_table.canuse_count = #{canuse_count}
+        WHERE
+            medicine_warehouse_table.medicine_code = #{medicine_code}
+          AND medicine_warehouse_table.medicine_batch_number = #{medicine_batch_number}
+          AND medicine_warehouse_table.create_time=STR_TO_DATE(#{create_time}, '%Y%m%d');
     </update>
 </mapper>

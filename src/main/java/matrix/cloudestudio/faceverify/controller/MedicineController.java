@@ -61,9 +61,9 @@ public class MedicineController {
     @RequestMapping("/queryMedicineCode")
     public void queryMedicineCode(HttpServletResponse response) throws IOException {
         List<MedicineBaseBean> list=medicineService.query_medicine_code();
-        System.out.println("查询药品:"+list.toString());
         response.setContentType("application/json;charset=UTF-8");
         if (list.size()>0) {
+            System.out.println("查询药品:"+list.toString());
             response.getWriter().write(gson.toJson(WebServerResponse.success("请求成功",list)));
         }else{
             response.getWriter().write(gson.toJson(WebServerResponse.failure("请求失败")));
@@ -78,9 +78,9 @@ public class MedicineController {
     @RequestMapping("/queryMedicineBaseInfo")
     public void queryMedicineBaseInfo(HttpServletResponse response) throws IOException {
         List<MedicineBaseBean> list=medicineService.query_medicine_baseInfo();
-        System.out.println("查询药品:"+list.toString());
         response.setContentType("application/json;charset=UTF-8");
         if (list.size()>0) {
+            System.out.println("查询药品:"+list.toString());
             response.getWriter().write(gson.toJson(WebServerResponse.success("请求成功",list)));
         }else{
             response.getWriter().write(gson.toJson(WebServerResponse.failure("请求失败")));
@@ -180,7 +180,6 @@ public class MedicineController {
             System.out.println("打印格式:"+printStyleBean.toString());
             response.getWriter().write(gson.toJson(WebServerResponse.success("请求成功",printStyleBean)));
         }else{
-            System.out.println("打印格式:"+printStyleBean.toString());
             response.getWriter().write(gson.toJson(WebServerResponse.failure("打印操作失异常!")));
         }
     }
@@ -193,9 +192,9 @@ public class MedicineController {
         if (result!=null) {
             System.out.println("解码结果:"+result);
 
-            String medicineCode = result.substring(0, 8);  // 提取前8个字符,得到编码
-            String createTime = result.substring(8, 16); // 提取接下来的8个字符,得到时间"yyyymmdd"
-            String batchNum = result.substring(16, 20); // 提取最后4个字符,得到批次
+            String medicineCode = result.substring(0, 6);  // 提取前8个字符,得到编码
+            String createTime = result.substring(6, 14); // 提取接下来的8个字符,得到时间"yyyymmdd"
+            String batchNum = result.substring(14, 18); // 提取最后4个字符,得到批次
             System.out.println("解码结果拆分:"+medicineCode+"\t"+createTime+"\t"+batchNum);
             Map<String,Object> queryMap=new HashMap<>();
             queryMap.put("medicine_code",medicineCode);

@@ -3,10 +3,12 @@ package matrix.cloudestudio.faceverify.controller;
 import com.google.gson.Gson;
 import com.google.zxing.WriterException;
 import jakarta.servlet.http.HttpServletResponse;
+import matrix.cloudestudio.faceverify.model.MedicineBaseBean;
 import matrix.cloudestudio.faceverify.model.PrintStyleBean;
 import matrix.cloudestudio.faceverify.model.UserAuthorityInfoBean;
 import matrix.cloudestudio.faceverify.service.AuthorityService;
 import matrix.cloudestudio.faceverify.service.BaseInfoService;
+import matrix.cloudestudio.faceverify.service.MedicineService;
 import matrix.cloudestudio.faceverify.service.PrintStyleService;
 import matrix.cloudestudio.faceverify.tool.QRCodeUtil;
 import matrix.cloudestudio.faceverify.util.WebServerResponse;
@@ -38,6 +40,9 @@ public class OpenApiController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private MedicineService medicineService;
 
     @Autowired
     private PrintStyleService printStyleService;
@@ -74,19 +79,6 @@ public class OpenApiController {
         return ResponseEntity.ok(list);
     }
 
-//    @RequestMapping("/generateQRCode")
-//    public ResponseEntity<byte[]> generateQRCode(@RequestParam("text") String text) {
-//        try {
-//            byte[] qrCodeImage = QRCodeUtil.generateQRCodeImage(text);
-//            HttpHeaders headers = new HttpHeaders();
-//            headers.add("Content-Type", "image/png");
-//            return new ResponseEntity<>(qrCodeImage, headers, HttpStatus.OK);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
-
     @RequestMapping("/generateQRCode")
     public void generateQRCode2(@RequestParam("text") String text,HttpServletResponse response) throws IOException, WriterException {
         //byte[] qrCodeImage = QRCodeUtil.generateQRCodeImage(text);
@@ -117,7 +109,6 @@ public class OpenApiController {
     @RequestMapping("/generateBarcode2")
     public void generateBarcode2(@RequestParam("text") String text,HttpServletResponse response) throws IOException, WriterException {
         String qrCodeImage = QRCodeUtil.generateBarcodeImage(text);
-        //String qrCodeImage = QRCodeUtil.generateBarcodeImage2(text);
         response.setContentType("application/json;charset=UTF-8");
         if (qrCodeImage != null || !(qrCodeImage.isEmpty())) {
             Map<String, Object> responseMap = new HashMap<>();
@@ -138,6 +129,104 @@ public class OpenApiController {
         }else{
             System.out.println("打印格式:"+printStyleBean.toString());
             response.getWriter().write(gson.toJson(WebServerResponse.failure("请求失败")));
+        }
+    }
+
+    /**
+     * 移动端扫码获取基本信息
+     * @param medicine_code
+     * @param response
+     * @throws IOException
+     */
+    @RequestMapping("/queryMedicineCodeInfoByCode")
+    public void queryNearMedicineCode(@RequestParam("medicine_code") String medicine_code,
+                                      HttpServletResponse response) throws IOException {
+        MedicineBaseBean request=medicineService.query_medicineBaseInfoByCode(medicine_code);
+        response.setContentType("application/json;charset=UTF-8");
+        if (request!=null) {
+            System.out.println("药品Code:"+request.getMedicine_code());
+            Map<String,Object> responseMap=new HashMap<>();
+            responseMap.put("medicine_code",request.getMedicine_code());
+            responseMap.put("medicine_name",request.getMedicine_name());
+            responseMap.put("medicine_price",request.getMedicine_price());
+            responseMap.put("medicine_time",request.getMedicine_time());
+            responseMap.put("medicine_retail",request.getMedicine_retail());
+            response.getWriter().write(gson.toJson(WebServerResponse.success("请求成功",responseMap)));
+        }else{
+            response.getWriter().write(gson.toJson(WebServerResponse.failure("获取新药品编码异常!")));
+        }
+    }
+
+    @RequestMapping("/addMedicineToWareHouse")
+    public void addMedicineToWareHouse(@RequestParam("medicine_code") String medicine_code,
+                                       @RequestParam("medicine_batch_number") int medicine_batch_number,
+                                       @RequestParam("warehouse_count") int warehouse_count,
+                                       @RequestParam("create_time") String create_time,
+                                      HttpServletResponse response) throws IOException {
+
+        Map<String,Object> requestMap=new HashMap<>();
+        requestMap.put("medicine_code",medicine_code);
+        requestMap.put("medicine_batch_number",medicine_batch_number);
+        requestMap.put("warehouse_count",warehouse_count);
+        requestMap.put("canuse_count",warehouse_count);
+        requestMap.put("create_time",create_time);
+        response.setContentType("application/json;charset=UTF-8");
+        MedicineBaseBean addQueryBean=medicineService.queryWareHouseInfoByCodeCrTimeBaNum(requestMap);
+        if(addQueryBean!=null){
+            System.out.println("药剂:"+medicine_code+" 批次:"+create_time+medicine_batch_number+"已在库");
+            Map<String,Object> updateWareCountMap=new HashMap<>();
+            updateWareCountMap.put("medicine_code",medicine_code);
+            updateWareCountMap.put("medicine_batch_number",medicine_batch_number);
+            updateWareCountMap.put("create_time",create_time);
+            updateWareCountMap.put("warehouse_count",addQueryBean.getWarehouse_count()+warehouse_count);
+            updateWareCountMap.put("canuse_count",addQueryBean.getCanuse_count()+warehouse_count);
+            boolean updateWareCountKey=medicineService.updateWarehouseCount(updateWareCountMap);
+            if(updateWareCountKey){
+                System.out.println("药剂:"+medicine_code+" 批次:"+create_time+medicine_batch_number+"入库成功");
+                response.getWriter().write(gson.toJson(WebServerResponse.success("入库成功")));
+            }else{
+                response.getWriter().write(gson.toJson(WebServerResponse.failure("入库异常!")));
+            }
+        }else{
+            System.out.println("药剂:"+medicine_code+" 批次:"+create_time+medicine_batch_number+"未入库");
+            boolean addKey=medicineService.addMedicineToWareHouse(requestMap);
+            if(addKey){
+                System.out.println("药剂:"+medicine_code+" 批次:"+create_time+medicine_batch_number+"入库成功");
+                response.getWriter().write(gson.toJson(WebServerResponse.success("入库成功")));
+            }else{
+                response.getWriter().write(gson.toJson(WebServerResponse.failure("入库异常!")));
+            }
+        }
+    }
+
+    @RequestMapping("/medicineOutWareHouse")
+    public void medicineOutWareHouse(@RequestParam("medicine_code") String medicine_code,
+                                       @RequestParam("medicine_batch_number") int medicine_batch_number,
+                                       @RequestParam("outCount") int outCount,
+                                       @RequestParam("create_time") String create_time,
+                                       HttpServletResponse response) throws IOException {
+        Map<String,Object> requestMap=new HashMap<>();
+        requestMap.put("medicine_code",medicine_code);
+        requestMap.put("medicine_batch_number",medicine_batch_number);
+        requestMap.put("create_time",create_time);
+        response.setContentType("application/json;charset=UTF-8");
+        MedicineBaseBean outQueryBean=medicineService.queryWareHouseInfoByCodeCrTimeBaNum(requestMap);
+        if(outQueryBean==null){
+            System.out.println("药剂:"+medicine_code+" 批次:"+create_time+medicine_batch_number+"未入库");
+            response.getWriter().write(gson.toJson(WebServerResponse.failure("出库异常!"+"药剂:"+medicine_code+" 批次:"+create_time+medicine_batch_number+"未入库")));
+        }else{
+            if(outQueryBean.getCanuse_count()>0){
+                requestMap.put("canuse_count",outQueryBean.getCanuse_count()-outCount);
+                boolean updateCanuseKey=medicineService.updateCanuseCount(requestMap);
+                if(updateCanuseKey){
+                    response.getWriter().write(gson.toJson(WebServerResponse.success("药剂:"+medicine_code+" 批次:"+create_time+medicine_batch_number+"出库成功!可用库存量:"+(outQueryBean.getCanuse_count()-outCount))));
+                }else{
+                    response.getWriter().write(gson.toJson(WebServerResponse.success("药剂:"+medicine_code+" 批次:"+create_time+medicine_batch_number+"出库异常!")));
+                }
+            }else{
+                System.out.println("药剂:"+medicine_code+" 批次:"+create_time+medicine_batch_number+"库存不足");
+                response.getWriter().write(gson.toJson(WebServerResponse.failure("出库异常!"+"药剂:"+medicine_code+" 批次:"+create_time+medicine_batch_number+"库存不足")));
+            }
         }
     }
 }

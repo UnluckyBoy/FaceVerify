@@ -19,4 +19,7 @@ public interface MedicineService {
     boolean addMedicineBaseInfo(Map<String,Object> map);
     MedicineBaseBean query_medicineBaseInfoByCode(String medicine_code);
     MedicineBaseBean queryWareHouseInfoByCodeCrTimeBaNum(Map<String,Object> map);
+    boolean addMedicineToWareHouse(Map<String,Object> map);
+    boolean updateWarehouseCount(Map<String,Object> map);
+    boolean updateCanuseCount(Map<String,Object> map);
 }

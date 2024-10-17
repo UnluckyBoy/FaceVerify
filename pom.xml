@@ -164,6 +164,13 @@
                     <include>**/*.xml</include>
                 </includes>
             </resource>
+            <!-- 配置 src/main/resources 目录下的所有文件 -->
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
         </resources>
         <plugins>
             <plugin>

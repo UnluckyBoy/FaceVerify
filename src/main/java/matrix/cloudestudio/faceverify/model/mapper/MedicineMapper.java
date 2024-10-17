@@ -25,4 +25,7 @@ public interface MedicineMapper {
     boolean addMedicineBaseInfo(Map<String,Object> map);//药剂基本信息Insert
     MedicineBaseBean query_medicineBaseInfoByCode(String medicine_code);//编码查询药品信息
     MedicineBaseBean queryWareHouseInfoByCodeCrTimeBaNum(Map<String,Object> map);//编码生产日期批次查询库存信息
+    boolean addMedicineToWareHouse(Map<String,Object> map);//入库插值
+    boolean updateWarehouseCount(Map<String,Object> map);//更新入库库存数
+    boolean updateCanuseCount(Map<String,Object> map);//更新可用库存数
 }
