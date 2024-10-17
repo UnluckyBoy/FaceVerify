@@ -58,7 +58,13 @@ function createWareHouseView(){
                                 <input type="text" class="form-control" id="addMedicinePriceInput" placeholder="价格" name="addMedicinePriceInput">  
                                 <label for="addMedicinePriceInput">价格(￥)</label>  
                             </div>  
-                        </div>  
+                        </div>
+                        <div class="col-md-4 p-1">  
+                            <div class="form-floating">  
+                                <input type="text" class="form-control" id="addMedicineRetailInput" placeholder="零售价格" name="addMedicineRetailInput">  
+                                <label for="addMedicineRetailInput">零售价格(￥)</label>  
+                            </div>  
+                        </div>
                         <div class="flex-row p-1 gap-2 matrix-item-center">  
                             <button type="button" class="btn btn-sm btn-success" id="createMedicineBtn"><span><i class="fa-regular fa-square-plus"></i></span>&nbsp;添加</button>  
                             <button type="button" class="btn btn-sm btn-primary" id="saveMedicineBtn"><span><i class="fa-regular fa-floppy-disk"></i></span>&nbsp;保存</button>  
@@ -73,6 +79,7 @@ function createWareHouseView(){
             addMedicineBaseInfo();
             $('#addMedicineNameInput').val('');
             $('#addMedicinePriceInput').val('');
+            $('#addMedicineRetailInput').val('');
         });
         $('#saveMedicineBtn').click(function (){
             insertMedicineBaseInfo();
@@ -91,6 +98,7 @@ function createWareHouseView(){
                      <th>药剂编码</th>
                      <th>药剂名称</th>
                      <th>药剂价格(￥)</th>
+                     <th>零售价格(￥)</th>
                      <th>创建日期</th>
                      <th>操作</th>
                   </tr>
@@ -294,6 +302,7 @@ function insertMedicineBaseInfo(){
     const code=$('#addMedicineCode').text();
     const name=$('#addMedicineNameInput').val().trim();
     const price=$('#addMedicinePriceInput').val().trim();
+    const retail=$('#addMedicineRetailInput').val().trim();
     if(!(isEmptyString(code))&&!(isEmptyString(name))&&!(isEmptyString(price))){
         $.ajax({
             url:'/MedicineApi/addMedicineBaseInfo',
@@ -301,16 +310,14 @@ function insertMedicineBaseInfo(){
             data:{
                 medicine_code:code,
                 medicine_name:name,
-                medicine_price:price
+                medicine_price:price,
+                medicine_retail:retail
             },
             dataType: 'json',
             success: function(response) {
                 if(response.handleType){
-                    //showToastTr('平台提示',response.handleMessage,'success');
-                    // successModal('平台提示',response.handleMessage,function (){
-                    //     //location.reload();
-                    // });
                     successToast('平台提示',response.handleMessage);
+                    clearCreateView();
                 }else{
                     waringToast('平台提示',response.handleMessage);
                 }
@@ -322,6 +329,16 @@ function insertMedicineBaseInfo(){
     }else {
         waringToast('平台提示','请检查输入!');
     }
+}
+
+/***
+ * 创建完之后清空视图
+ */
+function clearCreateView(){
+    $('#addMedicineCode').text('');
+    $('#addMedicineNameInput').val('');
+    $('#addMedicinePriceInput').val('');
+    $('#addMedicineRetailInput').val('');
 }
 
 /**
@@ -354,6 +371,18 @@ function bindMedicineDataTable(){
             // { "data": "medicine_price", "type": "string" },
             {
                 "data": "medicine_price",
+                "type": "num", // 虽然这主要用于排序，但我们可以设置它，然后在渲染时格式化输出
+                "render": function (data, type, row, meta) {
+                    const price = parseFloat(data);
+                    if (!isNaN(price)) { // 检查转换是否成功
+                        return price.toFixed(2);
+                    } else {
+                        return data;
+                    }
+                }
+            },
+            {
+                "data": "medicine_retail",
                 "type": "num", // 虽然这主要用于排序，但我们可以设置它，然后在渲染时格式化输出
                 "render": function (data, type, row, meta) {
                     const price = parseFloat(data);

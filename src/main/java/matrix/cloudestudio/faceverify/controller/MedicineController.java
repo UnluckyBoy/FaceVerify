@@ -150,18 +150,25 @@ public class MedicineController {
     public void addMedicineBaseInfo(@RequestParam("medicine_code") String medicine_code,
                                     @RequestParam("medicine_name") String medicine_name,
                                     @RequestParam("medicine_price") String medicine_price,
+                                    @RequestParam("medicine_retail") String medicine_retail,
                                     HttpServletResponse response) throws IOException {
         Map<String,Object> requestMap=new HashMap<>();
         requestMap.put("medicine_code",medicine_code);
         requestMap.put("medicine_name",medicine_name);
         requestMap.put("medicine_price",medicine_price);
-        boolean insertKey=medicineService.addMedicineBaseInfo(requestMap);
-        response.setContentType("application/json;charset=UTF-8");
-        if (insertKey) {
-            System.out.println("药剂字典创建:"+requestMap.toString());
-            response.getWriter().write(gson.toJson(WebServerResponse.success("药剂字典创建成功!")));
+        requestMap.put("medicine_retail",medicine_retail);
+        MedicineBaseBean queryBean=medicineService.query_medicineBaseInfoByCode(medicine_code);
+        if(queryBean==null){
+            boolean insertKey=medicineService.addMedicineBaseInfo(requestMap);
+            response.setContentType("application/json;charset=UTF-8");
+            if (insertKey) {
+                System.out.println("药剂字典创建:"+requestMap.toString());
+                response.getWriter().write(gson.toJson(WebServerResponse.success("药剂字典创建成功!")));
+            }else{
+                response.getWriter().write(gson.toJson(WebServerResponse.failure("药剂字典创建异常!")));
+            }
         }else{
-            response.getWriter().write(gson.toJson(WebServerResponse.failure("药剂字典创建异常!")));
+            response.getWriter().write(gson.toJson(WebServerResponse.failure("药剂字典已存在!")));
         }
     }
 
