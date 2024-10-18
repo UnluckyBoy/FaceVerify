@@ -81,9 +81,11 @@
             medicine_warehouse_table.towarehouse_time,
             medicine_warehouse_table.towarehouse_operator,
             medicine_warehouse_table.outwarehouse_time,
-            medicine_warehouse_table.outwarehouse_operator
+            medicine_warehouse_table.outwarehouse_operator,
+            medicine_base_table.medicine_retail
         FROM
             medicine_warehouse_table
+                INNER JOIN medicine_base_table ON medicine_base_table.medicine_code = medicine_warehouse_table.medicine_code
         WHERE
             medicine_warehouse_table.medicine_code = #{medicine_code}
           AND medicine_warehouse_table.create_time = STR_TO_DATE(#{create_time}, '%Y%m%d')

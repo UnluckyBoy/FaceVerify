@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="matrix.cloudestudio.faceverify.model.mapper.OrderMapper">
+    <select id="getOrderAmount" parameterType="String">
+        SELECT
+            sum( order_info_table.order_amount ) AS order_amount
+        FROM
+            order_info_table
+        WHERE
+            order_info_table.order_uid = #{order_uid};
+    </select>
+    <!--查询订单以及药品名-->
+    <select id="queryOrderBaseAndMedicineName" parameterType="java.util.Map" resultType="OrderBean">
+        SELECT
+            order_info_table.order_uid,
+            order_info_table.medicine_code,
+            order_info_table.order_time,
+            order_info_table.order_amount,
+            order_info_table.order_status,
+            order_info_table.order_quantity,
+            medicine_base_table.medicine_name
+        FROM
+            order_info_table
+                INNER JOIN medicine_base_table ON order_info_table.medicine_code = medicine_base_table.medicine_code
+        WHERE
+            order_info_table.order_uid = #{order_uid}
+          AND order_info_table.medicine_code = #{medicine_code}
+            LIMIT 1;
+    </select>
+
+
+    <!--插入逻辑-->
+    <!--订单生成-->
+    <insert id="addOrder" parameterType="java.util.Map">
+        INSERT INTO order_info_table
+            (order_uid,medicine_code,order_time,order_status,order_amount,order_quantity)
+        VALUES
+        (#{order_uid},#{medicine_code},#{order_time},#{order_status},#{order_amount},#{order_quantity});
+    </insert>
+
+    <!--更新逻辑-->
+    <update id="updateOrderStatus" parameterType="java.util.Map">
+        UPDATE order_info_table
+        SET order_info_table.order_status = #{order_status}
+        WHERE
+            order_info_table.order_uid = #{order_uid};
+    </update>
+</mapper>

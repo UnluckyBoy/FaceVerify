@@ -4,13 +4,12 @@ import com.google.gson.Gson;
 import com.google.zxing.WriterException;
 import jakarta.servlet.http.HttpServletResponse;
 import matrix.cloudestudio.faceverify.model.MedicineBaseBean;
+import matrix.cloudestudio.faceverify.model.OrderBean;
 import matrix.cloudestudio.faceverify.model.PrintStyleBean;
 import matrix.cloudestudio.faceverify.model.UserAuthorityInfoBean;
-import matrix.cloudestudio.faceverify.service.AuthorityService;
-import matrix.cloudestudio.faceverify.service.BaseInfoService;
-import matrix.cloudestudio.faceverify.service.MedicineService;
-import matrix.cloudestudio.faceverify.service.PrintStyleService;
+import matrix.cloudestudio.faceverify.service.*;
 import matrix.cloudestudio.faceverify.tool.QRCodeUtil;
+import matrix.cloudestudio.faceverify.tool.TimeUtil;
 import matrix.cloudestudio.faceverify.util.WebServerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +42,9 @@ public class OpenApiController {
 
     @Autowired
     private MedicineService medicineService;
+
+    @Autowired
+    private OrderService orderService;
 
     @Autowired
     private PrintStyleService printStyleService;
@@ -227,6 +229,48 @@ public class OpenApiController {
                 System.out.println("药剂:"+medicine_code+" 批次:"+create_time+medicine_batch_number+"库存不足");
                 response.getWriter().write(gson.toJson(WebServerResponse.failure("出库异常!"+"药剂:"+medicine_code+" 批次:"+create_time+medicine_batch_number+"库存不足")));
             }
+        }
+    }
+
+    @RequestMapping("/createOrder")
+    public void createOrder(@RequestParam("order_uid") String order_uid,
+                            @RequestParam("medicine_code") String medicine_code,
+                            @RequestParam("medicine_batch_number") int medicine_batch_number,
+                            @RequestParam("create_time") String create_time,
+                            HttpServletResponse response) throws IOException {
+        response.setContentType("application/json;charset=UTF-8");
+        String orderTime= TimeUtil.GetTime(true);
+        Map<String,Object> requestMap=new HashMap<>();
+        requestMap.put("medicine_code",medicine_code);
+        requestMap.put("medicine_batch_number",medicine_batch_number);
+        requestMap.put("create_time",create_time);
+        response.setContentType("application/json;charset=UTF-8");
+
+        MedicineBaseBean createOrderQueryBean=medicineService.queryWareHouseInfoByCodeCrTimeBaNum(requestMap);
+        if(createOrderQueryBean==null){
+            System.out.println("药剂:"+medicine_code+" 批次:"+create_time+medicine_batch_number+"未入库!");
+            response.getWriter().write(gson.toJson(WebServerResponse.failure("出库异常!"+"药剂:"+medicine_code+" 批次:"+create_time+medicine_batch_number+"未入库!")));
+        }else{
+                Map<String,Object> createMap=new HashMap<>();
+                createMap.put("order_uid",order_uid);
+                createMap.put("medicine_code",medicine_code);
+                createMap.put("order_time",orderTime);
+                createMap.put("order_status",0);
+                createMap.put("order_amount",createOrderQueryBean.getMedicine_retail());
+                createMap.put("order_quantity",1);
+                boolean createKey=orderService.addOrder(createMap);
+                if(createKey){
+                    System.out.println("订单:"+order_uid+" 产品:"+medicine_code+"创建成功!");
+                    OrderBean orderBean=orderService.queryOrderBaseAndMedicineName(createMap);
+                    if(orderBean!=null){
+                        response.getWriter().write(gson.toJson(WebServerResponse.success("订单:"+order_uid+" 产品:"+medicine_code+"创建成功!",orderBean)));
+                    }else{
+                        response.getWriter().write(gson.toJson(WebServerResponse.failure("订单:"+order_uid+" 产品:"+medicine_code+"返回异常!")));
+                    }
+                }else{
+                    System.out.println("订单:"+order_uid+" 产品:"+medicine_code+"创建异常!");
+                    response.getWriter().write(gson.toJson(WebServerResponse.failure("订单:"+order_uid+" 产品:"+medicine_code+"创建异常!")));
+                }
         }
     }
 }
